@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dat Tran — Graphic Designer</title>
+<title>DatTran — Graphic Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"/>
@@ -15,14 +15,67 @@ body {
   color: #fff;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  cursor: none; /* ẩn cursor gốc */
 }
+
+/* ══════════════════════════════
+   CUSTOM CURSOR + SPOTLIGHT
+══════════════════════════════ */
+/* Chấm tròn nhỏ ngay tại con trỏ */
+#cursor-dot {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s, transform 0.15s;
+  mix-blend-mode: difference;
+}
+
+/* Vòng tròn lớn theo sau */
+#cursor-ring {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.35);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+  mix-blend-mode: difference;
+}
+
+/* Vệt sáng spotlight lan rộng */
+#cursor-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,0.06) 0%,
+    rgba(255,120,120,0.03) 35%,
+    transparent 70%
+  );
+  filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+#cursor-glow.active { opacity: 1; }
 
 /* ── GIF BACKGROUND ── */
 .bg-gif {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background-image: url('https://github.com/minhdat0801/porfolio/blob/main/Comp-2.gif?raw=true');
+  background-image: url('https://github.com/minhdat0801/porfolio/blob/main/hf_20260331_074327_a4d6275d-82d9-4c83-bfbe-f1fb2213c17c-ezgif.com-cut.gif?raw=true');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -105,7 +158,7 @@ body::before {
 .orb-3 { width: 400px; height: 400px; top: 40%; left: 40%; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%); }
 
 /* ── LAYOUT ── */
-.page-wrap { position: relative; z-index: 1; }
+.page-wrap { position: relative; z-index: 2; }
 
 /* ── NAV ── */
 nav {
@@ -135,7 +188,7 @@ nav {
   padding: 0.5rem 1.25rem;
   font-family: 'Inter', sans-serif;
   font-size: 0.8rem; font-weight: 500;
-  cursor: pointer; letter-spacing: 0.05em;
+  cursor: none; letter-spacing: 0.05em;
   text-transform: uppercase;
   transition: opacity 0.2s;
 }
@@ -154,7 +207,6 @@ nav {
   margin: 0 auto;
 }
 
-/* LEFT: text */
 .hero-left {
   display: flex;
   flex-direction: column;
@@ -172,10 +224,11 @@ nav {
 .hero-tag .dot { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
 
+/* ── HERO NAME: viết liền, không in nghiêng ── */
 .hero-name {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-style: italic;
+  font-style: normal;
   font-size: clamp(3.5rem, 8vw, 7rem);
   line-height: 0.88;
   letter-spacing: -0.05em;
@@ -197,7 +250,7 @@ nav {
 .btn-primary {
   border-radius: 9999px; padding: 0.75rem 1.75rem;
   font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 500;
-  color: #fff; border: none; cursor: pointer;
+  color: #fff; border: none; cursor: none;
   display: flex; align-items: center; gap: 0.5rem;
   letter-spacing: 0.02em;
 }
@@ -205,12 +258,11 @@ nav {
   border-radius: 9999px; padding: 0.75rem 1.75rem;
   font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 400;
   color: rgba(255,255,255,0.7); background: transparent;
-  border: 1px solid rgba(255,255,255,0.15); cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15); cursor: none;
   letter-spacing: 0.02em; transition: border-color 0.3s, color 0.3s;
 }
 .btn-outline:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
 
-/* Stats row */
 .hero-stats {
   display: flex; align-items: stretch; gap: 1px;
   border-radius: 1.25rem; overflow: hidden;
@@ -235,29 +287,27 @@ nav {
 }
 .stat-label { font-size: 0.65rem; color: rgba(255,255,255,0.4); font-weight: 300; margin-top: 0.4rem; letter-spacing: 0.08em; text-transform: uppercase; }
 
-/* RIGHT: 3D canvas */
 .hero-right {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 70vh;
+  overflow: visible;
 }
 
 #three-canvas {
   width: 100%;
   height: 100%;
-  border-radius: 2rem;
-  cursor: grab;
+  border-radius: 0;
+  cursor: none;
 }
-#three-canvas:active { cursor: grabbing; }
 
-/* hint label */
 .canvas-hint {
   position: absolute;
   bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0; right: 0;
+  justify-content: center;
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -270,7 +320,6 @@ nav {
 .canvas-hint svg { animation: rotateHint 3s linear infinite; opacity: 0.4; }
 @keyframes rotateHint { to { transform: rotate(360deg); } }
 
-/* scroll indicator */
 .scroll-hint {
   position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -279,7 +328,6 @@ nav {
 .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent); animation: scrollDrop 2s ease-in-out infinite; }
 @keyframes scrollDrop { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
 
-/* ── SECTION BASE ── */
 section { padding: 6rem 3rem; position: relative; }
 .section-label {
   font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
@@ -297,7 +345,6 @@ section { padding: 6rem 3rem; position: relative; }
   margin-bottom: 3rem;
 }
 
-/* ── ABOUT ── */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; max-width: 1100px; margin: 0 auto; }
 .about-text { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.8; }
 .about-text strong { color: #fff; font-weight: 500; }
@@ -309,14 +356,13 @@ section { padding: 6rem 3rem; position: relative; }
 .about-card-val { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.4rem; color: #fff; letter-spacing: -0.03em; }
 .about-card + .about-card { margin-top: 1rem; }
 
-/* ── SKILLS ── */
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; max-width: 1100px; margin: 0 auto; }
 .skill-card {
   border-radius: 1.25rem;
   padding: 1.5rem;
   display: flex; flex-direction: column; gap: 1rem;
   transition: transform 0.3s, background 0.3s;
-  cursor: default;
+  cursor: none;
 }
 .skill-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.08); }
 .skill-icon-wrap {
@@ -330,7 +376,6 @@ section { padding: 6rem 3rem; position: relative; }
 .skill-bar { height: 100%; background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.3)); border-radius: 9999px; transition: width 1.2s cubic-bezier(0.16,1,0.3,1); width: 0; }
 .skill-level { font-size: 0.65rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-top: 0.4rem; }
 
-/* ── SERVICES ── */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -352,14 +397,13 @@ section { padding: 6rem 3rem; position: relative; }
 .service-title { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 0.75rem; }
 .service-desc { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.6; }
 
-/* ── WORKS ── */
 .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 1100px; margin: 0 auto; }
 .work-card {
   border-radius: 1.25rem;
   overflow: hidden;
   aspect-ratio: 4/5;
   position: relative;
-  cursor: pointer;
+  cursor: none;
   transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
 }
 .work-card:first-child { grid-column: span 2; aspect-ratio: 16/9; }
@@ -386,7 +430,6 @@ section { padding: 6rem 3rem; position: relative; }
 }
 .work-card:hover .work-arrow { opacity: 1; }
 
-/* ── CONTACT ── */
 .contact-wrap { max-width: 700px; margin: 0 auto; text-align: center; }
 .contact-email {
   font-family: 'Inter', sans-serif;
@@ -406,7 +449,6 @@ section { padding: 6rem 3rem; position: relative; }
 .social-btn { border-radius: 9999px; padding: 0.5rem 1.25rem; font-size: 0.78rem; color: rgba(255,255,255,0.6); text-decoration: none; letter-spacing: 0.05em; transition: color 0.3s, border-color 0.3s; }
 .social-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3) !important; }
 
-/* ── FOOTER ── */
 footer {
   padding: 2rem 3rem;
   border-top: 1px solid rgba(255,255,255,0.06);
@@ -414,7 +456,6 @@ footer {
 }
 footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; letter-spacing: 0.05em; }
 
-/* ── ANIMATIONS ── */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -426,10 +467,8 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 
-/* ── DIVIDER ── */
 .divider { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 0; }
 
-/* ── MOBILE ── */
 @media (max-width: 768px) {
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
@@ -446,10 +485,17 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   .works-grid { grid-template-columns: 1fr; }
   .work-card:first-child { grid-column: span 1; aspect-ratio: 4/3; }
   footer { flex-direction: column; gap: 1rem; text-align: center; }
+  body { cursor: auto; }
+  #cursor-dot, #cursor-ring, #cursor-glow { display: none; }
 }
 </style>
 </head>
 <body>
+
+<!-- ── CURSOR ELEMENTS ── -->
+<div id="cursor-glow"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
 
 <!-- GIF Background -->
 <div class="bg-gif"></div>
@@ -465,7 +511,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 <nav>
   <div class="nav-inner">
     <div class="nav-logo">
-      Dat Tran
+      DatTran
       <span>Graphic Designer</span>
     </div>
     <div class="nav-links">
@@ -483,7 +529,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 <!-- ═══ HERO ═══ -->
 <section class="hero" style="position:relative;">
 
-  <!-- LEFT TEXT -->
   <div class="hero-left">
 
     <div class="glass hero-tag reveal">
@@ -491,8 +536,9 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
       Available for freelance work
     </div>
 
+    <!-- Viết liền, không in nghiêng -->
     <h1 class="hero-name reveal reveal-delay-1">
-      Dat <span class="dim">Tran</span>
+      Dat<span class="dim">Tran</span>
     </h1>
 
     <p class="hero-sub reveal reveal-delay-2">
@@ -590,11 +636,9 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   <div style="max-width:1100px; margin:0 auto;">
     <p class="section-label reveal">— Software Skills</p>
     <h2 class="section-title reveal reveal-delay-1">Tools I<br/>master daily</h2>
-
     <div class="skills-grid" id="skills-grid">
-
       <div class="skill-card glass reveal" data-level="85">
-        <div class="skill-icon-wrap glass"><img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" width="26" height="26" alt="Photoshop"/></div>
+        <div class="skill-icon-wrap glass">🎨</div>
         <div>
           <div class="skill-name">Adobe Photoshop</div>
           <div class="skill-desc">Photo manipulation, digital painting, compositing & advanced retouching.</div>
@@ -604,9 +648,8 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <div class="skill-level">Advanced · 80%</div>
         </div>
       </div>
-
       <div class="skill-card glass reveal reveal-delay-1" data-level="80">
-        <div class="skill-icon-wrap glass"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg" width="26" height="26" alt="Illustrator"/></div>
+        <div class="skill-icon-wrap glass">✏️</div>
         <div>
           <div class="skill-name">Adobe Illustrator</div>
           <div class="skill-desc">Vector illustration, logo design, brand identity & typography systems.</div>
@@ -616,9 +659,8 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <div class="skill-level">Intermediate · 60%</div>
         </div>
       </div>
-
       <div class="skill-card glass reveal reveal-delay-2" data-level="60">
-        <div class="skill-icon-wrap glass"><img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg" width="26" height="26" alt="Premiere"/></div>
+        <div class="skill-icon-wrap glass">🎬</div>
         <div>
           <div class="skill-name">Adobe Premiere Pro</div>
           <div class="skill-desc">Video editing, color grading, storytelling & cinematic post-production.</div>
@@ -628,9 +670,8 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <div class="skill-level">Intermediate · 60%</div>
         </div>
       </div>
-
       <div class="skill-card glass reveal reveal-delay-3" data-level="60">
-        <div class="skill-icon-wrap glass"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg" width="26" height="26" alt="After Effects"/></div>
+        <div class="skill-icon-wrap glass">✨</div>
         <div>
           <div class="skill-name">After Effects</div>
           <div class="skill-desc">Motion graphics, visual effects, animation & interactive title sequences.</div>
@@ -640,9 +681,8 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <div class="skill-level">Intermediate · 60%</div>
         </div>
       </div>
-
       <div class="skill-card glass reveal" data-level="60">
-        <div class="skill-icon-wrap glass"><img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" width="22" height="26" alt="Figma"/></div>
+        <div class="skill-icon-wrap glass">🖥️</div>
         <div>
           <div class="skill-name">Figma</div>
           <div class="skill-desc">UI/UX design, prototyping, design systems & collaborative workflows.</div>
@@ -652,9 +692,8 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <div class="skill-level">Intermediate · 60%</div>
         </div>
       </div>
-
       <div class="skill-card glass reveal reveal-delay-1" data-level="55">
-        <div class="skill-icon-wrap glass"><img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg" width="26" height="26" alt="Blender"/></div>
+        <div class="skill-icon-wrap glass">🧊</div>
         <div>
           <div class="skill-name">Blender / 3D</div>
           <div class="skill-desc">3D modeling, rendering, product visualization & environment design.</div>
@@ -664,9 +703,8 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <div class="skill-level">Intermediate · 55%</div>
         </div>
       </div>
-
       <div class="skill-card glass reveal reveal-delay-2" data-level="65">
-        <div class="skill-icon-wrap glass"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Capture_One_logo.png" width="26" height="26" alt="Capture One" style="border-radius:6px;"/></div>
+        <div class="skill-icon-wrap glass">📷</div>
         <div>
           <div class="skill-name">Capture One</div>
           <div class="skill-desc">Professional photo editing, tethered shooting, color grading & RAW processing.</div>
@@ -676,7 +714,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <div class="skill-level">Intermediate · 65%</div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -688,7 +725,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   <div style="max-width:1100px; margin:0 auto;">
     <p class="section-label reveal">— What I do</p>
     <h2 class="section-title reveal reveal-delay-1">Services<br/>offered</h2>
-
     <div class="services-grid reveal reveal-delay-2">
       <div class="service-item">
         <div class="service-num">01</div>
@@ -711,9 +747,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   <div style="max-width:1100px; margin:0 auto;">
     <p class="section-label reveal">— Selected works</p>
     <h2 class="section-title reveal reveal-delay-1">Recent<br/>projects</h2>
-
     <div class="works-grid">
-
       <div class="work-card reveal">
         <div class="work-bg" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%);"></div>
         <div class="work-overlay">
@@ -724,7 +758,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
         </div>
       </div>
-
       <div class="work-card reveal reveal-delay-1">
         <div class="work-bg" style="background: linear-gradient(160deg, #0d0d0d 0%, #1c1c1c 40%, #2d2d2d 100%); position:relative;">
           <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%, rgba(255,255,255,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);"></div>
@@ -737,7 +770,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
         </div>
       </div>
-
       <div class="work-card reveal reveal-delay-2">
         <div class="work-bg" style="background: linear-gradient(200deg, #0a0a0a 0%, #111 30%, #1e1e1e 70%, #2a1a1a 100%);">
           <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%, rgba(180,80,80,0.12) 0%, transparent 70%);"></div>
@@ -750,7 +782,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
         </div>
       </div>
-
       <div class="work-card reveal reveal-delay-3">
         <div class="work-bg" style="background: linear-gradient(220deg, #0d1117 0%, #1a2332 50%, #0d1117 100%);">
           <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%, rgba(80,120,200,0.12) 0%, transparent 60%);"></div>
@@ -763,9 +794,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
         </div>
       </div>
-
     </div>
-
     <div style="text-align:center; margin-top:2.5rem;" class="reveal">
       <button class="btn-outline">View all projects →</button>
     </div>
@@ -782,11 +811,9 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
     <p style="color:rgba(255,255,255,0.4); font-size:0.9rem; font-weight:300; margin-bottom:2rem;" class="reveal reveal-delay-2">
       Open for freelance projects, collaborations and full-time opportunities.
     </p>
-
     <div class="reveal reveal-delay-2">
       <a href="mailto:minhdat0801@gmail.com" class="contact-email">minhdat0801@gmail.com</a>
     </div>
-
     <div class="social-row reveal reveal-delay-3">
       <a href="https://www.behance.net/dattran0801" class="social-btn glass" style="border:1px solid rgba(255,255,255,0.1);">Behance</a>
       <a href="https://www.instagram.com/dat.tran0801/" class="social-btn glass" style="border:1px solid rgba(255,255,255,0.1);">Instagram</a>
@@ -796,30 +823,81 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
 <footer>
-  <p>© 2025 Dat Tran. All rights reserved.</p>
+  <p>© 2025 DatTran. All rights reserved.</p>
   <p>Designed & Built with ♥</p>
 </footer>
 
-</div><!-- /page-wrap -->
+</div>
 
-<!-- Three.js CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<!-- GLTFLoader -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
-// ═══════════════════════════════════════════
-// THREE.JS — Load GLB model xoay theo chuột
-// ═══════════════════════════════════════════
+// ════════════════════════════════════════
+// CURSOR: dot + ring + spotlight glow
+// ════════════════════════════════════════
+(function() {
+  const dot   = document.getElementById('cursor-dot');
+  const ring  = document.getElementById('cursor-ring');
+  const glow  = document.getElementById('cursor-glow');
 
+  let mx = -300, my = -300;   // vị trí chuột thực
+  let rx = -300, ry = -300;   // vị trí ring (lag)
+  let gx = -300, gy = -300;   // vị trí glow (lag nhiều hơn)
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    glow.classList.add('active');
+  });
+  document.addEventListener('mouseleave', () => glow.classList.remove('active'));
+
+  // Phóng to ring khi hover link/button
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width  = '56px';
+      ring.style.height = '56px';
+      ring.style.borderColor = 'rgba(255,255,255,0.6)';
+      dot.style.transform = 'translate(-50%,-50%) scale(1.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width  = '36px';
+      ring.style.height = '36px';
+      ring.style.borderColor = 'rgba(255,255,255,0.35)';
+      dot.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+  });
+
+  function tick() {
+    // dot: tức thì
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+
+    // ring: lerp nhẹ
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+
+    // glow: lerp chậm hơn
+    gx += (mx - gx) * 0.07;
+    gy += (my - gy) * 0.07;
+    glow.style.left = gx + 'px';
+    glow.style.top  = gy + 'px';
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// ════════════════════════════════════════
+// THREE.JS
+// ════════════════════════════════════════
 (function() {
   const canvas = document.getElementById('three-canvas');
   const container = canvas.parentElement;
   const hint = container.querySelector('.canvas-hint');
 
-  // --- Renderer ---
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
@@ -827,223 +905,126 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
 
-  // --- Scene & Camera ---
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
   camera.position.set(0, 0.8, 5.5);
 
-  // --- Lights ---
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-
   const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
-  keyLight.position.set(3, 5, 4);
-  scene.add(keyLight);
-
+  keyLight.position.set(3, 5, 4); scene.add(keyLight);
   const fillLight = new THREE.DirectionalLight(0xff6060, 0.6);
-  fillLight.position.set(-4, 2, -2);
-  scene.add(fillLight);
-
+  fillLight.position.set(-4, 2, -2); scene.add(fillLight);
   const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  rimLight.position.set(0, -3, -4);
-  scene.add(rimLight);
-
+  rimLight.position.set(0, -3, -4); scene.add(rimLight);
   const mouseLight = new THREE.PointLight(0xff4444, 0.5, 15);
-  mouseLight.position.set(0, 1, 4);
-  scene.add(mouseLight);
+  mouseLight.position.set(0, 1, 4); scene.add(mouseLight);
 
-  // --- Group để xoay ---
   const group = new THREE.Group();
   scene.add(group);
 
-  // --- Loading indicator ---
   const loadingEl = document.createElement('div');
-  loadingEl.style.cssText = `
-    position:absolute; inset:0; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; gap:1rem;
-    color:rgba(255,255,255,0.5); font-size:0.75rem;
-    letter-spacing:0.15em; text-transform:uppercase;
-  `;
-  loadingEl.innerHTML = `
-    <div style="width:40px;height:40px;border:1px solid rgba(255,255,255,0.15);
-      border-top-color:rgba(255,255,255,0.7);border-radius:50%;
-      animation:spin 1s linear infinite;"></div>
+  loadingEl.style.cssText = `position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:1rem;
+    color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;`;
+  loadingEl.innerHTML = `<div style="width:40px;height:40px;border:1px solid rgba(255,255,255,0.15);
+    border-top-color:rgba(255,255,255,0.7);border-radius:50%;animation:spin 1s linear infinite;"></div>
     <span id="load-pct">Loading model…</span>
-    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
-  `;
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>`;
   container.appendChild(loadingEl);
 
-  // --- Load GLB ---
-  // Google Drive direct download URL
   const MODEL_URL = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/sign/11/Meshy_AI_Crimson_Gaze_0508022717_texture.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85MTlkZjA2Yy00NTNkLTQzNTctOGFiMS0wMjA0NzVmMWY1YjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMS9NZXNoeV9BSV9Dcmltc29uX0dhemVfMDUwODAyMjcxN190ZXh0dXJlLmdsYiIsImlhdCI6MTc3ODIwODA3NywiZXhwIjoxODA5NzQ0MDc3fQ.E8NarCETjUhsChLVzgd0GJRiHkoASFO9gUZyv0C3LPI';
 
-  const loader = new THREE.GLTFLoader();
-  loader.load(
-    MODEL_URL,
+  new THREE.GLTFLoader().load(MODEL_URL,
     (gltf) => {
-      // Thành công
       loadingEl.remove();
       if (hint) hint.style.opacity = '1';
-
       const model = gltf.scene;
-
-      // Auto center & scale model vừa vặn
       const box = new THREE.Box3().setFromObject(model);
       const size = box.getSize(new THREE.Vector3());
       const center = box.getCenter(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
       const scale = 3.0 / maxDim;
-
       model.scale.setScalar(scale);
-      // Center model perfectly in view
       model.position.x = -center.x * scale;
-      model.position.y = -center.y * scale - 0.3;
+      model.position.y = -center.y * scale + 0.7;
       model.position.z = -center.z * scale;
-
       group.add(model);
     },
     (progress) => {
       if (progress.total > 0) {
-        const pct = Math.round(progress.loaded / progress.total * 100);
         const el = document.getElementById('load-pct');
-        if (el) el.textContent = `Loading… ${pct}%`;
+        if (el) el.textContent = `Loading… ${Math.round(progress.loaded/progress.total*100)}%`;
       }
     },
-    (error) => {
-      // CORS error từ Google Drive — hiện hướng dẫn
-      loadingEl.innerHTML = `
-        <div style="text-align:center;padding:1.5rem;max-width:280px;">
-          <div style="font-size:1.5rem;margin-bottom:1rem;">⚠️</div>
-          <div style="color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.7;letter-spacing:0;">
-            Google Drive bị chặn CORS.<br><br>
-            Hãy host file <code style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;">.glb</code> lên:<br>
-            <strong>GitHub Raw</strong> hoặc <strong>Cloudflare R2</strong><br>
-            rồi paste URL vào <code style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;">MODEL_URL</code>
-          </div>
-        </div>
-      `;
-      console.error('GLB load error:', error);
+    (err) => {
+      loadingEl.innerHTML = `<div style="text-align:center;padding:1.5rem;max-width:280px;">
+        <div style="font-size:1.5rem;margin-bottom:1rem;">⚠️</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:0.8rem;line-height:1.7;letter-spacing:0;">
+          Không load được model.<br>Kiểm tra URL hoặc CORS.</div></div>`;
     }
   );
 
-  // --- Particles xung quanh ---
-  const particleGeo = new THREE.BufferGeometry();
-  const pCount = 150;
-  const pPos = new Float32Array(pCount * 3);
-  for (let i = 0; i < pCount; i++) {
-    const r = 2.2 + Math.random() * 1.5;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    pPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
-    pPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-    pPos[i*3+2] = r * Math.cos(phi);
+  // Particles
+  const geo = new THREE.BufferGeometry();
+  const n = 150, pos = new Float32Array(n*3);
+  for (let i=0;i<n;i++){
+    const r=2.2+Math.random()*1.5, t=Math.random()*Math.PI*2, p=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(p)*Math.cos(t); pos[i*3+1]=r*Math.sin(p)*Math.sin(t); pos[i*3+2]=r*Math.cos(p);
   }
-  particleGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({
-    color: 0xff3333, size: 0.03, transparent: true, opacity: 0.6, sizeAttenuation: true
-  }));
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  const particles = new THREE.Points(geo, new THREE.PointsMaterial({color:0xff3333,size:0.03,transparent:true,opacity:0.6,sizeAttenuation:true}));
   scene.add(particles);
 
-  // --- Mouse tracking ---
-  let targetRotX = 0.1, targetRotY = 0;
-  let currentRotX = 0.1, currentRotY = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    const nx = (e.clientX / window.innerWidth - 0.5) * 2;
-    const ny = (e.clientY / window.innerHeight - 0.5) * 2;
-    targetRotY = nx * 0.8;
-    targetRotX = 0.1 + ny * 0.3;
-    mouseLight.position.x = nx * 5;
-    mouseLight.position.y = 1 - ny * 3;
+  let tRX=0.1,tRY=0,cRX=0.1,cRY=0;
+  document.addEventListener('mousemove',(e)=>{
+    const nx=(e.clientX/window.innerWidth-0.5)*2, ny=(e.clientY/window.innerHeight-0.5)*2;
+    tRY=nx*0.8; tRX=0.1+ny*0.3;
+    mouseLight.position.x=nx*5; mouseLight.position.y=1-ny*3;
   });
 
-  // Touch
-  let isDrag = false, lastTX = 0, lastTY = 0;
-  canvas.addEventListener('touchstart', e => { isDrag=true; lastTX=e.touches[0].clientX; lastTY=e.touches[0].clientY; e.preventDefault(); }, {passive:false});
-  canvas.addEventListener('touchmove', e => {
-    if (!isDrag) return;
-    targetRotY += (e.touches[0].clientX - lastTX) * 0.008;
-    targetRotX += (e.touches[0].clientY - lastTY) * 0.008;
-    lastTX = e.touches[0].clientX; lastTY = e.touches[0].clientY;
-    e.preventDefault();
-  }, {passive:false});
-  canvas.addEventListener('touchend', () => { isDrag=false; });
+  let drag=false,lx=0,ly=0;
+  canvas.addEventListener('touchstart',e=>{drag=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY;e.preventDefault();},{passive:false});
+  canvas.addEventListener('touchmove',e=>{if(!drag)return;tRY+=(e.touches[0].clientX-lx)*0.008;tRX+=(e.touches[0].clientY-ly)*0.008;lx=e.touches[0].clientX;ly=e.touches[0].clientY;e.preventDefault();},{passive:false});
+  canvas.addEventListener('touchend',()=>{drag=false;});
 
-  // --- Resize ---
-  function resize() {
-    const w = container.clientWidth, h = container.clientHeight;
-    renderer.setSize(w, h);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  }
-  resize();
-  window.addEventListener('resize', resize);
+  function resize(){ const w=container.clientWidth,h=container.clientHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+  resize(); window.addEventListener('resize',resize);
 
-  // --- Animate ---
-  function animate() {
+  (function animate(){
     requestAnimationFrame(animate);
-    currentRotX += (targetRotX - currentRotX) * 0.05;
-    currentRotY += (targetRotY - currentRotY) * 0.05;
-    group.rotation.x = currentRotX;
-    group.rotation.y = currentRotY;
-    targetRotY += 0.002; // auto spin
-    particles.rotation.y += 0.0008;
-    renderer.render(scene, camera);
-  }
-  animate();
-
+    cRX+=(tRX-cRX)*0.05; cRY+=(tRY-cRY)*0.05;
+    group.rotation.x=cRX; group.rotation.y=cRY;
+    tRY+=0.002; particles.rotation.y+=0.0008;
+    renderer.render(scene,camera);
+  })();
 })();
 
-// ═══════════════════════════════════════════
-// Existing scripts
-// ═══════════════════════════════════════════
+// ════════════════════════════════════════
+// Scroll & intersection scripts
+// ════════════════════════════════════════
+document.querySelectorAll('.reveal').forEach(el =>
+  new IntersectionObserver((entries,obs)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:0.08}).observe(el)
+);
 
-// Intersection Observer: reveal animations
-const revealEls = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.08 });
-revealEls.forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.skill-bar').forEach(bar =>
+  new IntersectionObserver((entries,obs)=>{
+    entries.forEach(e=>{if(e.isIntersecting){setTimeout(()=>{bar.style.width=bar.getAttribute('data-width')+'%';},200);obs.unobserve(bar);}});
+  },{threshold:0.2}).observe(bar)
+);
 
-// Skill bars animate when visible
-const skillBars = document.querySelectorAll('.skill-bar');
-const barObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const bar = entry.target;
-      const width = bar.getAttribute('data-width');
-      setTimeout(() => { bar.style.width = width + '%'; }, 200);
-      barObserver.unobserve(bar);
-    }
-  });
-}, { threshold: 0.2 });
-skillBars.forEach(bar => barObserver.observe(bar));
-
-// Orb parallax on mouse move
-document.addEventListener('mousemove', (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 40;
-  const y = (e.clientY / window.innerHeight - 0.5) * 40;
-  document.querySelector('.orb-1').style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-  document.querySelector('.orb-2').style.transform = `translate(${-x * 0.2}px, ${-y * 0.2}px)`;
-  document.querySelector('.orb-3').style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+document.addEventListener('mousemove',(e)=>{
+  const x=(e.clientX/window.innerWidth-0.5)*40, y=(e.clientY/window.innerHeight-0.5)*40;
+  document.querySelector('.orb-1').style.transform=`translate(${x*.3}px,${y*.3}px)`;
+  document.querySelector('.orb-2').style.transform=`translate(${-x*.2}px,${-y*.2}px)`;
+  document.querySelector('.orb-3').style.transform=`translate(${x*.15}px,${y*.15}px)`;
 });
 
-// Nav glass on scroll
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  if (window.scrollY > 50) {
-    nav.style.background = 'rgba(8,8,8,0.7)';
-    nav.style.backdropFilter = 'blur(20px)';
-    nav.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-  } else {
-    nav.style.background = '';
-    nav.style.backdropFilter = '';
-    nav.style.borderBottom = '';
-  }
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('nav');
+  if(window.scrollY>50){nav.style.background='rgba(8,8,8,0.7)';nav.style.backdropFilter='blur(20px)';nav.style.borderBottom='1px solid rgba(255,255,255,0.05)';}
+  else{nav.style.background='';nav.style.backdropFilter='';nav.style.borderBottom='';}
 });
 </script>
 </body>
