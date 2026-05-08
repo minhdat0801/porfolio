@@ -76,16 +76,16 @@
       border-radius: 50%;
       transform: translate(-50%, -50%);
       
-      /* Optical brightening effect */
-      backdrop-filter: brightness(1.6) contrast(1.15) saturate(1.2);
-      -webkit-backdrop-filter: brightness(1.6) contrast(1.15) saturate(1.2);
+      /* Optical brightening effect (Reduced intensity) */
+      backdrop-filter: brightness(1.25) contrast(1.1) saturate(1.0);
+      -webkit-backdrop-filter: brightness(1.25) contrast(1.1) saturate(1.0);
       
       /* Fade the brightening out at the edges */
-      mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.6) 30%, transparent 65%);
-      -webkit-mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.6) 30%, transparent 65%);
+      mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.5) 25%, transparent 60%);
+      -webkit-mask-image: radial-gradient(circle at center, black 0%, rgba(0,0,0,0.5) 25%, transparent 60%);
       
-      /* Subtle physical tint (lime) */
-      background: radial-gradient(circle at center, rgba(192, 241, 53, 0.08) 0%, transparent 60%);
+      /* Subtle physical white light */
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
       
       opacity: 0;
       transition: opacity 0.4s;
@@ -970,9 +970,9 @@
     /* Signature / decorative */
     .footer-signature {
       position: absolute;
-      top: 2rem;
+      top: 25%;
       left: 50%;
-      transform: translateX(-50%) rotate(-8deg);
+      transform: translate(-50%, -50%) rotate(-8deg);
       font-family: 'Inter', sans-serif;
       font-size: clamp(1.2rem, 3vw, 2rem);
       font-weight: 300;
