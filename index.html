@@ -1428,6 +1428,8 @@ section { padding: 6rem 3rem; position: relative; }
 <!-- GSAP + ScrollTrigger -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<!-- HLS.js -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
 
 <script>
 // ════════════════════════════════════════
@@ -1503,7 +1505,7 @@ section { padding: 6rem 3rem; position: relative; }
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
-  camera.position.set(0, 0.4, 5.5);
+  camera.position.set(0, 0.8, 5.5);
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
   const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -2178,6 +2180,21 @@ function initScrollEffects() {
     particles.rotation.y += 0.001;
     renderer.render(scene,camera);
   })();
+})();
+
+// ════════════════════════════════════════
+// HLS.JS BACKGROUND VIDEO
+// ════════════════════════════════════════
+(function() {
+  var video = document.getElementById('bg-video');
+  var videoSrc = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
+  if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(video);
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = videoSrc;
+  }
 })();
 </script>
 </body>
