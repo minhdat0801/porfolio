@@ -17,6 +17,24 @@ body {
   overflow-x: hidden;
 }
 
+/* ── GIF BACKGROUND ── */
+.bg-gif {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('https://github.com/minhdat0801/porfolio/blob/main/to_mt_video_dng_dc_v-ezgif.com-video-to-gif-converter.gif?raw=true');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.35;
+}
+.bg-gif::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 8, 8, 0.75);
+}
+
 /* ── GLASS SYSTEM ── */
 .glass {
   background: rgba(255,255,255,0.04);
@@ -380,6 +398,9 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 </head>
 <body>
 
+<!-- GIF Background -->
+<div class="bg-gif"></div>
+
 <!-- Orbs -->
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
@@ -700,7 +721,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
     </p>
 
     <div class="reveal reveal-delay-2">
-      <a href="mailto:minhdat.0801@gmail.com" class="contact-email">minhdat.0801@gmail.com</a>
+      <a href="mailto:minhdat0801@gmail.com" class="contact-email">minhdat0801@gmail.com</a>
     </div>
 
     <div class="social-row reveal reveal-delay-3">
@@ -715,7 +736,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <p>© 2025 Dat Tran. All rights reserved.</p>
-  <p>Designed & Built with Claude</p>
+  <p>Designed & Built with ♥</p>
 </footer>
 
 </div><!-- /page-wrap -->
