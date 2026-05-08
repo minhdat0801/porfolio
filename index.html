@@ -896,8 +896,8 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 
       model.scale.setScalar(scale);
       // Center model perfectly in view
-      model.position.x = -center.x * scale + 0.4;
-      model.position.y = -center.y * scale + 0.9;
+      model.position.x = -center.x * scale;
+      model.position.y = -center.y * scale + 0.5;
       model.position.z = -center.z * scale;
 
       group.add(model);
