@@ -892,7 +892,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
       const size = box.getSize(new THREE.Vector3());
       const center = box.getCenter(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
-      const scale = 5.0 / maxDim;
+      const scale = 3.0 / maxDim;
 
       model.scale.setScalar(scale);
       // Center model perfectly in view
