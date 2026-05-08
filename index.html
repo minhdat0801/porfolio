@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dat Tran — Graphic Designer</title>
+<title>DatTran — Graphic Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"/>
@@ -16,6 +16,28 @@ body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
+
+/* ── CURSOR GLOW ── */
+#cursor-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 998;
+  top: 0; left: 0;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(255, 100, 100, 0.03) 30%,
+    transparent 70%
+  );
+  transition: opacity 0.4s ease;
+  opacity: 0;
+  filter: blur(2px);
+}
+#cursor-glow.active { opacity: 1; }
 
 /* ── GIF BACKGROUND ── */
 .bg-gif {
@@ -146,7 +168,8 @@ nav {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  /* align top so model stays at same vertical level as heading */
+  align-items: start;
   gap: 2rem;
   padding: 7rem 3rem 4rem;
   position: relative;
@@ -172,10 +195,11 @@ nav {
 .hero-tag .dot { width: 6px; height: 6px; background: #fff; border-radius: 50%; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
 
+/* ── HERO NAME: not italic, joined ── */
 .hero-name {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-style: italic;
+  font-style: normal;           /* removed italic */
   font-size: clamp(3.5rem, 8vw, 7rem);
   line-height: 0.88;
   letter-spacing: -0.05em;
@@ -235,13 +259,15 @@ nav {
 }
 .stat-label { font-size: 0.65rem; color: rgba(255,255,255,0.4); font-weight: 300; margin-top: 0.4rem; letter-spacing: 0.08em; text-transform: uppercase; }
 
-/* RIGHT: 3D canvas */
+/* RIGHT: 3D canvas — aligned to top, with padding-top to reach heading level */
 .hero-right {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  height: 70vh;
+  /* push model down to align with the big heading */
+  padding-top: 3.5rem;
+  height: 72vh;
   overflow: visible;
 }
 
@@ -441,7 +467,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
     text-align: center;
   }
   .hero-left { align-items: center; }
-  .hero-right { height: 50vw; min-height: 300px; }
+  .hero-right { height: 50vw; min-height: 300px; padding-top: 0; }
   .about-grid { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
   .works-grid { grid-template-columns: 1fr; }
@@ -451,6 +477,9 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 </style>
 </head>
 <body>
+
+<!-- CURSOR GLOW -->
+<div id="cursor-glow"></div>
 
 <!-- GIF Background -->
 <div class="bg-gif"></div>
@@ -466,7 +495,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 <nav>
   <div class="nav-inner">
     <div class="nav-logo">
-      Dat Tran
+      DatTran
       <span>Graphic Designer</span>
     </div>
     <div class="nav-links">
@@ -492,8 +521,9 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
       Available for freelance work
     </div>
 
+    <!-- DatTran: joined, not italic -->
     <h1 class="hero-name reveal reveal-delay-1">
-      Dat <span class="dim">Tran</span>
+      Dat<span class="dim">Tran</span>
     </h1>
 
     <p class="hero-sub reveal reveal-delay-2">
@@ -530,7 +560,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
     </div>
   </div>
 
-  <!-- RIGHT 3D -->
+  <!-- RIGHT 3D — padding-top aligns model top with heading -->
   <div class="hero-right reveal reveal-delay-2">
     <canvas id="three-canvas"></canvas>
     <div class="canvas-hint">
@@ -799,7 +829,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
-  <p>© 2025 Dat Tran. All rights reserved.</p>
+  <p>© 2025 DatTran. All rights reserved.</p>
   <p>Designed & Built with ♥</p>
 </footer>
 
@@ -807,20 +837,47 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
 
 <!-- Three.js CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<!-- GLTFLoader -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
 // ═══════════════════════════════════════════
-// THREE.JS — Load GLB model xoay theo chuột
+// CURSOR GLOW SHADOW
 // ═══════════════════════════════════════════
+(function() {
+  const glow = document.getElementById('cursor-glow');
+  let mouseX = 0, mouseY = 0;
+  let glowX = 0, glowY = 0;
+  let raf;
 
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    glow.classList.add('active');
+  });
+
+  document.addEventListener('mouseleave', () => {
+    glow.classList.remove('active');
+  });
+
+  function animateGlow() {
+    // Smooth follow with lerp
+    glowX += (mouseX - glowX) * 0.08;
+    glowY += (mouseY - glowY) * 0.08;
+    glow.style.left = glowX + 'px';
+    glow.style.top  = glowY + 'px';
+    raf = requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+})();
+
+// ═══════════════════════════════════════════
+// THREE.JS — 3D Model
+// ═══════════════════════════════════════════
 (function() {
   const canvas = document.getElementById('three-canvas');
   const container = canvas.parentElement;
   const hint = container.querySelector('.canvas-hint');
 
-  // --- Renderer ---
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
@@ -828,35 +885,27 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
 
-  // --- Scene & Camera ---
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
   camera.position.set(0, 0.8, 5.5);
 
-  // --- Lights ---
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-
   const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
   keyLight.position.set(3, 5, 4);
   scene.add(keyLight);
-
   const fillLight = new THREE.DirectionalLight(0xff6060, 0.6);
   fillLight.position.set(-4, 2, -2);
   scene.add(fillLight);
-
   const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
   rimLight.position.set(0, -3, -4);
   scene.add(rimLight);
-
   const mouseLight = new THREE.PointLight(0xff4444, 0.5, 15);
   mouseLight.position.set(0, 1, 4);
   scene.add(mouseLight);
 
-  // --- Group để xoay ---
   const group = new THREE.Group();
   scene.add(group);
 
-  // --- Loading indicator ---
   const loadingEl = document.createElement('div');
   loadingEl.style.cssText = `
     position:absolute; inset:0; display:flex; flex-direction:column;
@@ -873,21 +922,16 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   `;
   container.appendChild(loadingEl);
 
-  // --- Load GLB ---
-  // Google Drive direct download URL
   const MODEL_URL = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/sign/11/Meshy_AI_Crimson_Gaze_0508022717_texture.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85MTlkZjA2Yy00NTNkLTQzNTctOGFiMS0wMjA0NzVmMWY1YjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMS9NZXNoeV9BSV9Dcmltc29uX0dhemVfMDUwODAyMjcxN190ZXh0dXJlLmdsYiIsImlhdCI6MTc3ODIwODA3NywiZXhwIjoxODA5NzQ0MDc3fQ.E8NarCETjUhsChLVzgd0GJRiHkoASFO9gUZyv0C3LPI';
 
   const loader = new THREE.GLTFLoader();
   loader.load(
     MODEL_URL,
     (gltf) => {
-      // Thành công
       loadingEl.remove();
       if (hint) hint.style.opacity = '1';
 
       const model = gltf.scene;
-
-      // Auto center & scale model vừa vặn
       const box = new THREE.Box3().setFromObject(model);
       const size = box.getSize(new THREE.Vector3());
       const center = box.getCenter(new THREE.Vector3());
@@ -895,7 +939,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
       const scale = 3.0 / maxDim;
 
       model.scale.setScalar(scale);
-      // Center model perfectly in view
       model.position.x = -center.x * scale;
       model.position.y = -center.y * scale - 0.6;
       model.position.z = -center.z * scale;
@@ -910,7 +953,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
       }
     },
     (error) => {
-      // CORS error từ Google Drive — hiện hướng dẫn
       loadingEl.innerHTML = `
         <div style="text-align:center;padding:1.5rem;max-width:280px;">
           <div style="font-size:1.5rem;margin-bottom:1rem;">⚠️</div>
@@ -926,7 +968,7 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
     }
   );
 
-  // --- Particles xung quanh ---
+  // Particles
   const particleGeo = new THREE.BufferGeometry();
   const pCount = 150;
   const pPos = new Float32Array(pCount * 3);
@@ -944,7 +986,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   }));
   scene.add(particles);
 
-  // --- Mouse tracking ---
   let targetRotX = 0.1, targetRotY = 0;
   let currentRotX = 0.1, currentRotY = 0;
 
@@ -957,7 +998,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
     mouseLight.position.y = 1 - ny * 3;
   });
 
-  // Touch
   let isDrag = false, lastTX = 0, lastTY = 0;
   canvas.addEventListener('touchstart', e => { isDrag=true; lastTX=e.touches[0].clientX; lastTY=e.touches[0].clientY; e.preventDefault(); }, {passive:false});
   canvas.addEventListener('touchmove', e => {
@@ -969,7 +1009,6 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   }, {passive:false});
   canvas.addEventListener('touchend', () => { isDrag=false; });
 
-  // --- Resize ---
   function resize() {
     const w = container.clientWidth, h = container.clientHeight;
     renderer.setSize(w, h);
@@ -979,26 +1018,24 @@ footer p { font-size: 0.72rem; color: rgba(255,255,255,0.25); font-weight: 300; 
   resize();
   window.addEventListener('resize', resize);
 
-  // --- Animate ---
   function animate() {
     requestAnimationFrame(animate);
     currentRotX += (targetRotX - currentRotX) * 0.05;
     currentRotY += (targetRotY - currentRotY) * 0.05;
     group.rotation.x = currentRotX;
     group.rotation.y = currentRotY;
-    targetRotY += 0.002; // auto spin
+    targetRotY += 0.002;
     particles.rotation.y += 0.0008;
     renderer.render(scene, camera);
   }
   animate();
-
 })();
 
 // ═══════════════════════════════════════════
-// Existing scripts
+// Scroll & interaction scripts
 // ═══════════════════════════════════════════
 
-// Intersection Observer: reveal animations
+// Reveal animations
 const revealEls = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -1010,7 +1047,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.08 });
 revealEls.forEach(el => revealObserver.observe(el));
 
-// Skill bars animate when visible
+// Skill bars
 const skillBars = document.querySelectorAll('.skill-bar');
 const barObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -1024,7 +1061,7 @@ const barObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.2 });
 skillBars.forEach(bar => barObserver.observe(bar));
 
-// Orb parallax on mouse move
+// Orb parallax
 document.addEventListener('mousemove', (e) => {
   const x = (e.clientX / window.innerWidth - 0.5) * 40;
   const y = (e.clientY / window.innerHeight - 0.5) * 40;
