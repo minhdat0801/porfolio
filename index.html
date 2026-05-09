@@ -27,7 +27,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 
   <title>DatTran — Graphic Designer</title>
-  <meta name="view-transition" content="same-origin" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
@@ -82,12 +81,6 @@
           <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
             <span></span><span></span><span></span>
           </button>
-          <div class="mag-btn">
-            <button id="theme-toggle" class="theme-toggle nav-cta mag-inner" aria-label="Toggle light/dark mode">
-              <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-              <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-          </div>
         </div>
       </div>
     </nav>
@@ -104,7 +97,7 @@
       <a href="#contact" class="mobile-menu-cta">Hire Me ↗</a>
     </div>
 
-    <section id="main-content" class="hero" data-accent="hero">
+    <section id="main-content" class="hero">
       <div class="hero-left">
         <div class="glass hero-tag reveal">
           <span class="dot"></span>
@@ -187,7 +180,7 @@
       </div>
     </div>
 
-    <section id="about" data-accent="about">
+    <section id="about">
       <div class="about-grid">
         <div>
           <p class="section-label reveal">— About me</p>
@@ -221,7 +214,7 @@
       </div>
     </section>
 
-    <section id="works" data-accent="works">
+    <section id="works">
       <div id="works-pin-wrap" class="works-pin-wrap">
         <div id="works-track" class="works-track">
           <div class="work-slide headline-slide">
@@ -271,7 +264,7 @@
       </div>
     </section>
 
-    <section class="career-section" id="career" data-accent="career">
+    <section class="career-section" id="career">
       <div class="career-inner">
         <div class="career-header reveal">
           <h2 class="career-title">My career &amp;<br><em>experience</em></h2>
@@ -313,7 +306,7 @@
       </div>
     </section>
 
-    <section id="contact" data-accent="contact">
+    <section id="contact">
       <div class="contact-wrap">
         <p class="section-label reveal">— Get in touch</p>
         <h2 class="section-title reveal">Let's work together</h2>
@@ -383,19 +376,6 @@
         </div>
       </div>
     </footer>
-  </div>
-
-  <div id="password-modal" class="password-modal">
-    <div class="password-box">
-      <h2 style="font-style:italic; font-weight:800; margin-bottom:1rem;">Confidential Content</h2>
-      <p style="font-size:0.9rem; color:rgba(255,255,255,0.6);">This project is protected by an NDA. Please enter the access password.</p>
-      <div class="password-input-wrap">
-        <input type="password" id="nda-password" placeholder="Enter Password" />
-        <button class="btn-primary glass-strong" onclick="checkPassword()">Unlock</button>
-      </div>
-      <p id="password-error" class="password-error">Incorrect password. Please try again.</p>
-      <button onclick="closePasswordModal()" style="margin-top:2rem; background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em;">Close</button>
-    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -574,55 +554,6 @@
         hamburger.classList.remove('open');
       }));
     })();
-
-    // ── ADVANCED FEATURES ──
-
-    // Section Color Swapping
-    (function() {
-      const sections = document.querySelectorAll('section[data-accent]');
-      sections.forEach(section => {
-        const accent = section.getAttribute('data-accent');
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top 50%",
-          end: "bottom 50%",
-          onToggle: self => {
-            if (self.isActive) {
-              const color = getComputedStyle(document.documentElement).getPropertyValue(`--color-${accent}`).trim();
-              gsap.to('html', { '--accent-rgb': color, duration: 0.8 });
-            }
-          }
-        });
-      });
-    })();
-
-    // Theme Toggle
-    (function() {
-      const themeToggle = document.getElementById('theme-toggle');
-      const storageKey = 'portfolio-theme';
-      const currentTheme = localStorage.getItem(storageKey) || 'dark';
-      if (currentTheme === 'light') document.body.classList.add('light-mode');
-
-      themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('light-mode');
-        localStorage.setItem(storageKey, document.body.classList.contains('light-mode') ? 'light' : 'dark');
-      });
-    })();
-
-    // Password Protection
-    function openPasswordModal() { document.getElementById('password-modal').classList.add('active'); }
-    function closePasswordModal() { 
-      document.getElementById('password-modal').classList.remove('active');
-      document.getElementById('password-error').style.display = 'none';
-    }
-    function checkPassword() {
-      const pass = document.getElementById('nda-password').value;
-      if (pass === 'design2026') {
-        window.location.href = 'project.html';
-      } else {
-        document.getElementById('password-error').style.display = 'block';
-      }
-    }
   </script>
 </body>
 </html>
