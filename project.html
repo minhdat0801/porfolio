@@ -27,7 +27,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 
   <title>DatTran — Archive</title>
-  <meta name="view-transition" content="same-origin" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
@@ -37,7 +36,6 @@
 <body>
 
   <a href="#main-content" class="skip-link">Skip to content</a>
-  <div class="reading-progress" id="reading-progress"></div>
 
   <div id="cursor-glow"></div>
   <div id="cursor-ring"></div>
@@ -50,7 +48,7 @@
   <div class="page-wrap">
     <nav id="main-nav">
       <div class="nav-inner">
-        <div class="nav-logo" style="view-transition-name: logo;">
+        <div class="nav-logo">
           DatTran
           <span>Archive</span>
         </div>
@@ -66,12 +64,6 @@
           <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
             <span></span><span></span><span></span>
           </button>
-          <div class="mag-btn">
-            <button id="theme-toggle" class="theme-toggle nav-cta mag-inner" aria-label="Toggle light/dark mode">
-              <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-              <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-          </div>
         </div>
       </div>
     </nav>
@@ -138,14 +130,6 @@
           <div class="work-info">
             <h3>Void Letters</h3>
           </div>
-        </div>
-      </div>
-
-      <div class="figma-embed-container reveal" style="margin-top: 8rem;">
-        <p class="section-label">— Process</p>
-        <h2 class="section-title">Live Prototype</h2>
-        <div class="glass" style="border-radius: 1.5rem; overflow: hidden; aspect-ratio: 16/9; width: 100%; max-width: 1100px; margin: 0 auto;">
-          <iframe style="border: 1px solid rgba(0, 0, 0, 0.1); width: 100%; height: 100%;" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FNJ6N2fK6oK6oK6oK6oK6oK%2FPortfolio-Design" allowfullscreen></iframe>
         </div>
       </div>
     </section>
@@ -231,17 +215,6 @@
       });
     })();
 
-    // Reading Progress
-    (function() {
-      const bar = document.getElementById('reading-progress');
-      window.addEventListener('scroll', () => {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        bar.style.width = scrolled + "%";
-      });
-    })();
-
     // Mobile Menu
     (function() {
       const hamburger = document.getElementById('nav-hamburger');
@@ -250,18 +223,6 @@
       hamburger.addEventListener('click', () => { menu.classList.add('open'); hamburger.classList.add('open'); });
       close.addEventListener('click', () => { menu.classList.remove('open'); hamburger.classList.remove('open'); });
       menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { menu.classList.remove('open'); hamburger.classList.remove('open'); }));
-    })();
-
-    // Theme Toggle
-    (function() {
-      const themeToggle = document.getElementById('theme-toggle');
-      const storageKey = 'portfolio-theme';
-      const currentTheme = localStorage.getItem(storageKey) || 'dark';
-      if (currentTheme === 'light') document.body.classList.add('light-mode');
-      themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('light-mode');
-        localStorage.setItem(storageKey, document.body.classList.contains('light-mode') ? 'light' : 'dark');
-      });
     })();
   </script>
 </body>
