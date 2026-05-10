@@ -1,310 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DatTran — Graphic Designer</title>
+  <title>DatTran — Selected Works</title>
+  
+  <meta name="description" content="Portfolio of DatTran - Graphic Designer & Digital Image Artist based in Vietnam." />
+  <meta name="theme-color" content="#080808" id="meta-theme-color" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="DatTran — Selected Works" />
+  <meta property="og:description" content="Explore the selected projects and cinematic visual stories crafted by DatTran." />
+  <meta property="og:image" content="https://dattran-porfolio.vercel.app/og-image.jpg" /> 
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: #080808;
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      cursor: none;
-      transition: background-color 0.5s ease, color 0.5s ease;
-    }
-
-    /* ── SKIP LINK ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #080808; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; cursor: none; transition: background-color 0.5s ease, color 0.5s ease; }
     .skip-link { position: fixed; top: -100%; left: 1rem; z-index: 99999; background: #fff; color: #080808; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: 600; border-radius: 0 0 4px 4px; text-decoration: none; transition: top 0.2s; }
     .skip-link:focus { top: 0; }
     a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 2px; }
-    body.intro-active { overflow-y: hidden; }
-
-    /* ══════════════════════════════
-       CUSTOM CURSOR + SPOTLIGHT
-    ══════════════════════════════ */
-    #cursor-dot {
-      position: fixed; pointer-events: none; z-index: 9999; width: 8px; height: 8px;
-      border-radius: 50%; background: #fff; transform: translate(-50%, -50%);
-      transition: opacity 0.3s, transform 0.2s, width 0.2s, height 0.2s, background-color 0.5s; mix-blend-mode: difference;
-    }
-    #cursor-ring {
-      position: fixed; pointer-events: none; z-index: 9998; width: 36px; height: 36px;
-      border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.35); transform: translate(-50%, -50%);
-      transition: opacity 0.3s, width 0.2s, height 0.2s, border-color 0.5s; mix-blend-mode: difference;
-    }
     
-    /* Cursor Hover States */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: transform, opacity;
+    }
+
+    /* ── CURSOR & AURA GLOW ── */
+    #cursor-dot { position: fixed; pointer-events: none; z-index: 10002; width: 8px; height: 8px; border-radius: 50%; background: #fff; transform: translate(-50%, -50%); transition: opacity 0.3s, transform 0.2s, width 0.2s, height 0.2s, background-color 0.5s; mix-blend-mode: difference; }
+    #cursor-ring { position: fixed; pointer-events: none; z-index: 10001; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.35); transform: translate(-50%, -50%); transition: opacity 0.3s, width 0.2s, height 0.2s, border-color 0.5s; mix-blend-mode: difference; }
     #cursor-dot.hover { transform: translate(-50%, -50%) scale(1.8); }
     #cursor-ring.hover { width: 56px; height: 56px; }
-
-    #cursor-glow {
-      position: fixed; pointer-events: none; z-index: 9997; width: 600px; height: 600px; border-radius: 50%; transform: translate(-50%, -50%);
-      backdrop-filter: brightness(1.25) contrast(1.1) saturate(1.0); -webkit-backdrop-filter: brightness(1.25) contrast(1.1) saturate(1.0);
-      mask-image: radial-gradient(circle at center, black 0%, rgba(0, 0, 0, 0.5) 25%, transparent 60%); -webkit-mask-image: radial-gradient(circle at center, black 0%, rgba(0, 0, 0, 0.5) 25%, transparent 60%);
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s;
+    
+    #cursor-glow { 
+      position: fixed; pointer-events: none; z-index: 10000; width: 600px; height: 600px; border-radius: 50%; 
+      transform: translate(-50%, -50%); 
+      background: radial-gradient(circle at 30% 30%, rgba(255, 68, 68, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(80, 120, 200, 0.06) 0%, transparent 50%);
+      filter: blur(40px); opacity: 0; transition: opacity 0.4s; will-change: left, top;
+      animation: glowSpin 8s linear infinite;
     }
     #cursor-glow.active { opacity: 1; }
+    @keyframes glowSpin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
     /* ── VIDEO BACKGROUND ── */
     .bg-video-wrap { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
     .bg-video-wrap video { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: opacity 0.5s ease; }
     .bg-video-wrap::after { content: ""; position: absolute; inset: 0; background: rgba(8, 8, 8, 0.75); pointer-events: none; transition: background-color 0.5s ease; }
 
-    /* ── GLASS SYSTEM ── */
-    .glass {
-      background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08); position: relative;
-    }
-    .glass::before {
-      content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 30%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.10) 100%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor;
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite: exclude; pointer-events: none;
-    }
-
+    /* ── NOISE ── */
     body::before { content: ""; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); background-size: 200px; pointer-events: none; z-index: 999; opacity: 0.4; }
 
-    /* ── ORBS ── */
-    .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
-    .orb-1 { width: 600px; height: 600px; top: -200px; left: -150px; background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%); }
-    .orb-2 { width: 500px; height: 500px; bottom: 10%; right: -100px; background: radial-gradient(circle, rgba(200, 200, 200, 0.05) 0%, transparent 70%); }
-    .orb-3 { width: 400px; height: 400px; top: 40%; left: 40%; background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%); }
-
-    /* ── LAYOUT ── */
     .page-wrap { position: relative; z-index: 2; }
 
     /* ── NAV ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s, border-bottom 0.3s; }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-    .nav-logo { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.1rem; color: #fff; letter-spacing: -0.03em; }
+    .nav-logo { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.1rem; color: #fff; letter-spacing: -0.03em; text-decoration: none; cursor: none; }
     .nav-logo span { color: rgba(255, 255, 255, 0.4); font-size: 0.72rem; font-weight: 400; display: block; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 1px; }
-    .nav-links { display: flex; align-items: center; gap: 2rem; }
-    .nav-links a { font-size: 0.8rem; font-weight: 400; color: rgba(255, 255, 255, 0.6); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.3s; }
-    .nav-links a:hover { color: #fff; }
     .nav-cta { background: #fff; color: #000; border: none; border-radius: 9999px; padding: 0.5rem 1.25rem; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500; cursor: none; letter-spacing: 0.05em; text-transform: uppercase; transition: opacity 0.2s, transform 0.2s; }
     .nav-cta:hover { opacity: 0.85; transform: translateY(-2px); }
 
-    /* ── THEME TOGGLE ── */
-    #theme-toggle { background: none; border: none; color: inherit; font-size: 1.2rem; cursor: none; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: transform 0.2s ease, opacity 0.2s ease; opacity: 0.8; }
-    #theme-toggle:hover { transform: scale(1.15); opacity: 1; }
+    /* ── FLOATING CONTROL DOCK (GLASSMORPHISM) ── */
+    .floating-dock {
+      position: fixed; bottom: 2rem; right: 2.5rem; z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 0.75rem 0.5rem;
+      border-radius: 9999px; background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      transition: all 0.5s ease;
+    }
+    .dock-btn {
+      background: transparent; border: none; color: #fff; font-family: 'Inter', sans-serif;
+      font-size: 0.85rem; font-weight: 600; cursor: none; width: 44px; height: 44px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      transition: background 0.3s, transform 0.2s; opacity: 0.8;
+    }
+    .dock-btn:hover { background: rgba(255, 255, 255, 0.15); opacity: 1; transform: scale(1.05); }
+    .dock-divider { width: 24px; height: 1px; background: rgba(255, 255, 255, 0.2); margin: 0.2rem 0; }
+    
+    .vol-track { width: 4px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 0.5rem 0; position: relative; cursor: none; }
+    .vol-fill { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: #fff; border-radius: 2px; pointer-events: none; transition: height 0.1s; }
+    .vol-hitbox { position: absolute; inset: -15px; cursor: none; }
 
     section { padding: 6rem 3rem; position: relative; }
     .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.35); font-weight: 400; margin-bottom: 1rem; }
     .section-title { font-family: 'Inter', sans-serif; font-weight: 800; font-style: italic; font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.92; letter-spacing: -0.04em; color: #fff; margin-bottom: 3rem; }
 
-    .work-card-horizontal { height: 100%; display: flex; flex-direction: column; gap: 1.5rem; position: relative; cursor: none; }
-    .archive-grid .work-card-horizontal { height: 520px !important; width: 100% !important; }
+    /* ── FILTER BUTTONS ── */
+    .filter-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 3rem; margin-bottom: 1rem; }
+    .filter-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); padding: 0.6rem 1.4rem; border-radius: 9999px; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; cursor: none; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+    .filter-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+    .filter-btn.active { background: #fff; color: #080808; border-color: #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+
+    /* ── 3x3 GRID SOLID COLORS ── */
+    .archive-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .work-card-horizontal { height: 400px; display: flex; flex-direction: column; gap: 1.5rem; position: relative; cursor: none; width: 100%; }
     .work-card-horizontal .lando-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); font-weight: 600; z-index: 2; }
-    .work-card-horizontal .lando-img-wrap { flex: 1; position: relative; overflow: hidden; border-radius: 8px; }
-    .work-card-horizontal .work-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s; filter: grayscale(40%) sepia(10%) hue-rotate(10deg) contrast(1.1); }
-    .work-card-horizontal:hover .work-bg { transform: scale(1.05); filter: grayscale(0%) sepia(0%) contrast(1); }
+    .work-card-horizontal .lando-img-wrap { flex: 1; position: relative; overflow: hidden; border-radius: 12px; }
+    .work-card-horizontal .work-bg, .work-card-horizontal .work-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+    .work-card-horizontal:hover .work-bg, .work-card-horizontal:hover .work-img { transform: scale(1.05); }
+
+    /* ── CROSS-DOCUMENT VIEW TRANSITIONS ── */
+    @view-transition {
+      navigation: auto;
+    }
+
+    ::view-transition-group(root) {
+      animation-duration: 0.8s !important;
+    }
+    ::view-transition-old(root) {
+      animation: fade-out 0.8s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+    }
+    ::view-transition-new(root) {
+      animation: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+    }
+
+    ::view-transition-group(project-thumb) {
+      animation-duration: 0.8s !important;
+      animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+    #cursor-label {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
+      color: #fff; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; white-space: nowrap; opacity: 0; pointer-events: none; transition: none; z-index: 10003;
+    }
+
+    @media (max-width: 1024px) { .archive-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 650px) { .archive-grid { grid-template-columns: 1fr; } }
+    
+    .nav-controls { display: flex; align-items: center; gap: 0.5rem; }
+    .nav-audio-group { display: flex; align-items: center; gap: 0.4rem; position: relative; }
+    .vol-track-h { 
+      width: 0px; height: 3px; background: rgba(255, 255, 255, 0.15); 
+      border-radius: 99px; position: relative; cursor: none; 
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s, background 0.3s; 
+      opacity: 0; overflow: visible; 
+    }
+    .nav-audio-group:hover .vol-track-h { width: 80px; opacity: 1; margin-right: 0.5rem; }
+    .vol-track-h::after {
+      content: attr(data-pct); position: absolute; right: -25px; top: 50%;
+      transform: translateY(-50%); font-size: 0.65rem; font-weight: 700;
+      color: #fff; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .nav-audio-group:hover .vol-track-h::after { opacity: 0.6; }
+    .vol-fill-h { position: absolute; top: 0; left: 0; height: 100%; width: 50%; background: #fff; border-radius: 99px; pointer-events: none; }
+    .vol-hitbox-h { position: absolute; inset: -10px -5px; cursor: none; z-index: 2; }
+    .dock-btn { 
+      background: transparent; border: none; color: rgba(255, 255, 255, 0.6); 
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500; 
+      cursor: none; padding: 0.5rem; display: flex; align-items: center; 
+      justify-content: center; transition: color 0.3s, transform 0.2s; 
+    }
+    .dock-btn:hover { color: #fff; transform: translateY(-1px); }
 
     .btn-outline { border-radius: 9999px; padding: 0.75rem 1.75rem; font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 400; color: rgba(255, 255, 255, 0.7); background: transparent; border: 1px solid rgba(255, 255, 255, 0.15); cursor: none; letter-spacing: 0.02em; transition: border-color 0.3s, color 0.3s; }
     .btn-outline:hover { border-color: rgba(255, 255, 255, 0.4); color: #fff; }
 
-    /* ══════════════════════════════
-       GRAND FOOTER
-    ══════════════════════════════ */
-    .grand-footer { position: relative; overflow: hidden; background: #080808; border-top: 1px solid rgba(255, 255, 255, 0.06); }
-    .footer-hero { position: relative; min-height: 75vh; display: flex; align-items: center; justify-content: center; padding: 6rem 3rem 3rem; overflow: hidden; }
-    .footer-hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 80%, rgba(255, 60, 60, 0.06) 0%, transparent 60%), radial-gradient(ellipse at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 50%); pointer-events: none; }
-    .footer-headline { position: relative; z-index: 3; text-align: center; pointer-events: none; margin-top: 0; }
-    .footer-headline h2 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(2.5rem, 7.5vw, 6.5rem); line-height: 0.95; letter-spacing: -0.05em; text-transform: uppercase; color: #fff; }
-    .footer-headline h2 .outline-text { -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7); color: transparent; }
-    .footer-headline h2 .accent-text { font-style: italic; }
-    .footer-side-left, .footer-side-right { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; }
-    .footer-side-left { left: 3rem; }
-    .footer-side-right { right: 3rem; text-align: right; }
-    .footer-col-label { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255, 255, 255, 0.3); margin-bottom: 1rem; font-weight: 400; }
-    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-    .footer-col-links li a { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(0.9rem, 1.8vw, 1.15rem); text-transform: uppercase; color: #fff; text-decoration: none; letter-spacing: 0.02em; transition: color 0.3s, transform 0.3s; display: inline-block; cursor: none; }
-    .footer-col-links li a:hover { color: rgba(255, 255, 255, 0.5); transform: translateX(4px); }
-    .footer-col-links li a.highlight { color: rgba(255, 80, 80, 0.9); }
-    .footer-col-links li a.highlight:hover { color: rgba(255, 80, 80, 0.6); }
+    [data-i18n] { transition: opacity 0.3s ease; }
 
-    .footer-partners { position: relative; z-index: 5; border: none; padding: 1.5rem 0; margin-top: 6rem; overflow: hidden; }
-    .partner-track { display: flex; align-items: center; justify-content: center; gap: 3rem; width: 100%; padding: 0 3rem; flex-wrap: wrap; }
-    .partner-item { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.45); white-space: nowrap; transition: color 0.3s; cursor: none; display: inline-block; padding: 0.5rem; }
-    .partner-item:hover { color: rgba(255, 255, 255, 0.6); }
-    .partner-item.accent { color: rgba(255, 80, 80, 0.3); }
-    .partner-item.accent:hover { color: rgba(255, 80, 80, 0.6); }
-
-    .footer-cta-bar { display: flex; align-items: center; justify-content: center; padding: 1rem 3rem; border: none; position: relative; z-index: 5; }
-    .footer-cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; color: #080808; border: none; border-radius: 9999px; padding: 0.6rem 1.5rem; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; cursor: none; transition: opacity 0.3s, transform 0.3s; }
-    .footer-cta-btn:hover { opacity: 0.85; transform: scale(1.03); }
-    .footer-cta-btn svg { width: 14px; height: 14px; }
-
-    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; position: relative; z-index: 5; }
-    .footer-copyright { font-size: 0.68rem; color: rgba(255, 255, 255, 0.2); font-weight: 300; letter-spacing: 0.05em; }
-    .footer-legal { display: flex; gap: 1.5rem; }
-    .footer-legal a { font-size: 0.68rem; color: rgba(255, 255, 255, 0.3); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.3s; cursor: none; }
-    .footer-legal a:hover { color: #fff; }
-
-    /* ── Mobile footer ── */
-    @media (max-width: 768px) {
-      .footer-hero { min-height: 60vh; padding: 4rem 1.5rem 2rem; flex-direction: column; }
-      .footer-side-left, .footer-side-right { position: relative; top: auto; left: auto; right: auto; transform: none; text-align: center; margin-bottom: 2rem; }
-      .footer-headline h2 { font-size: clamp(2.5rem, 12vw, 4.5rem); }
-      .partner-track { gap: 1.5rem; padding: 0 1.5rem; }
-      .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1rem 1.5rem; }
+    /* ════ LIGHT MODE OVERRIDES ════ */
+    [data-theme='light'] body { background-color: #f8fafc !important; color: #060b14 !important; }
+    [data-theme='light'] body::before { opacity: 0.15 !important; }
+    [data-theme='light'] .section-title, [data-theme='light'] .nav-logo { color: #060b14 !important; }
+    [data-theme='light'] .section-label, [data-theme='light'] .lando-label, [data-theme='light'] .nav-logo span { color: rgba(6, 11, 20, 0.7) !important; }
+    [data-theme='light'] .dock-btn { color: #060b14 !important; }
+    [data-theme='light'] .dock-btn:hover { color: #000 !important; }
+    [data-theme='light'] .vol-track-h { background: rgba(6, 11, 20, 0.15) !important; }
+    [data-theme='light'] .vol-fill-h { background: #060b14 !important; }
+    [data-theme='light'] .skill-icon-wrap svg { stroke: #060b14 !important; }
+    [data-theme='light'] .bg-video-wrap::after { background: rgba(248, 250, 252, 0.45) !important; }
+    [data-theme='light'] #cursor-dot { background: #060b14 !important; width: 5px; height: 5px; mix-blend-mode: normal !important; }
+    [data-theme='light'] #cursor-ring { border-color: #060b14 !important; width: 24px; height: 24px; mix-blend-mode: normal !important; }
+    [data-theme='light'] #cursor-dot.hover { transform: translate(-50%, -50%) scale(1.4); }
+    [data-theme='light'] #cursor-ring.hover { width: 44px; height: 44px; }
+    
+    [data-theme='light'] #cursor-glow { 
+      background: radial-gradient(circle at 30% 30%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(219, 39, 119, 0.06) 0%, transparent 50%) !important;
     }
+
+    [data-theme='light'] .btn-outline { color: #060b14 !important; border-color: rgba(6, 11, 20, 0.3) !important; }
+    [data-theme='light'] .btn-outline:hover { border-color: #060b14 !important; }
+    [data-theme='light'] .nav-cta { background: #060b14 !important; color: #f8fafc !important; }
+    
+    /* FIX NÚT FILTER LIGHT MODE */
+    [data-theme='light'] .filter-btn { background: rgba(6, 11, 20, 0.05) !important; border-color: rgba(6, 11, 20, 0.2) !important; color: #060b14 !important; }
+    [data-theme='light'] .filter-btn:hover { background: rgba(6, 11, 20, 0.12) !important; border-color: rgba(6, 11, 20, 0.4) !important; color: #000 !important; }
+    [data-theme='light'] .filter-btn.active { background: #060b14 !important; color: #f8fafc !important; border-color: #060b14 !important; box-shadow: 0 0 15px rgba(6, 11, 20, 0.15) !important; }
+
+
 
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
-
-    .split-text .char { display: inline-block; transform-origin: center top; }
-    .split-text .word { display: inline-block; overflow: hidden; margin-right: 0.1em; vertical-align: top; padding: 0.1em 0.15em; margin: -0.1em -0.15em -0.1em -0.15em; margin-right: 0.1em; }
-
-    .scroll-progress { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, rgba(255, 80, 80, 0.8), rgba(255, 255, 255, 0.6)); z-index: 10001; transform-origin: left; transform: scaleX(0); width: 100%; pointer-events: none; }
-
-    .mag-btn { display: inline-block; position: relative; transition: transform 0.1s ease-out; will-change: transform; cursor: none; }
-    .mag-btn .mag-inner { display: inline-block; transition: transform 0.15s ease-out; will-change: transform; }
-
-    .nav-hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; cursor: pointer; padding: 0; flex-shrink: 0; transition: background 0.2s; }
-    .nav-hamburger:hover { background: rgba(255, 255, 255, 0.12); }
-    .nav-hamburger span { display: block; width: 18px; height: 1.5px; background: #fff; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    .mobile-menu { position: fixed; inset: 0; z-index: 9000; background: rgba(8, 8, 8, 0.97); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2rem; opacity: 0; pointer-events: none; transform: translateY(-12px); transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
-    .mobile-menu.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
-    .mobile-menu-close { position: absolute; top: 1.25rem; right: 1.25rem; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; color: #fff; font-size: 1.1rem; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
-    .mobile-menu-close:hover { background: rgba(255, 255, 255, 0.12); }
-    .mobile-menu-links { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; width: 100%; }
-    .mobile-menu-links a { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2rem, 8vw, 3rem); letter-spacing: -0.04em; color: rgba(255, 255, 255, 0.85); text-decoration: none; line-height: 1.2; text-transform: uppercase; transition: color 0.2s, transform 0.2s; display: block; width: 100%; text-align: center; }
-    .mobile-menu-links a:hover { color: #fff; transform: scale(1.04); }
-    .mobile-menu-cta { margin-top: 1.5rem; background: #fff; color: #080808; border-radius: 9999px; padding: 0.8rem 2rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
-    .mobile-menu-cta:hover { opacity: 0.85; }
-
-    @media (max-width: 768px) {
-      .nav-hamburger { display: flex; }
-      nav .nav-cta { display: none; }
-      body { cursor: auto; }
-      #cursor-dot, #cursor-ring, #cursor-glow { display: none; }
-      nav { padding: 1rem 1.25rem; }
-      .nav-links { display: none; }
-      .nav-logo { font-size: 0.95rem; }
-      section { padding: 4rem 1.25rem; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-      #cursor-dot, #cursor-ring, #cursor-glow { display: none; }
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .orb { animation: none !important; transform: none !important; }
-    }
-
-    /* ════ LIGHT MODE OVERRIDES ════ */
-    [data-theme='light'] body,
-    [data-theme='light'] .grand-footer,
-    [data-theme='light'] #works {
-      background-color: #f8fafc !important; color: #0f172a !important;
-    }
-
-    /* Strong Typography (Dark Slate) */
-    [data-theme='light'] .section-title,
-    [data-theme='light'] .footer-headline h2,
-    [data-theme='light'] .nav-logo {
-      color: #0f172a !important;
-    }
-
-    /* Muted Typography (Slate with transparency) */
-    [data-theme='light'] .section-label,
-    [data-theme='light'] .lando-label,
-    [data-theme='light'] .nav-links a,
-    [data-theme='light'] .footer-col-label,
-    [data-theme='light'] .partner-item,
-    [data-theme='light'] .footer-copyright,
-    [data-theme='light'] .footer-legal a,
-    [data-theme='light'] .filter-btn,
-    [data-theme='light'] .nav-logo span {
-      color: rgba(15, 23, 42, 0.7) !important;
-    }
-
-    /* UI Elements & Backgrounds */
-    [data-theme='light'] .bg-video-wrap::after { background: rgba(248, 250, 252, 0.45) !important; }
-    
-    /* Cursor Light Mode adjustments */
-    [data-theme='light'] #cursor-dot { background: #0f172a !important; width: 5px; height: 5px; mix-blend-mode: normal !important; }
-    [data-theme='light'] #cursor-ring { border-color: #0f172a !important; width: 24px; height: 24px; mix-blend-mode: normal !important; }
-    [data-theme='light'] #cursor-dot.hover { transform: translate(-50%, -50%) scale(1.4); }
-    [data-theme='light'] #cursor-ring.hover { width: 44px; height: 44px; }
-
-    [data-theme='light'] .btn-outline,
-    [data-theme='light'] .footer-col-links li a { color: #0f172a !important; border-color: rgba(15, 23, 42, 0.3) !important; }
-    [data-theme='light'] .btn-outline:hover { border-color: #0f172a !important; }
-    [data-theme='light'] .nav-cta,
-    [data-theme='light'] .footer-cta-btn { background: #0f172a !important; color: #f8fafc !important; }
-    [data-theme='light'] .glass { background: rgba(15, 23, 42, 0.04) !important; border-color: rgba(15, 23, 42, 0.1) !important; }
-    [data-theme='light'] .mobile-menu { background: rgba(248, 250, 252, 0.97) !important; }
-    [data-theme='light'] .mobile-menu-links a { color: #0f172a !important; }
-    [data-theme='light'] .nav-hamburger span { background: #0f172a !important; }
-    [data-theme='light'] .footer-headline h2 .outline-text { -webkit-text-stroke: 1.5px rgba(15, 23, 42, 0.6) !important; }
-    [data-theme='light'] .work-bg { filter: grayscale(10%) sepia(5%) contrast(1.05) !important; }
-    [data-theme='light'] .filter-btn.active { background: #0f172a !important; color: #f8fafc !important; border-color: #0f172a !important; box-shadow: 0 0 15px rgba(15, 23, 42, 0.15) !important; }
-    [data-theme='light'] .skip-link { background: #0f172a !important; color: #f8fafc !important; }
   </style>
 </head>
 
 <body>
+  <div id="cursor-glow"></div><div id="cursor-ring"><span id="cursor-label"></span></div><div id="cursor-dot"></div>
+  <div class="bg-video-wrap"><video id="bg-video" autoplay muted loop playsinline></video></div>
 
-  <a href="#main-content" class="skip-link">Skip to content</a>
-  <div id="cursor-glow"></div>
-  <div id="cursor-ring"></div>
-  <div id="cursor-dot"></div>
 
-  <div class="bg-video-wrap">
-    <video id="bg-video" autoplay muted loop playsinline></video>
-  </div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
 
   <div class="page-wrap">
     <nav id="main-nav">
       <div class="nav-inner">
-        <div class="nav-logo">DatTran<span>Archive</span></div>
-        <div class="nav-links">
-          <a href="index.html" class="nav-close-trigger">← Back to Home</a>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <button id="theme-toggle" aria-label="Toggle Theme"><span id="theme-icon">☼</span></button>
+        <a href="index.html?scroll=works" class="nav-logo">DatTran<span>Archive</span></a>
+        <div style="display:flex;align-items:center;gap:1.25rem;">
+          <div class="nav-controls" style="display:flex;align-items:center;gap:0.75rem;">
+            <button id="lang-toggle" class="dock-btn" style="font-size:0.75rem; font-weight:700;">EN</button>
+            <button id="theme-toggle" class="dock-btn" aria-label="Toggle Theme"><span id="theme-icon" style="font-size:1.1rem;">☼</span></button>
+            <div class="nav-audio-group">
+              <button id="audio-toggle" class="dock-btn" aria-label="Toggle Audio">
+                <svg id="audio-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+              </button>
+              <div class="vol-track-h" id="vol-track">
+                <div class="vol-hitbox-h"></div>
+                <div class="vol-fill-h" id="vol-fill"></div>
+              </div>
+            </div>
+          </div>
+          <div style="width:1px; height:16px; background:rgba(255,255,255,0.15);"></div>
           <button class="nav-cta" onclick="window.location.href='index.html#contact'">Hire Me ↗</button>
-          <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
         </div>
       </div>
     </nav>
-
-    <div class="mobile-menu" id="mobile-menu">
-      <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">✕</button>
-      <nav class="mobile-menu-links"><a href="index.html" id="mm-home">← Back to Home</a></nav>
-      <a href="index.html#contact" class="mobile-menu-cta" id="mm-hire">Hire Me ↗</a>
-    </div>
 
     <section id="main-content" class="archive-hero" style="position:relative; min-height: 40vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 3rem 4rem; text-align: center;">
       <div style="position: relative; z-index: 2;">
         <p class="section-label reveal">— Archive</p>
         <h1 class="section-title reveal reveal-delay-1" style="font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 2rem;">Selected Works</h1>
         <div class="reveal reveal-delay-2" style="display: flex; justify-content: center; margin-top: 1.5rem;">
-          <a href="index.html" class="btn-outline" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+          <a href="index.html?scroll=works" class="btn-outline" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             Back to Home
           </a>
@@ -322,274 +262,298 @@
     </section>
 
     <section class="archive-grid-section" style="padding: 2rem 3rem 8rem;">
-      <div class="archive-grid" style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 3rem;">
-        <div class="work-card-horizontal filter-item reveal" data-category="branding"><div class="lando-label">Brand Identity, 2024</div><div class="lando-img-wrap" style="border-radius: 12px;"><div class="work-bg" style="background: #1a1a1a;"></div></div></div>
-        <div class="work-card-horizontal filter-item reveal reveal-delay-1" data-category="photography"><div class="lando-label">Photography, 2024</div><div class="lando-img-wrap" style="border-radius: 12px;"><div class="work-bg" style="background: #222;"></div></div></div>
-        <div class="work-card-horizontal filter-item reveal reveal-delay-2" data-category="retouch"><div class="lando-label">Retouch, 2024</div><div class="lando-img-wrap" style="border-radius: 12px;"><div class="work-bg" style="background: #1a1a1a;"></div></div></div>
-        <div class="work-card-horizontal filter-item reveal" data-category="typography"><div class="lando-label">Typography, 2023</div><div class="lando-img-wrap" style="border-radius: 12px;"><div class="work-bg" style="background: #222;"></div></div></div>
-        <div class="work-card-horizontal filter-item reveal reveal-delay-1" data-category="uxui"><div class="lando-label">UX/UI Design, 2023</div><div class="lando-img-wrap" style="border-radius: 12px;"><div class="work-bg" style="background: #1a1a1a;"></div></div></div>
-        <div class="work-card-horizontal filter-item reveal reveal-delay-2" data-category="branding"><div class="lando-label">Packaging Design, 2023</div><div class="lando-img-wrap" style="border-radius: 12px;"><div class="work-bg" style="background: #222;"></div></div></div>
-        <div class="work-card-horizontal filter-item reveal" data-category="typography"><div class="lando-label">Editorial, 2022</div><div class="lando-img-wrap" style="border-radius: 12px;"><div class="work-bg" style="background: #1a1a1a;"></div></div></div>
-        <div class="work-card-horizontal filter-item reveal reveal-delay-1" data-category="retouch"><div class="lando-label">Photo Composite, 2022</div><div class="lando-img-wrap" style="border-radius: 12px;"><div class="work-bg" style="background: #222;"></div></div></div>
+      <div class="archive-grid">
+        
+        <div class="work-card-horizontal filter-item reveal" data-category="branding" data-id="brand-identity" data-label="View →" onclick="navigateToDetail(this, 'brand-identity')">
+          <div class="lando-label">Brand Identity, 2024</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+        <div class="work-card-horizontal filter-item reveal reveal-delay-1" data-category="photography" data-id="photo-composite" data-label="View →" onclick="navigateToDetail(this, 'photo-composite')">
+          <div class="lando-label">Photography, 2024</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+        <div class="work-card-horizontal filter-item reveal reveal-delay-2" data-category="retouch" data-id="noir-cosmetics" data-label="View →" onclick="navigateToDetail(this, 'noir-cosmetics')">
+          <div class="lando-label">Retouch, 2024</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+        <div class="work-card-horizontal filter-item reveal" data-category="typography" data-id="motion-graphics" data-label="View →" onclick="navigateToDetail(this, 'motion-graphics')">
+          <div class="lando-label">Typography, 2023</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+        <div class="work-card-horizontal filter-item reveal reveal-delay-1" data-category="uxui" data-id="brand-identity" data-label="View →" onclick="navigateToDetail(this, 'brand-identity')">
+          <div class="lando-label">UX/UI Design, 2023</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+        <div class="work-card-horizontal filter-item reveal reveal-delay-2" data-category="branding" data-id="photo-composite" data-label="View →" onclick="navigateToDetail(this, 'photo-composite')">
+          <div class="lando-label">Packaging Design, 2023</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+        <div class="work-card-horizontal filter-item reveal" data-category="typography" data-id="noir-cosmetics" data-label="View →" onclick="navigateToDetail(this, 'noir-cosmetics')">
+          <div class="lando-label">Editorial, 2022</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1544476915-ed1370594142?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+        <div class="work-card-horizontal filter-item reveal reveal-delay-1" data-category="retouch" data-id="motion-graphics" data-label="View →" onclick="navigateToDetail(this, 'motion-graphics')">
+          <div class="lando-label">Photo Composite, 2022</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+        <div class="work-card-horizontal filter-item reveal reveal-delay-2" data-category="uxui" data-id="brand-identity" data-label="View →" onclick="navigateToDetail(this, 'brand-identity')">
+          <div class="lando-label">Web Design, 2022</div>
+          <div class="lando-img-wrap"><img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Work" /></div>
+        </div>
+
       </div>
     </section>
-
-    <footer class="grand-footer" id="contact">
-      <div class="footer-hero" style="min-height: 40vh;">
-        <div class="footer-hero-bg"></div>
-        <div class="footer-side-left reveal">
-          <div class="footer-col-label">Pages</div>
-          <ul class="footer-col-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="mailto:minhdat0801@gmail.com" class="highlight">Hire me</a></li>
-          </ul>
-        </div>
-        <div class="footer-headline reveal reveal-delay-1">
-          <h2>ALWAYS<br /><span class="outline-text accent-text">CREATING</span><br />THE <span class="accent-text">ART.</span></h2>
-        </div>
-        <div class="footer-side-right reveal">
-          <div class="footer-col-label">Follow On</div>
-          <ul class="footer-col-links">
-            <li><a href="https://www.behance.net/dattran0801" target="_blank" rel="noopener noreferrer">Behance</a></li>
-            <li><a href="https://www.instagram.com/dat.tran0801/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-            <li><a href="https://www.linkedin.com/in/minhdat0801/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-            <li><a href="https://www.facebook.com/minhdat0801/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-partners">
-        <div class="partner-track">
-          <span class="partner-item mag-btn"><span class="mag-inner">Adobe</span></span>
-          <span class="partner-item accent mag-btn"><span class="mag-inner">Photoshop</span></span>
-          <span class="partner-item mag-btn"><span class="mag-inner">Illustrator</span></span>
-          <span class="partner-item mag-btn"><span class="mag-inner">Premiere</span></span>
-          <span class="partner-item accent mag-btn"><span class="mag-inner">After Effects</span></span>
-          <span class="partner-item mag-btn"><span class="mag-inner">Figma</span></span>
-          <span class="partner-item mag-btn"><span class="mag-inner">Blender</span></span>
-          <span class="partner-item accent mag-btn"><span class="mag-inner">Capture One</span></span>
-        </div>
-      </div>
-
-      <div class="footer-cta-bar">
-        <a href="mailto:minhdat0801@gmail.com" class="footer-cta-btn mag-btn">
-          <span class="mag-inner" style="display:inline-flex;align-items:center;gap:0.5rem;">
-            Business Enquiries
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
-          </span>
-        </a>
-      </div>
-
-      <div class="footer-bottom">
-        <div class="footer-copyright">© 2026 DatTran. All rights reserved.</div>
-        <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
-      </div>
-    </footer>
   </div>
 
-  <div class="scroll-progress" id="scroll-progress"></div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
 
   <script>
     // ════════════════════════════════════════
-    // CURSOR
+    // TRANSLATIONS (KHÔNG DỊCH BUTTON VÀ HEADLINE)
+    // ════════════════════════════════════════
+    // Do trang Archive ít desc nên ko cần file i18n phức tạp, chủ yếu giữ logic lang sync.
+    let currentLang = localStorage.getItem('lang') || 'en';
+    const langBtn = document.getElementById('lang-toggle');
+    langBtn.textContent = currentLang === 'en' ? 'EN' : 'VN';
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'vn' : 'en';
+      localStorage.setItem('lang', currentLang);
+      langBtn.textContent = currentLang === 'en' ? 'EN' : 'VN';
+      // Fade transition code for any [data-i18n] if needed
+    });
+
+    // ════════════════════════════════════════
+    // AUDIO MANAGER (SYNC QUA SESSION)
+    // ════════════════════════════════════════
+    const audioLight = new Audio('https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3');
+    const audioDark = new Audio('https://cdn.pixabay.com/audio/2022/11/22/audio_febc508520.mp3');
+    audioLight.loop = true; audioDark.loop = true;
+    audioLight.crossOrigin = "anonymous"; audioDark.crossOrigin = "anonymous";
+    
+    // Đọc trạng thái từ localStorage/sessionStorage
+    let currentTheme = localStorage.getItem('theme');
+    if (!currentTheme) {
+      currentTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      localStorage.setItem('theme', currentTheme);
+    }
+    
+    let currentAudio = currentTheme === 'light' ? audioLight : audioDark;
+    let targetVolume = parseFloat(sessionStorage.getItem('targetVolume'));
+    if(isNaN(targetVolume)) targetVolume = 0.5;
+    let isMuted = sessionStorage.getItem('isMuted') === 'true';
+    let audioStarted = false;
+    
+    const audioToggle = document.getElementById('audio-toggle');
+    const audioIcon = document.getElementById('audio-icon');
+    const volTrack = document.getElementById('vol-track');
+    const volFill = document.getElementById('vol-fill');
+    
+    const svgMute = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>`;
+    const svgVol = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
+
+    function updateIcon() {
+      if(!audioStarted) { audioIcon.innerHTML = svgMute; return; }
+      audioIcon.innerHTML = (isMuted || targetVolume === 0) ? svgMute : svgVol;
+    }
+
+    function applyVolume(vol) {
+      targetVolume = vol;
+      if (volFill) gsap.to(volFill, { width: (vol * 100) + '%', duration: 0.4, ease: 'power2.out' });
+      if (volTrack) volTrack.setAttribute('data-pct', Math.round(vol * 100) + '%');
+      if(!isMuted && currentAudio && audioStarted) gsap.to(currentAudio, { volume: targetVolume, duration: 0.3, ease: 'none' });
+      updateIcon();
+    }
+
+    function restoreAudio() {
+      let savedTime = parseFloat(sessionStorage.getItem('audioTime')) || 0;
+      let wasPlaying = sessionStorage.getItem('isPlaying') === 'true';
+      currentAudio.currentTime = savedTime;
+      currentAudio.volume = isMuted ? 0 : targetVolume;
+      if (volFill) gsap.set(volFill, { width: (targetVolume * 100) + '%' });
+      if (volTrack) volTrack.setAttribute('data-pct', Math.round(targetVolume * 100) + '%');
+      
+      if(wasPlaying) {
+        currentAudio.play().then(() => {
+          audioStarted = true; updateIcon();
+        }).catch(() => {
+          const startInteraction = () => {
+             currentAudio.play().then(() => { audioStarted = true; updateIcon(); });
+             window.removeEventListener('click', startInteraction);
+             window.removeEventListener('scroll', startInteraction);
+          };
+          window.addEventListener('click', startInteraction);
+          window.addEventListener('scroll', startInteraction);
+        });
+      } else {
+        updateIcon();
+      }
+    }
+    restoreAudio();
+
+    window.addEventListener('beforeunload', () => {
+      sessionStorage.setItem('audioTime', currentAudio.currentTime);
+      sessionStorage.setItem('isPlaying', (!currentAudio.paused && audioStarted) ? 'true' : 'false');
+      sessionStorage.setItem('targetVolume', targetVolume);
+      sessionStorage.setItem('isMuted', isMuted);
+    });
+
+    let isDraggingVol = false;
+    if (volTrack) {
+      function calcVolume(e) {
+        const rect = volTrack.getBoundingClientRect(); 
+        const w = rect.width > 20 ? rect.width : 80;
+        let x = e.clientX - rect.left;
+        let pct = x / w; 
+        pct = Math.max(0, Math.min(1, pct));
+        if(isMuted && pct > 0) isMuted = false;
+        applyVolume(pct);
+      }
+      volTrack.addEventListener('click', calcVolume);
+      volTrack.addEventListener('mousedown', e => { isDraggingVol = true; calcVolume(e); });
+      window.addEventListener('mousemove', e => { if(isDraggingVol) calcVolume(e); });
+      window.addEventListener('mouseup', () => { isDraggingVol = false; });
+    }
+
+    audioToggle.addEventListener('click', () => {
+      if(!audioStarted) { 
+        currentAudio.volume = isMuted ? 0 : targetVolume;
+        currentAudio.play().then(() => { audioStarted = true; updateIcon(); }).catch(()=>{}); 
+        return; 
+      }
+      isMuted = !isMuted;
+      if(isMuted) { gsap.to(currentAudio, { volume: 0, duration: 0.5 }); } 
+      else { if(targetVolume === 0) targetVolume = 0.5; applyVolume(targetVolume); }
+      updateIcon();
+    });
+
+    function switchThemeAudio(isLight) {
+      if(!audioStarted) { currentAudio = isLight ? audioLight : audioDark; return; }
+      const nextAudio = isLight ? audioLight : audioDark;
+      const prevAudio = isLight ? audioDark : audioLight;
+      currentAudio = nextAudio;
+      
+      if(isMuted) return;
+      gsap.to(prevAudio, { volume: 0, duration: 1.5, onComplete: () => prevAudio.pause() });
+      nextAudio.volume = 0; nextAudio.play().catch(()=>{});
+      gsap.to(nextAudio, { volume: targetVolume, duration: 1.5 });
+    }
+
+    // ════════════════════════════════════════
+    // CORE GLOBAL LOGIC
     // ════════════════════════════════════════
     (function () {
-      const dot = document.getElementById('cursor-dot');
-      const ring = document.getElementById('cursor-ring');
-      const glow = document.getElementById('cursor-glow');
-      let mx = -300, my = -300, rx = -300, ry = -300, gx = -300, gy = -300;
-
-      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; glow.classList.add('active'); });
+      const dot = document.getElementById('cursor-dot'); const ring = document.getElementById('cursor-ring'); const glow = document.getElementById('cursor-glow');
+      const cLabel = document.getElementById('cursor-label');
+      let mx = -300, my = -300, rx = -300, ry = -300, gx = -300, gy = -300; let rafId = null, needsUpdate = false;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top  = my + 'px'; glow.classList.add('active'); needsUpdate = true; if (!rafId) rafId = requestAnimationFrame(tick); });
       document.addEventListener('mouseleave', () => glow.classList.remove('active'));
-
-      // Áp dụng Hover hiệu ứng bằng class tĩnh
-      document.querySelectorAll('a, button, .mag-btn, .nav-cta, .filter-btn').forEach(el => {
-        el.addEventListener('mouseenter', () => { ring.classList.add('hover'); dot.classList.add('hover'); });
-        el.addEventListener('mouseleave', () => { ring.classList.remove('hover'); dot.classList.remove('hover'); });
+      document.querySelectorAll('a, button, .mag-btn, .nav-cta, .dock-btn, .vol-track').forEach(el => { el.addEventListener('mouseenter', () => { ring.classList.add('hover'); dot.classList.add('hover'); }); el.addEventListener('mouseleave', () => { ring.classList.remove('hover'); dot.classList.remove('hover'); }); });
+      
+      // Project Label & Navigation
+      document.querySelectorAll('[data-label]').forEach(el => {
+        el.addEventListener('mouseenter', () => { if(cLabel) { cLabel.textContent = el.dataset.label; gsap.to(cLabel, { opacity: 1, scale: 1, duration: 0.3 }); } });
+        el.addEventListener('mouseleave', () => { if(cLabel) { gsap.to(cLabel, { opacity: 0, scale: 0.8, duration: 0.3 }); } });
       });
 
-      function tick() {
-        dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-        rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-        gx += (mx - gx) * 0.07; gy += (my - gy) * 0.07;
-        glow.style.left = gx + 'px'; glow.style.top = gy + 'px';
-        requestAnimationFrame(tick);
-      }
-      tick();
+      window.navigateToDetail = function(card, id) {
+        const thumb = card.querySelector('.lando-img-wrap') || card;
+        thumb.style.viewTransitionName = 'project-thumb';
+        sessionStorage.setItem('_vtProjectId', id);
+        window.location.href = `project-detail.html?id=${id}`;
+      };
+
+      function tick() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; gx += (mx - gx) * 0.07; gy += (my - gy) * 0.07; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; glow.style.left = gx + 'px'; glow.style.top = gy + 'px'; rafId = (Math.abs(mx - rx) < 0.5 && Math.abs(my - ry) < 0.5 && Math.abs(mx - gx) < 0.5 && Math.abs(my - gy) < 0.5) ? null : requestAnimationFrame(tick); }
+      document.addEventListener('visibilitychange', () => { if (document.hidden && rafId) { cancelAnimationFrame(rafId); rafId = null; } else if (!document.hidden && needsUpdate && !rafId) rafId = requestAnimationFrame(tick); });
     })();
 
-    // ════════════════════════════════════════
     // THEME & VIDEO MANAGER
-    // ════════════════════════════════════════
     (function () {
-      const themeToggle = document.getElementById('theme-toggle');
-      const themeIcon = document.getElementById('theme-icon');
-      const video = document.getElementById('bg-video');
-      
+      const themeToggle = document.getElementById('theme-toggle'); const themeIcon = document.getElementById('theme-icon'); const video = document.getElementById('bg-video');
+      const metaThemeColor = document.getElementById('meta-theme-color');
       const darkVideoSrc = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
-      // URL mới
       const lightVideoSrc = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_074327_a4d6275d-82d9-4c83-bfbe-f1fb2213c17c.mp4';
-      
       let hlsInstance = null;
 
       function loadVideoForTheme(theme) {
         if (!video) return;
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReduced || (navigator.connection && navigator.connection.saveData)) {
-          video.parentElement.style.display = 'none'; return;
-        }
-
+        if (prefersReduced || (navigator.connection && navigator.connection.saveData)) { video.parentElement.style.display = 'none'; return; }
         video.style.opacity = '0';
         setTimeout(() => {
           if (theme === 'light') {
             if (hlsInstance) { hlsInstance.destroy(); hlsInstance = null; }
             video.src = lightVideoSrc;
+            if(metaThemeColor) metaThemeColor.setAttribute('content', '#f8fafc');
           } else {
-            if (Hls.isSupported()) {
-              hlsInstance = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
-              hlsInstance.loadSource(darkVideoSrc);
-              hlsInstance.attachMedia(video);
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-              video.src = darkVideoSrc;
-            }
+            if (Hls.isSupported()) { hlsInstance = new Hls({ startLevel: -1, capLevelToPlayerSize: true }); hlsInstance.loadSource(darkVideoSrc); hlsInstance.attachMedia(video); } 
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = darkVideoSrc; }
+            if(metaThemeColor) metaThemeColor.setAttribute('content', '#080808');
           }
           video.play().then(() => { video.style.opacity = '0.85'; }).catch(() => {});
         }, 300);
       }
 
-      let currentTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', currentTheme);
-      if(themeIcon) themeIcon.textContent = currentTheme === 'dark' ? '☼' : '☾';
+      themeIcon.textContent = currentTheme === 'dark' ? '☼' : '☾';
       loadVideoForTheme(currentTheme);
 
-      if(themeToggle) {
-        themeToggle.addEventListener('click', () => {
-          currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', currentTheme);
-          localStorage.setItem('theme', currentTheme);
-          themeIcon.textContent = currentTheme === 'dark' ? '☼' : '☾';
-          loadVideoForTheme(currentTheme);
-          
-          if(window.scrollY > 50) {
-            const nav = document.querySelector('nav');
-            const isLight = currentTheme === 'light';
-            nav.style.background = isLight ? 'rgba(248, 250, 252, 0.8)' : 'rgba(8,8,8,0.7)';
-            nav.style.borderBottom = isLight ? '1px solid rgba(15,23,42,0.1)' : '1px solid rgba(255,255,255,0.05)';
-          }
+      themeToggle.addEventListener('click', () => {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        localStorage.setItem('theme', currentTheme);
+        themeIcon.textContent = currentTheme === 'dark' ? '☼' : '☾';
+        loadVideoForTheme(currentTheme);
+        switchThemeAudio(currentTheme === 'light');
+      });
+    })();
+
+    // GSAP Reveal & Filters
+    document.querySelectorAll('.reveal:not(.work-card-horizontal)').forEach(el => { 
+      gsap.fromTo(el, { opacity: 0, y: 40 }, { 
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out', 
+        scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' } 
+      }); 
+    });
+
+    // Staggered Grid Reveal
+    ScrollTrigger.batch(".archive-grid .work-card-horizontal", {
+      onEnter: batch => gsap.fromTo(batch, { opacity: 0, y: 60 }, { 
+        opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', stagger: 0.15, overwrite: true 
+      }),
+      start: 'top 90%'
+    });
+    const filterBtns = document.querySelectorAll('.filter-btn'); const items = document.querySelectorAll('.filter-item');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
+        const filterValue = btn.getAttribute('data-filter');
+        items.forEach(item => { 
+          const category = item.getAttribute('data-category'); 
+          if (filterValue === 'all' || filterValue === category) { 
+            gsap.to(item, { 
+              display: 'flex', // Grid children are flex-column in our CSS
+              scale: 1, 
+              opacity: 1, 
+              duration: 0.4, 
+              ease: 'power2.out',
+              overwrite: 'auto'
+            }); 
+          } else { 
+            gsap.to(item, { 
+              scale: 0.9, 
+              opacity: 0, 
+              duration: 0.4, 
+              ease: 'power2.out', 
+              display: 'none',
+              overwrite: 'auto'
+            }); 
+          } 
         });
-      }
-
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden && video) video.pause();
-        else if (video) video.play().catch(() => {});
+        setTimeout(() => ScrollTrigger.refresh(), 450);
       });
-    })();
-
-    // ════════════════════════════════════════
-    // SCROLL EFFECTS & LENIS
-    // ════════════════════════════════════════
-    (function initScrollEffects() {
-      const lenis = new Lenis({ duration: 1.2, orientation: 'vertical', smoothWheel: true });
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => lenis.raf(time * 1000));
-      gsap.ticker.lagSmoothing(0);
-
-      const progressBar = document.getElementById('scroll-progress');
-      if (progressBar) { gsap.to(progressBar, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 } }); }
-
-      const nav = document.querySelector('nav');
-      ScrollTrigger.create({
-        start: 50,
-        onUpdate: (self) => {
-          const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-          if (self.direction === 1 && window.scrollY > 50) {
-            nav.style.background = isLight ? 'rgba(248, 250, 252, 0.8)' : 'rgba(8,8,8,0.7)';
-            nav.style.backdropFilter = 'blur(20px)';
-            nav.style.borderBottom = isLight ? '1px solid rgba(15,23,42,0.1)' : '1px solid rgba(255,255,255,0.05)';
-          } else if (window.scrollY <= 50) {
-            nav.style.background = ''; nav.style.backdropFilter = ''; nav.style.borderBottom = '';
-          }
-        }
-      });
-
-      document.querySelectorAll('.reveal').forEach(el => {
-        gsap.fromTo(el, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' } });
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 40; const y = (e.clientY / window.innerHeight - 0.5) * 40;
-        gsap.to('.orb-1', { x: x * 0.3, y: y * 0.3, duration: 1.2, ease: 'power2.out' });
-        gsap.to('.orb-2', { x: -x * 0.2, y: -y * 0.2, duration: 1.2, ease: 'power2.out' });
-        gsap.to('.orb-3', { x: x * 0.15, y: y * 0.15, duration: 1.2, ease: 'power2.out' });
-      });
-    })();
-
-    // ════════════════════════════════════════
-    // MAGNETIC BUTTONS
-    // ════════════════════════════════════════
-    (function () {
-      const STRENGTH = 0.3, RADIUS = 80;
-      document.querySelectorAll('.mag-btn').forEach(wrap => {
-        const inner = wrap.querySelector('.mag-inner');
-        let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-        function animate() {
-          currentX += (targetX - currentX) * 0.1; currentY += (targetY - currentY) * 0.1;
-          wrap.style.transform = `translate(${currentX}px, ${currentY}px)`;
-          if (inner) inner.style.transform = `translate(${currentX * 0.4}px, ${currentY * 0.4}px)`;
-          requestAnimationFrame(animate);
-        }
-        document.addEventListener('mousemove', e => {
-          const rect = wrap.getBoundingClientRect(); const cx = rect.left + rect.width / 2; const cy = rect.top + rect.height / 2;
-          const dx = e.clientX - cx, dy = e.clientY - cy;
-          if (Math.sqrt(dx * dx + dy * dy) < RADIUS) { targetX = dx * STRENGTH; targetY = dy * STRENGTH; } else { targetX = 0; targetY = 0; }
-        });
-        animate();
-      });
-    })();
-
-    // ════════════════════════════════════════
-    // ARCHIVE FILTER & MOBILE NAV
-    // ════════════════════════════════════════
-    (function () {
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      const items = document.querySelectorAll('.filter-item');
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active');
-          const filterValue = btn.getAttribute('data-filter');
-          items.forEach(item => {
-            const category = item.getAttribute('data-category');
-            if (filterValue === 'all' || filterValue === category) {
-              gsap.to(item, { scale: 1, opacity: 1, duration: 0.5, ease: 'power2.out', display: 'block' });
-            } else {
-              gsap.to(item, { scale: 0.8, opacity: 0, duration: 0.5, ease: 'power2.out', onComplete: () => { item.style.display = 'none'; } });
-            }
-          });
-          setTimeout(() => ScrollTrigger.refresh(), 500);
-        });
-      });
-
-      const hamburger = document.getElementById('nav-hamburger'), menu = document.getElementById('mobile-menu'), closeBtn = document.getElementById('mobile-menu-close');
-      if (!hamburger || !menu) return;
-      function openMenu() { menu.classList.add('open'); hamburger.classList.add('open'); document.body.style.overflow = 'hidden'; }
-      function closeMenu() { menu.classList.remove('open'); hamburger.classList.remove('open'); document.body.style.overflow = ''; }
-      hamburger.addEventListener('click', openMenu); if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-      menu.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { closeMenu(); }); });
-    })();
+    });
   </script>
-
-  <style>
-    .filter-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 3rem; margin-bottom: 1rem; }
-    .filter-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.6); padding: 0.6rem 1.4rem; border-radius: 9999px; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; cursor: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); backdrop-filter: blur(10px); }
-    .filter-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
-    .filter-btn.active { background: #fff; color: #080808; border-color: #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
-  </style>
 </body>
 </html>
