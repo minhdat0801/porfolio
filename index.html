@@ -3502,7 +3502,7 @@
       function restoreAudio() {
         let savedTime = parseFloat(sessionStorage.getItem('audioTime')) || 0;
         let wasPlaying = sessionStorage.getItem('isPlaying');
-        if (wasPlaying === null) wasPlaying = 'true'; // Mặc định auto-play khi mới vào web
+        if (wasPlaying === null) wasPlaying = 'false'; // Mặc định không auto-play để tránh phiền
 
         currentAudio.currentTime = savedTime;
         currentAudio.volume = isMuted ? 0 : targetVolume;
@@ -3513,17 +3513,9 @@
           currentAudio.play().then(() => {
             audioStarted = true; updateIcon();
           }).catch(() => {
-            // Xử lý khi trình duyệt cấm auto-play: chờ người dùng click hoặc vuốt là phát luôn
-            const startInteraction = () => {
-              currentAudio.play().then(() => { audioStarted = true; updateIcon(); });
-              window.removeEventListener('click', startInteraction);
-              window.removeEventListener('scroll', startInteraction);
-              window.removeEventListener('keydown', startInteraction);
-            };
-            window.addEventListener('click', startInteraction);
-            window.addEventListener('scroll', startInteraction, { once: true });
-            window.addEventListener('keydown', startInteraction, { once: true });
-            updateIcon(); // Vẫn hiển thị icon bình thường để user biết có nhạc
+            // Không tự động phát nhạc khi người dùng tương tác chung (như đổi theme)
+            // Nhạc sẽ chỉ phát khi người dùng nhấn nút Audio Toggle
+            updateIcon(); 
           });
         } else {
           updateIcon();
@@ -3578,7 +3570,7 @@
         const nextAudio = isLight ? audioLight : audioDark;
         const prevAudio = isLight ? audioDark : audioLight;
         currentAudio = nextAudio;
-        if (isMuted) return;
+        if (isMuted || prevAudio.paused) return;
         gsap.to(prevAudio, { volume: 0, duration: 1.5, onComplete: () => prevAudio.pause() });
         nextAudio.volume = 0; nextAudio.play().catch(() => { });
         gsap.to(nextAudio, { volume: targetVolume, duration: 1.5 });
@@ -3617,7 +3609,7 @@
       // THREE.JS
       // THREE.JS
       (function () {
-        const darkModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/public/11/do.glb';
+        const darkModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/public/12/do.glb';
         const lightModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/public/11/xanh.glb';
 
         const canvas = document.getElementById('three-canvas');
