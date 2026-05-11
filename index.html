@@ -302,21 +302,74 @@
       min-height: 100vh;
       background: transparent;
     }
-    .project-hero { width: 100%; height: 100vh; position: relative; }
-    .project-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 6rem 3rem 4rem; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 10; }
-    .project-title { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.5rem; }
-    .project-meta { font-size: 1rem; color: rgba(255,255,255,0.6); font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; }
-    .content-section { padding: 6rem 3rem; max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.8; color: rgba(255,255,255,0.7); background: #080808; min-height: 50vh; }
-    .content-section p { margin-bottom: 2rem; }
+
+    .project-hero {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+
+    .project-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 6rem 3rem 4rem;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+      z-index: 10;
+    }
+
+    .project-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-meta {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .content-section {
+      padding: 6rem 3rem;
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.7);
+      background: #080808;
+      min-height: 50vh;
+    }
+
+    .content-section p {
+      margin-bottom: 2rem;
+    }
+
     .back-btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
-      padding: 0.75rem 1.5rem; border-radius: 9999px;
-      color: #fff; text-decoration: none; font-size: 0.85rem;
-      font-weight: 500; cursor: none; border: 1px solid rgba(255,255,255,0.1);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s;
     }
-    .back-btn:hover { background: #fff; color: #000; }
+
+    .back-btn:hover {
+      background: #fff;
+      color: #000;
+    }
 
     /* ── NAV (ĐÃ FIX GLASSMORPHISM VĨNH VIỄN) ── */
     nav {
@@ -2376,6 +2429,7 @@
       animation: none;
       mix-blend-mode: normal;
     }
+
     ::view-transition-old(project-thumb),
     ::view-transition-new(project-thumb) {
       animation-duration: 0.5s;
@@ -2388,10 +2442,25 @@
       color: #060b14 !important;
     }
 
-    [data-theme='light'] .project-info { background: linear-gradient(to top, rgba(248, 250, 252, 0.95), transparent); }
-    [data-theme='light'] .content-section { color: rgba(6,11,20,0.8); background: #f8fafc; }
-    [data-theme='light'] .back-btn { background: rgba(255,255,255,0.8); color: #000; border-color: rgba(0,0,0,0.1); }
-    [data-theme='light'] .back-btn:hover { background: #000; color: #fff; }
+    [data-theme='light'] .project-info {
+      background: linear-gradient(to top, rgba(248, 250, 252, 0.95), transparent);
+    }
+
+    [data-theme='light'] .content-section {
+      color: rgba(6, 11, 20, 0.8);
+      background: #f8fafc;
+    }
+
+    [data-theme='light'] .back-btn {
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme='light'] .back-btn:hover {
+      background: #000;
+      color: #fff;
+    }
 
     [data-theme='light'] body::before {
       opacity: 0.15 !important;
@@ -2607,6 +2676,7 @@
     [data-theme='light'] .skill-icon-wrap img {
       filter: invert(0) !important;
     }
+
     [data-theme='light'] .skill-icon-wrap svg {
       stroke: #060b14 !important;
     }
@@ -2614,12 +2684,15 @@
     [data-theme='light'] .dock-btn {
       color: #060b14;
     }
+
     [data-theme='light'] .dock-btn:hover {
       color: #000;
     }
+
     [data-theme='light'] .vol-track-h {
       background: rgba(6, 11, 20, 0.15) !important;
     }
+
     [data-theme='light'] .vol-fill-h {
       background: #060b14 !important;
     }
@@ -2633,11 +2706,13 @@
       background: rgba(255, 255, 255, 0.4) !important;
       border-top: 1px solid rgba(6, 11, 20, 0.1) !important;
     }
+
     [data-theme='light'] .footer-copyright,
     [data-theme='light'] .footer-legal a,
     [data-theme='light'] .footer-email a {
       color: rgba(6, 11, 20, 0.5) !important;
     }
+
     [data-theme='light'] .footer-email a:hover,
     [data-theme='light'] .footer-legal a:hover {
       color: #000 !important;
@@ -2655,11 +2730,11 @@
     ::view-transition-group(root) {
       animation-duration: 0.8s !important;
     }
-    
+
     ::view-transition-old(root) {
       animation: fade-out 0.8s cubic-bezier(0.16, 1, 0.3, 1) both !important;
     }
-    
+
     ::view-transition-new(root) {
       animation: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both !important;
     }
@@ -2670,12 +2745,23 @@
     }
 
     @keyframes fade-out {
-      from { opacity: 1; }
-      to { opacity: 0; }
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
     }
+
     @keyframes fade-in {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -2720,10 +2806,12 @@
         <div style="display:flex;align-items:center;gap:1.25rem;">
           <div class="nav-controls" style="display:flex;align-items:center;gap:1rem;">
             <button id="lang-toggle" class="dock-btn" style="font-size:0.75rem; font-weight:700;">EN</button>
-            <button id="theme-toggle" class="dock-btn" aria-label="Toggle Theme"><span id="theme-icon" style="font-size:1.1rem;">☼</span></button>
+            <button id="theme-toggle" class="dock-btn" aria-label="Toggle Theme"><span id="theme-icon"
+                style="font-size:1.1rem;">☼</span></button>
             <div class="nav-audio-group">
               <button id="audio-toggle" class="dock-btn" aria-label="Toggle Audio">
-                <svg id="audio-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg id="audio-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                   <line x1="23" y1="9" x2="17" y2="15"></line>
                   <line x1="17" y1="9" x2="23" y2="15"></line>
@@ -3154,37 +3242,45 @@
           </div>
 
           <div class="work-slide" data-project-id="brand-identity">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'brand-identity')" data-label="View →">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'brand-identity')"
+              data-label="View →">
               <div class="lando-label">Brand Identity, 2024</div>
               <div class="lando-img-wrap">
-                <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Brand Identity" crossorigin="anonymous" />
+                <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1000&auto=format&fit=crop"
+                  class="work-img" alt="Brand Identity" crossorigin="anonymous" />
               </div>
             </div>
           </div>
 
           <div class="work-slide" data-project-id="photo-composite">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'photo-composite')" data-label="View →">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'photo-composite')"
+              data-label="View →">
               <div class="lando-label">Photo Composite, 2024</div>
               <div class="lando-img-wrap">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Photo Composite" crossorigin="anonymous" />
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop"
+                  class="work-img" alt="Photo Composite" crossorigin="anonymous" />
               </div>
             </div>
           </div>
 
           <div class="work-slide" data-project-id="noir-cosmetics">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'noir-cosmetics')" data-label="View →">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'noir-cosmetics')"
+              data-label="View →">
               <div class="lando-label">Noir Cosmetics, 2024</div>
               <div class="lando-img-wrap">
-                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Noir Cosmetics" crossorigin="anonymous" />
+                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop"
+                  class="work-img" alt="Noir Cosmetics" crossorigin="anonymous" />
               </div>
             </div>
           </div>
 
           <div class="work-slide" data-project-id="motion-graphics">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'motion-graphics')" data-label="View →">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'motion-graphics')"
+              data-label="View →">
               <div class="lando-label">Motion Graphics, 2023</div>
               <div class="lando-img-wrap">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop" class="work-img" alt="Motion Graphics" crossorigin="anonymous" />
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop"
+                  class="work-img" alt="Motion Graphics" crossorigin="anonymous" />
               </div>
             </div>
           </div>
@@ -3224,7 +3320,8 @@
                 rel="noopener noreferrer">Instagram</a></li>
             <li><a href="https://www.linkedin.com/in/minhdat0801/" target="_blank"
                 rel="noopener noreferrer">LinkedIn</a></li>
-            <li><a href="https://www.facebook.com/minhdat0801/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.facebook.com/minhdat0801/" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </li>
           </ul>
         </div>
         <div class="footer-model-wrap"><canvas id="footer-three-canvas" role="img"
@@ -3249,7 +3346,8 @@
       <div class="footer-bottom">
         <div style="display:flex; align-items:center; gap:2rem;">
           <div class="footer-copyright">© 2026 DatTran. All rights reserved.</div>
-          <div class="footer-email"><a href="mailto:minhdat0801@gmail.com" onclick="copyEmail(event)">mail: minhdat0801@gmail.com</a></div>
+          <div class="footer-email"><a href="mailto:minhdat0801@gmail.com" onclick="copyEmail(event)">mail:
+              minhdat0801@gmail.com</a></div>
         </div>
         <div class="footer-legal"><a href="#" data-i18n="ftr_privacy">Privacy Policy</a><a href="#"
             data-i18n="ftr_terms">Terms</a></div>
@@ -3260,9 +3358,14 @@
   <canvas id="webgl-works"></canvas>
 
   <div id="detail-view">
-    <nav style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3rem; display: flex; justify-content: space-between;">
+    <nav
+      style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3rem; display: flex; justify-content: space-between;">
       <a href="#" class="back-btn" onclick="navigateBack(event)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
         Back
       </a>
       <a href="#" class="nav-logo" onclick="navigateBack(event)">DatTran</a>
@@ -3276,8 +3379,10 @@
     </div>
 
     <div class="content-section">
-      <p>This is a detailed view of the project. The transition seamlessly morphs the thumbnail from the archive grid into this immersive full-screen hero section.</p>
-      <p>Using the View Transitions API in a native SPA setup, navigating back feels natural and maintains the entire context without reloading the page.</p>
+      <p>This is a detailed view of the project. The transition seamlessly morphs the thumbnail from the archive grid
+        into this immersive full-screen hero section.</p>
+      <p>Using the View Transitions API in a native SPA setup, navigating back feels natural and maintains the entire
+        context without reloading the page.</p>
     </div>
   </div>
 
@@ -3436,21 +3541,21 @@
       let isDraggingVol = false;
       if (volTrack) {
         const calcVolume = (e) => {
-          const rect = volTrack.getBoundingClientRect(); 
+          const rect = volTrack.getBoundingClientRect();
           // Use a fixed width of 80px if the bar is transitioning, 
           // but getBoundingClientRect is safer if it's already open.
           const w = rect.width > 20 ? rect.width : 80;
           let x = e.clientX - rect.left;
-          let pct = x / w; 
+          let pct = x / w;
           pct = Math.max(0, Math.min(1, pct));
           if (isMuted && pct > 0) isMuted = false;
           applyVolume(pct);
         };
         // Add click listener for immediate jump
         volTrack.addEventListener('click', calcVolume);
-        volTrack.addEventListener('mousedown', e => { 
-          isDraggingVol = true; 
-          calcVolume(e); 
+        volTrack.addEventListener('mousedown', e => {
+          isDraggingVol = true;
+          calcVolume(e);
         });
         window.addEventListener('mousemove', e => { if (isDraggingVol) calcVolume(e); });
         window.addEventListener('mouseup', () => { isDraggingVol = false; });
@@ -3510,51 +3615,86 @@
       })();
 
       // THREE.JS
+      // THREE.JS
       (function () {
-        const darkModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/sign/11/Meshy_AI_Crimson_Gaze_0508022717_texture.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85MTlkZjA2Yy00NTNkLTQzNTctOGFiMS0wMjA0NzVmMWY1YjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMS9NZXNoeV9BSV9Dcmltc29uX0dhemVfMDUwODAyMjcxN190ZXh0dXJlLmdsYiIsImlhdCI6MTc3ODIwODA3NywiZXhwIjoxODA5NzQ0MDc3fQ.E8NarCETjUhsChLVzgd0GJRiHkoASFO9gUZyv0C3LPI';
-        const lightModelUrl = 'https://dkpiuyohpzkrmvdzjvas.supabase.co/storage/v1/object/sign/111/Meshy_AI_Crimson_Gaze_0509184343_texture.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNjk3MTYxMS0xNjAwLTRhOTQtYmM4Zi1kOWQ5ZTU1MzkyOGMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMTEvTWVzaHlfQUlfQ3JpbXNvbl9HYXplXzA1MDkxODQzNDNfdGV4dHVyZS5nbGIiLCJpYXQiOjE3NzgzNTIyOTgsImV4cCI6MTgwOTg4ODI5OH0.ifMeg8lV-rUVty0PpHoLBP5sY6tEgmBqnW_zL_VbDwY';
+        const darkModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/public/11/do.glb';
+        const lightModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/public/11/xanh.glb';
 
         const canvas = document.getElementById('three-canvas');
-        if (canvas) {
-          const container = canvas.parentElement; const hint = container.querySelector('.canvas-hint');
-          const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); renderer.setClearColor(0x000000, 0); renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.2;
-          const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100); camera.position.set(0, 0.4, 5.5);
-          scene.add(new THREE.AmbientLight(0xffffff, 0.6)); const keyLight = new THREE.DirectionalLight(0xffffff, 1.5); keyLight.position.set(3, 5, 4); scene.add(keyLight); const fillLight = new THREE.DirectionalLight(0xff6060, 0.6); fillLight.position.set(-4, 2, -2); scene.add(fillLight); const rimLight = new THREE.DirectionalLight(0xffffff, 0.8); rimLight.position.set(0, -3, -4); scene.add(rimLight); const mouseLight = new THREE.PointLight(0xff4444, 0.5, 15); mouseLight.position.set(0, 1, 4); scene.add(mouseLight);
-          const group = new THREE.Group(); scene.add(group);
+        if (canvas && typeof THREE !== 'undefined') {
+          try {
+            const container = canvas.parentElement; const hint = container.querySelector('.canvas-hint');
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); renderer.setClearColor(0x000000, 0); renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.2;
+            const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100); camera.position.set(0, 0.4, 5.5);
+            scene.add(new THREE.AmbientLight(0xffffff, 0.6)); const keyLight = new THREE.DirectionalLight(0xffffff, 1.5); keyLight.position.set(3, 5, 4); scene.add(keyLight); const fillLight = new THREE.DirectionalLight(0xff6060, 0.6); fillLight.position.set(-4, 2, -2); scene.add(fillLight); const rimLight = new THREE.DirectionalLight(0xffffff, 0.8); rimLight.position.set(0, -3, -4); scene.add(rimLight); const mouseLight = new THREE.PointLight(0xff4444, 0.5, 15); mouseLight.position.set(0, 1, 4); scene.add(mouseLight);
+            const group = new THREE.Group(); scene.add(group);
 
-          new THREE.GLTFLoader().load(darkModelUrl, (gltf) => { if (hint) hint.style.opacity = '1'; window.appModels.heroDark = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.heroDark); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 3.0 / Math.max(size.x, size.y, size.z); window.appModels.heroDark.scale.setScalar(scale); window.appModels.heroDark.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale); window.appModels.heroDark.visible = document.documentElement.getAttribute('data-theme') !== 'light'; group.add(window.appModels.heroDark); });
-          new THREE.GLTFLoader().load(lightModelUrl, (gltf) => { window.appModels.heroLight = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.heroLight); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 3.0 / Math.max(size.x, size.y, size.z); window.appModels.heroLight.scale.setScalar(scale); window.appModels.heroLight.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale); window.appModels.heroLight.visible = document.documentElement.getAttribute('data-theme') === 'light'; group.add(window.appModels.heroLight); });
+            if (THREE.GLTFLoader) {
+              new THREE.GLTFLoader().load(darkModelUrl, (gltf) => { if (hint) hint.style.opacity = '1'; window.appModels.heroDark = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.heroDark); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 3.0 / Math.max(size.x, size.y, size.z); window.appModels.heroDark.scale.setScalar(scale); window.appModels.heroDark.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale); window.appModels.heroDark.visible = document.documentElement.getAttribute('data-theme') !== 'light'; group.add(window.appModels.heroDark); });
+              new THREE.GLTFLoader().load(lightModelUrl, (gltf) => { window.appModels.heroLight = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.heroLight); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 3.0 / Math.max(size.x, size.y, size.z); window.appModels.heroLight.scale.setScalar(scale); window.appModels.heroLight.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale); window.appModels.heroLight.visible = document.documentElement.getAttribute('data-theme') === 'light'; group.add(window.appModels.heroLight); });
+            }
 
-          const geo = new THREE.BufferGeometry(); const n = 150, pos = new Float32Array(n * 3); for (let i = 0; i < n; i++) { const r = 2.2 + Math.random() * 1.5, t = Math.random() * Math.PI * 2, p = Math.acos(2 * Math.random() - 1); pos[i * 3] = r * Math.sin(p) * Math.cos(t); pos[i * 3 + 1] = r * Math.sin(p) * Math.sin(t); pos[i * 3 + 2] = r * Math.cos(p); } geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); const particles = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xff3333, size: 0.03, transparent: true, opacity: 0.6, sizeAttenuation: true })); scene.add(particles);
-          let tRX = 0.1, tRY = 0, cRX = 0.1, cRY = 0; document.addEventListener('mousemove', (e) => { const nx = (e.clientX / window.innerWidth - 0.5) * 2, ny = (e.clientY / window.innerHeight - 0.5) * 2; tRY = nx * 0.8; tRX = 0.1 + ny * 0.3; mouseLight.position.set(nx * 5, 1 - ny * 3, 4); });
-          function resize() { const w = container.clientWidth, h = container.clientHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); } resize(); window.addEventListener('resize', resize);
-          let heroRafId = null, heroVisible = true; function heroAnimate() { cRX += (tRX - cRX) * 0.05; cRY += (tRY - cRY) * 0.05; group.rotation.x = cRX; group.rotation.y = cRY; tRY += 0.002; particles.rotation.y += 0.0008; renderer.render(scene, camera); heroRafId = requestAnimationFrame(heroAnimate); }
-          new IntersectionObserver(entries => { heroVisible = entries[0].isIntersecting; if (heroVisible && !document.hidden && !heroRafId) heroRafId = requestAnimationFrame(heroAnimate); else if (!heroVisible && heroRafId) { cancelAnimationFrame(heroRafId); heroRafId = null; } }, { threshold: 0.01 }).observe(canvas); heroRafId = requestAnimationFrame(heroAnimate);
+            const geo = new THREE.BufferGeometry(); const n = 150, pos = new Float32Array(n * 3); for (let i = 0; i < n; i++) { const r = 2.2 + Math.random() * 1.5, t = Math.random() * Math.PI * 2, p = Math.acos(2 * Math.random() - 1); pos[i * 3] = r * Math.sin(p) * Math.cos(t); pos[i * 3 + 1] = r * Math.sin(p) * Math.sin(t); pos[i * 3 + 2] = r * Math.cos(p); } geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); const particles = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xff3333, size: 0.03, transparent: true, opacity: 0.6, sizeAttenuation: true })); scene.add(particles);
+            let tRX = 0.1, tRY = 0, cRX = 0.1, cRY = 0; document.addEventListener('mousemove', (e) => { const nx = (e.clientX / window.innerWidth - 0.5) * 2, ny = (e.clientY / window.innerHeight - 0.5) * 2; tRY = nx * 0.8; tRX = 0.1 + ny * 0.3; mouseLight.position.set(nx * 5, 1 - ny * 3, 4); });
+            function resize() { const w = container.clientWidth, h = container.clientHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); } resize(); window.addEventListener('resize', resize);
+            let heroRafId = null, heroVisible = true; function heroAnimate() { cRX += (tRX - cRX) * 0.05; cRY += (tRY - cRY) * 0.05; group.rotation.x = cRX; group.rotation.y = cRY; tRY += 0.002; particles.rotation.y += 0.0008; renderer.render(scene, camera); heroRafId = requestAnimationFrame(heroAnimate); }
+            new IntersectionObserver(entries => { heroVisible = entries[0].isIntersecting; if (heroVisible && !document.hidden && !heroRafId) heroRafId = requestAnimationFrame(heroAnimate); else if (!heroVisible && heroRafId) { cancelAnimationFrame(heroRafId); heroRafId = null; } }, { threshold: 0.01 }).observe(canvas); heroRafId = requestAnimationFrame(heroAnimate);
+          } catch (e) { console.warn("Three.js Hero Canvas failed to initialize:", e); }
         }
 
         const fCanvas = document.getElementById('footer-three-canvas');
-        if (fCanvas) {
-          const container = fCanvas.parentElement; let footerRafId = null;
-          const fRenderer = new THREE.WebGLRenderer({ canvas: fCanvas, antialias: true, alpha: true }); fRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); fRenderer.outputEncoding = THREE.sRGBEncoding; fRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-          const fScene = new THREE.Scene(); const fCamera = new THREE.PerspectiveCamera(35, 1, 0.1, 100); fCamera.position.set(0, 1.0, 6); fScene.add(new THREE.AmbientLight(0xffffff, 0.5)); const key = new THREE.DirectionalLight(0xffffff, 1.2); key.position.set(2, 4, 3); fScene.add(key); const fGroup = new THREE.Group(); fScene.add(fGroup);
+        if (fCanvas && typeof THREE !== 'undefined') {
+          try {
+            const container = fCanvas.parentElement; let footerRafId = null;
+            const fRenderer = new THREE.WebGLRenderer({ canvas: fCanvas, antialias: true, alpha: true }); fRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); fRenderer.outputEncoding = THREE.sRGBEncoding; fRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+            const fScene = new THREE.Scene(); const fCamera = new THREE.PerspectiveCamera(35, 1, 0.1, 100); fCamera.position.set(0, 1.0, 6); fScene.add(new THREE.AmbientLight(0xffffff, 0.5)); const key = new THREE.DirectionalLight(0xffffff, 1.2); key.position.set(2, 4, 3); fScene.add(key); const fGroup = new THREE.Group(); fScene.add(fGroup);
 
-          // Đã nhấc tọa độ Y của cả 2 mô hình lên +0.8 để tránh bị cắt chân
-          new THREE.GLTFLoader().load(darkModelUrl, (gltf) => { window.appModels.footerDark = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.footerDark); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 2.6 / Math.max(size.x, size.y, size.z); window.appModels.footerDark.scale.setScalar(scale); window.appModels.footerDark.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale); window.appModels.footerDark.visible = document.documentElement.getAttribute('data-theme') !== 'light'; fGroup.add(window.appModels.footerDark); });
-          new THREE.GLTFLoader().load(lightModelUrl, (gltf) => { window.appModels.footerLight = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.footerLight); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 2.6 / Math.max(size.x, size.y, size.z); window.appModels.footerLight.scale.setScalar(scale); window.appModels.footerLight.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale); window.appModels.footerLight.visible = document.documentElement.getAttribute('data-theme') === 'light'; fGroup.add(window.appModels.footerLight); });
+            if (THREE.GLTFLoader) {
+              new THREE.GLTFLoader().load(darkModelUrl, (gltf) => { window.appModels.footerDark = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.footerDark); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 2.6 / Math.max(size.x, size.y, size.z); window.appModels.footerDark.scale.setScalar(scale); window.appModels.footerDark.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale); window.appModels.footerDark.visible = document.documentElement.getAttribute('data-theme') !== 'light'; fGroup.add(window.appModels.footerDark); });
+              new THREE.GLTFLoader().load(lightModelUrl, (gltf) => { window.appModels.footerLight = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.footerLight); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 2.6 / Math.max(size.x, size.y, size.z); window.appModels.footerLight.scale.setScalar(scale); window.appModels.footerLight.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale); window.appModels.footerLight.visible = document.documentElement.getAttribute('data-theme') === 'light'; fGroup.add(window.appModels.footerLight); });
+            }
 
-          function resizeFooter() { fRenderer.setSize(container.clientWidth, container.clientHeight); fCamera.aspect = container.clientWidth / container.clientHeight; fCamera.updateProjectionMatrix(); } resizeFooter(); window.addEventListener('resize', resizeFooter);
-          new IntersectionObserver(entries => { const isVisible = entries[0].isIntersecting; if (isVisible && !document.hidden && !footerRafId) { footerRafId = requestAnimationFrame(function loop() { fGroup.rotation.y += 0.003; fRenderer.render(fScene, fCamera); footerRafId = requestAnimationFrame(loop); }); } else if (!isVisible && footerRafId) { cancelAnimationFrame(footerRafId); footerRafId = null; } }, { threshold: 0.01 }).observe(container);
+            function resizeFooter() { fRenderer.setSize(container.clientWidth, container.clientHeight); fCamera.aspect = container.clientWidth / container.clientHeight; fCamera.updateProjectionMatrix(); } resizeFooter(); window.addEventListener('resize', resizeFooter);
+            new IntersectionObserver(entries => { const isVisible = entries[0].isIntersecting; if (isVisible && !document.hidden && !footerRafId) { footerRafId = requestAnimationFrame(function loop() { fGroup.rotation.y += 0.003; fRenderer.render(fScene, fCamera); footerRafId = requestAnimationFrame(loop); }); } else if (!isVisible && footerRafId) { cancelAnimationFrame(footerRafId); footerRafId = null; } }, { threshold: 0.01 }).observe(container);
+          } catch (e) { console.warn("Three.js Footer Canvas failed to initialize:", e); }
         }
       })();
+
 
       // SCROLL LOCK INTRO
       (function () {
         const intro = document.getElementById('intro'); const counter = document.getElementById('intro-counter');
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || sessionStorage.getItem('introSeen')) { intro.style.display = 'none'; initScrollEffects(); return; }
-        document.body.classList.add('intro-active'); let count = 0; const duration = 2400, startTime = performance.now();
-        function updateCounter(now) { count = Math.min(100, Math.round(((now - startTime) / duration) * 100)); counter.textContent = String(count).padStart(3, '0'); if (count < 100) requestAnimationFrame(updateCounter); } requestAnimationFrame(updateCounter);
-        setTimeout(() => { intro.classList.add('hide'); sessionStorage.setItem('introSeen', '1'); setTimeout(() => { document.body.classList.remove('intro-active'); intro.style.display = 'none'; initScrollEffects(); }, 950); }, duration + 200);
+        if (!intro) { initScrollEffects(); return; }
+
+        const forceHide = () => {
+          intro.classList.add('hide');
+          sessionStorage.setItem('introSeen', '1');
+          setTimeout(() => {
+            document.body.classList.remove('intro-active');
+            intro.style.display = 'none';
+            initScrollEffects();
+          }, 950);
+        };
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || sessionStorage.getItem('introSeen')) {
+          intro.style.display = 'none';
+          initScrollEffects();
+          return;
+        }
+
+        document.body.classList.add('intro-active');
+        let count = 0; const duration = 2400, startTime = performance.now();
+
+        function updateCounter(now) {
+          count = Math.min(100, Math.round(((now - startTime) / duration) * 100));
+          if (counter) counter.textContent = String(count).padStart(3, '0');
+          if (count < 100) requestAnimationFrame(updateCounter);
+        }
+        requestAnimationFrame(updateCounter);
+
+        // Fallback safety to ensure site always loads
+        const safetyTimeout = setTimeout(forceHide, duration + 500);
       })();
 
       // THEME & VIDEO MANAGER
@@ -3566,7 +3706,16 @@
           if (!video) return; const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (prefersReduced || (navigator.connection && navigator.connection.saveData)) { video.parentElement.style.display = 'none'; return; }
           video.style.opacity = '0'; setTimeout(() => {
             if (theme === 'light') { if (hlsInstance) { hlsInstance.destroy(); hlsInstance = null; } video.src = lightVideoSrc; if (metaThemeColor) metaThemeColor.setAttribute('content', '#f8fafc'); }
-            else { if (Hls.isSupported()) { hlsInstance = new Hls({ startLevel: -1, capLevelToPlayerSize: true }); hlsInstance.loadSource(darkVideoSrc); hlsInstance.attachMedia(video); } else if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = darkVideoSrc; } if (metaThemeColor) metaThemeColor.setAttribute('content', '#080808'); }
+            else {
+              if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+                hlsInstance = new Hls({ startLevel: -1, capLevelToPlayerSize: true });
+                hlsInstance.loadSource(darkVideoSrc);
+                hlsInstance.attachMedia(video);
+              } else if (video.canPlayType && video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = darkVideoSrc;
+              }
+              if (metaThemeColor) metaThemeColor.setAttribute('content', '#080808');
+            }
             video.play().then(() => { video.style.opacity = '0.85'; }).catch(() => { });
           }, 300);
         }
@@ -3612,9 +3761,9 @@
         const footerHeadline = document.querySelector('.footer-headline h2'); if (footerHeadline) { const fChars = splitTextIntoChars(footerHeadline); gsap.fromTo(fChars, { opacity: 0, y: '100%', rotateX: -90 }, { opacity: 1, y: '0%', rotateX: 0, duration: 0.9, ease: 'power3.out', stagger: 0.025, scrollTrigger: { trigger: footerHeadline, start: 'top 85%', toggleActions: 'play none none none' } }); }
 
         document.querySelectorAll('.section-label').forEach(label => { label.style.opacity = '1'; label.style.transform = 'none'; gsap.fromTo(label, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1, ease: 'power3.inOut', scrollTrigger: { trigger: label, start: 'top 88%', toggleActions: 'play none none none' } }); });
-        document.querySelectorAll('.reveal:not(.work-card-horizontal)').forEach(el => { 
-          if (el.classList.contains('section-title') || el.classList.contains('section-label') || el.classList.contains('skill-card')) return; 
-          gsap.to(el, { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' } }); 
+        document.querySelectorAll('.reveal:not(.work-card-horizontal)').forEach(el => {
+          if (el.classList.contains('section-title') || el.classList.contains('section-label') || el.classList.contains('skill-card')) return;
+          gsap.to(el, { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' } });
         });
 
         // Staggered Reveal for Horizontal Works
@@ -3667,13 +3816,13 @@
         document.querySelectorAll('section').forEach(section => { if (section.id === 'works') return; gsap.fromTo(section, { scale: 0.97, opacity: 0.8 }, { scale: 1, opacity: 1, ease: 'power2.out', scrollTrigger: { trigger: section, start: 'top 95%', end: 'top 60%', scrub: 1 } }); });
 
         const worksPinWrap = document.getElementById('works-pin-wrap'); const worksTrack = document.getElementById('works-track');
-        if (worksPinWrap && worksTrack) { 
-          let mm = gsap.matchMedia(); 
-          mm.add("(min-width: 769px)", () => { 
-            function getScrollAmount() { return -(worksTrack.scrollWidth - window.innerWidth); } 
-            const tween = gsap.to(worksTrack, { x: () => getScrollAmount(), ease: "none" }); 
-            window.worksST = ScrollTrigger.create({ trigger: worksPinWrap, start: "top top", end: () => `+=${getScrollAmount() * -1}`, pin: true, animation: tween, scrub: 1, invalidateOnRefresh: true }); 
-          }); 
+        if (worksPinWrap && worksTrack) {
+          let mm = gsap.matchMedia();
+          mm.add("(min-width: 769px)", () => {
+            function getScrollAmount() { return -(worksTrack.scrollWidth - window.innerWidth); }
+            const tween = gsap.to(worksTrack, { x: () => getScrollAmount(), ease: "none" });
+            window.worksST = ScrollTrigger.create({ trigger: worksPinWrap, start: "top top", end: () => `+=${getScrollAmount() * -1}`, pin: true, animation: tween, scrub: 1, invalidateOnRefresh: true });
+          });
         }
 
         // Auto-scroll logic for returning from project.html
@@ -3739,13 +3888,13 @@
       window._activeProjectId = null;
       window._savedScrollPos = 0;
 
-      window.navigateWithTransition = function(card, projectId) {
+      window.navigateWithTransition = function (card, projectId) {
         if (card && card.preventDefault) card.preventDefault();
-        
+
         const thumb = card.querySelector('.lando-img-wrap') || card;
         window._activeProjectId = projectId;
         window._savedScrollPos = window.scrollY || document.documentElement.scrollTop;
-        
+
         const project = PROJECTS[projectId];
         if (project) {
           document.getElementById('p-title').textContent = project.title;
@@ -3763,9 +3912,9 @@
           document.querySelectorAll('.lando-img-wrap').forEach(el => el.style.viewTransitionName = '');
           thumb.style.viewTransitionName = 'project-thumb';
           document.getElementById('project-hero').style.viewTransitionName = 'project-thumb';
-          
+
           if (window._lenis) window._lenis.stop();
-          
+
           document.startViewTransition(() => {
             document.querySelector('.page-wrap').style.display = 'none';
             document.getElementById('detail-view').style.display = 'block';
@@ -3783,24 +3932,24 @@
         }
       }
 
-      window.navigateBack = function(e) {
+      window.navigateBack = function (e) {
         if (e) e.preventDefault();
         history.back(); // Triggers popstate
       }
 
       window.addEventListener('popstate', (e) => {
         const state = e.state;
-        
+
         if (!state || state.view !== 'detail') {
           // Navigating back to main view
           if (document.startViewTransition) {
             if (window._activeProjectId) {
-               document.querySelectorAll('.lando-img-wrap').forEach(el => el.style.viewTransitionName = '');
-               const card = document.querySelector(`.work-slide[data-project-id="${window._activeProjectId}"] .lando-img-wrap`);
-               if (card) card.style.viewTransitionName = 'project-thumb';
+              document.querySelectorAll('.lando-img-wrap').forEach(el => el.style.viewTransitionName = '');
+              const card = document.querySelector(`.work-slide[data-project-id="${window._activeProjectId}"] .lando-img-wrap`);
+              if (card) card.style.viewTransitionName = 'project-thumb';
             }
             document.getElementById('project-hero').style.viewTransitionName = 'project-thumb';
-            
+
             if (window._lenis) window._lenis.stop();
 
             document.startViewTransition(() => {
@@ -3812,10 +3961,10 @@
                 ScrollTrigger.update();
               }
             }).finished.finally(() => {
-               if (window._lenis) {
-                 window._lenis.scrollTo(window._savedScrollPos, { immediate: true });
-                 window._lenis.start();
-               }
+              if (window._lenis) {
+                window._lenis.scrollTo(window._savedScrollPos, { immediate: true });
+                window._lenis.start();
+              }
             });
           } else {
             document.getElementById('detail-view').style.display = 'none';
@@ -3823,9 +3972,9 @@
             window.scrollTo(0, window._savedScrollPos);
             if (window.ScrollTrigger) ScrollTrigger.refresh();
             if (window._lenis) {
-                 window._lenis.scrollTo(window._savedScrollPos, { immediate: true });
-                 window._lenis.start();
-             }
+              window._lenis.scrollTo(window._savedScrollPos, { immediate: true });
+              window._lenis.start();
+            }
           }
           window._activeProjectId = null;
         } else {
@@ -3837,16 +3986,24 @@
     });
 
     // --- WEBGL WORKS LIQUID EFFECT ---
-    (function() {
+    (function () {
       const canvas = document.getElementById('webgl-works');
       if (!canvas || !window.THREE) return;
+
+      // OPTIMIZATION: Disable heavy WebGL liquid effect on touch devices (phones/tablets)
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      if (isTouch) {
+        canvas.style.display = 'none';
+        return;
+      }
+
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-      renderer.setClearColor(0x000000, 0); 
+      renderer.setClearColor(0x000000, 0);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
       const scene = new THREE.Scene();
-      
+
       const camera = new THREE.OrthographicCamera(
         window.innerWidth / -2, window.innerWidth / 2,
         window.innerHeight / 2, window.innerHeight / -2,
@@ -3944,10 +4101,10 @@
           material.uniforms.uTexture.value = tex;
           material.uniforms.uMediaRes.value.set(tex.image.width, tex.image.height);
         });
-        
+
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
-        
+
         const wrap = img.parentElement;
         const planeObj = { mesh, img, wrap, targetHover: 0 };
         planes.push(planeObj);
@@ -3974,20 +4131,20 @@
         const dy = mouseY - lastMouseY;
         lastMouseX = mouseX;
         lastMouseY = mouseY;
-        
+
         veloX += (dx - veloX) * 0.1;
         veloY += (dy - veloY) * 0.1;
-        
+
         const scrollY = window.scrollY || document.documentElement.scrollTop;
 
         planes.forEach(p => {
           p.mesh.material.uniforms.uHover.value += (p.targetHover - p.mesh.material.uniforms.uHover.value) * 0.1;
           p.mesh.material.uniforms.uTime.value = time;
-          
+
           // Use cached rect and adjust for scroll
           const rect = p.rect;
           const currentTop = rect.top - scrollY;
-          
+
           // Hide if outside viewport vertically
           if (currentTop + rect.height < -100 || currentTop > window.innerHeight + 100) {
             p.mesh.visible = false;
@@ -3998,18 +4155,18 @@
           p.mesh.scale.set(rect.width, rect.height, 1);
           p.mesh.position.x = rect.left - window.innerWidth / 2 + rect.width / 2;
           p.mesh.position.y = -currentTop + window.innerHeight / 2 - rect.height / 2;
-          
+
           let lx = (mouseX - rect.left) / rect.width;
           let ly = 1.0 - ((mouseY - currentTop) / rect.height);
-          
+
           p.mesh.material.uniforms.uMouse.value.set(lx, ly);
           p.mesh.material.uniforms.uVelo.value.set(veloX * 0.003, -veloY * 0.003);
           p.mesh.material.uniforms.uPlaneRes.value.set(rect.width, rect.height);
         });
-        
+
         renderer.render(scene, camera);
       }
-      
+
       gsap.ticker.add(updatePlanes);
 
       function refreshPlaneRects() {
@@ -4028,7 +4185,7 @@
       window.addEventListener('resize', refreshPlaneRects);
       refreshPlaneRects();
 
-      window.copyEmail = function(e) {
+      window.copyEmail = function (e) {
         // e.preventDefault(); // Don't prevent default so it still tries to open mail app
         const email = "minhdat0801@gmail.com";
         navigator.clipboard.writeText(email).then(() => {
@@ -4071,4 +4228,5 @@
 
   </script>
 </body>
+
 </html>
