@@ -20,13 +20,6 @@
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     rel="stylesheet" />
 
-  <script>
-    (function () {
-      const theme = localStorage.getItem('theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
-
   <style>
     *,
     *::before,
@@ -389,33 +382,6 @@
 
     .nav-links a:hover {
       color: #fff;
-    }
-
-    /* Styling cho link đang active */
-    .nav-links a.active {
-      color: #fff;
-      font-weight: 600;
-      position: relative;
-    }
-
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #fff;
-      /* Hoặc màu đỏ #ff4444 tùy gu của bạn */
-      border-radius: 2px;
-    }
-
-    [data-theme='light'] .nav-links a.active {
-      color: #060b14 !important;
-    }
-
-    [data-theme='light'] .nav-links a.active::after {
-      background: #060b14 !important;
     }
 
     .nav-cta {
@@ -2064,7 +2030,7 @@
         flex-direction: column;
         gap: 3rem;
         padding: 0;
-        transform: none;
+        transform: none !important;
       }
 
       .work-slide {
@@ -2685,21 +2651,6 @@
       transition: opacity 0.3s ease;
     }
 
-    ::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-
-    [data-theme='light'] input,
-    [data-theme='light'] textarea {
-      background: rgba(0, 0, 0, 0.03) !important;
-      border-color: rgba(0, 0, 0, 0.1) !important;
-      color: #060b14 !important;
-    }
-
-    [data-theme='light'] ::placeholder {
-      color: rgba(0, 0, 0, 0.4);
-    }
-
     /* CUSTOM VIEW TRANSITIONS SPEED */
     ::view-transition-group(root) {
       animation-duration: 0.8s !important;
@@ -2739,7 +2690,7 @@
     <div class="intro-line-wrap">
       <div class="intro-line"></div>
     </div>
-    <div class="intro-counter" id="intro-counter"></div>
+    <div class="intro-counter" id="intro-counter">000</div>
   </div>
 
   <div id="cursor-glow"></div>
@@ -3245,29 +3196,9 @@
 
         </div>
       </div>
-    <section id="contact" style="padding: 8rem 3rem 4rem; position: relative; z-index: 5;">
-      <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-        <p class="section-label reveal">— Get in touch</p>
-        <h2 class="section-title reveal reveal-delay-1" style="font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 2rem;">Let's
-          create<br />something bold.</h2>
-
-        <form class="glass-strong reveal reveal-delay-2"
-          style="padding: 2rem; border-radius: 1.5rem; display: flex; flex-direction: column; gap: 1rem; text-align: left;">
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <input type="text" placeholder="Your Name"
-              style="flex: 1; min-width: 200px; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; color: #fff; outline: none; font-family: 'Inter', sans-serif;">
-            <input type="email" placeholder="Your Email"
-              style="flex: 1; min-width: 200px; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; color: #fff; outline: none; font-family: 'Inter', sans-serif;">
-          </div>
-          <textarea placeholder="Tell me about your project..." rows="4"
-            style="padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; color: #fff; outline: none; font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
-          <button type="submit" class="btn-primary" style="justify-content: center; margin-top: 0.5rem; width: 100%;">Send
-            Message ↗</button>
-        </form>
-      </div>
     </section>
 
-    <footer class="grand-footer">
+    <footer class="grand-footer" id="contact">
       <div class="footer-hero">
         <div class="footer-hero-bg"></div>
         <div class="footer-side-left reveal">
@@ -3362,7 +3293,6 @@
   <script>
     // Gói tất cả script của bạn vào DOMContentLoaded để nó đợi các thư viện bên trên load xong mới chạy
     window.addEventListener('DOMContentLoaded', () => {
-      const isMobile = window.innerWidth < 1024 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       // ════════════════════════════════════════
       // TRANSLATIONS (CHỈ DỊCH DESCRIPTION)
       // ════════════════════════════════════════
@@ -3553,24 +3483,8 @@
       // CORE GLOBAL LOGIC
       // ════════════════════════════════════════
       window.appModels = { heroDark: null, heroLight: null, footerDark: null, footerLight: null };
-      window.updateModelsVisibility = function (theme) {
-        const isLight = theme === 'light';
-        if (window.appModels.heroDark) window.appModels.heroDark.visible = !isLight;
-        if (window.appModels.heroLight) window.appModels.heroLight.visible = isLight;
-        if (window.appModels.footerDark) window.appModels.footerDark.visible = !isLight;
-        if (window.appModels.footerLight) window.appModels.footerLight.visible = isLight;
-      };
 
       (function () {
-        if (isMobile) {
-          const dot = document.getElementById('cursor-dot');
-          const ring = document.getElementById('cursor-ring');
-          const glow = document.getElementById('cursor-glow');
-          if (dot) dot.style.display = 'none';
-          if (ring) ring.style.display = 'none';
-          if (glow) glow.style.display = 'none';
-          return;
-        }
         const dot = document.getElementById('cursor-dot'); const ring = document.getElementById('cursor-ring'); const glow = document.getElementById('cursor-glow');
         const cLabel = document.getElementById('cursor-label');
         let mx = -300, my = -300, rx = -300, ry = -300, gx = -300, gy = -300; let rafId = null, needsUpdate = false;
@@ -3596,8 +3510,8 @@
       })();
 
       // THREE.JS
+      // THREE.JS
       (function () {
-        if (isMobile) return;
         const darkModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/sign/11/Meshy_AI_Crimson_Gaze_0508022717_texture.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85MTlkZjA2Yy00NTNkLTQzNTctOGFiMS0wMjA0NzVmMWY1YjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMS9NZXNoeV9BSV9Dcmltc29uX0dhemVfMDUwODAyMjcxN190ZXh0dXJlLmdsYiIsImlhdCI6MTc3ODIwODA3NywiZXhwIjoxODA5NzQ0MDc3fQ.E8NarCETjUhsChLVzgd0GJRiHkoASFO9gUZyv0C3LPI';
         const lightModelUrl = 'https://dkpiuyohpzkrmvdzjvas.supabase.co/storage/v1/object/sign/111/Meshy_AI_Crimson_Gaze_0509184343_texture.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNjk3MTYxMS0xNjAwLTRhOTQtYmM4Zi1kOWQ5ZTU1MzkyOGMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMTEvTWVzaHlfQUlfQ3JpbXNvbl9HYXplXzA1MDkxODQzNDNfdGV4dHVyZS5nbGIiLCJpYXQiOjE3NzgzNTIyOTgsImV4cCI6MTgwOTg4ODI5OH0.ifMeg8lV-rUVty0PpHoLBP5sY6tEgmBqnW_zL_VbDwY';
 
@@ -3612,33 +3526,8 @@
             const group = new THREE.Group(); scene.add(group);
 
             if (THREE.GLTFLoader) {
-              const loader = new THREE.GLTFLoader();
-              const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-
-              loader.load(darkModelUrl, (gltf) => {
-                if (hint) hint.style.opacity = '1';
-                window.appModels.heroDark = gltf.scene;
-                const box = new THREE.Box3().setFromObject(window.appModels.heroDark);
-                const size = box.getSize(new THREE.Vector3());
-                const center = box.getCenter(new THREE.Vector3());
-                const scale = 3.0 / Math.max(size.x, size.y, size.z);
-                window.appModels.heroDark.scale.setScalar(scale);
-                window.appModels.heroDark.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale);
-                group.add(window.appModels.heroDark);
-                window.updateModelsVisibility(document.documentElement.getAttribute('data-theme') || 'dark');
-              }, undefined, (err) => console.error("Hero Dark Model Load Error:", err));
-
-              loader.load(lightModelUrl, (gltf) => {
-                window.appModels.heroLight = gltf.scene;
-                const box = new THREE.Box3().setFromObject(window.appModels.heroLight);
-                const size = box.getSize(new THREE.Vector3());
-                const center = box.getCenter(new THREE.Vector3());
-                const scale = 3.0 / Math.max(size.x, size.y, size.z);
-                window.appModels.heroLight.scale.setScalar(scale);
-                window.appModels.heroLight.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale);
-                group.add(window.appModels.heroLight);
-                window.updateModelsVisibility(document.documentElement.getAttribute('data-theme') || 'dark');
-              }, undefined, (err) => console.error("Hero Light Model Load Error:", err));
+              new THREE.GLTFLoader().load(darkModelUrl, (gltf) => { if (hint) hint.style.opacity = '1'; window.appModels.heroDark = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.heroDark); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 3.0 / Math.max(size.x, size.y, size.z); window.appModels.heroDark.scale.setScalar(scale); window.appModels.heroDark.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale); window.appModels.heroDark.visible = document.documentElement.getAttribute('data-theme') !== 'light'; group.add(window.appModels.heroDark); });
+              new THREE.GLTFLoader().load(lightModelUrl, (gltf) => { window.appModels.heroLight = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.heroLight); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 3.0 / Math.max(size.x, size.y, size.z); window.appModels.heroLight.scale.setScalar(scale); window.appModels.heroLight.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale); window.appModels.heroLight.visible = document.documentElement.getAttribute('data-theme') === 'light'; group.add(window.appModels.heroLight); });
             }
 
             const geo = new THREE.BufferGeometry(); const n = 150, pos = new Float32Array(n * 3); for (let i = 0; i < n; i++) { const r = 2.2 + Math.random() * 1.5, t = Math.random() * Math.PI * 2, p = Math.acos(2 * Math.random() - 1); pos[i * 3] = r * Math.sin(p) * Math.cos(t); pos[i * 3 + 1] = r * Math.sin(p) * Math.sin(t); pos[i * 3 + 2] = r * Math.cos(p); } geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); const particles = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xff3333, size: 0.03, transparent: true, opacity: 0.6, sizeAttenuation: true })); scene.add(particles);
@@ -3657,32 +3546,8 @@
             const fScene = new THREE.Scene(); const fCamera = new THREE.PerspectiveCamera(35, 1, 0.1, 100); fCamera.position.set(0, 1.0, 6); fScene.add(new THREE.AmbientLight(0xffffff, 0.5)); const key = new THREE.DirectionalLight(0xffffff, 1.2); key.position.set(2, 4, 3); fScene.add(key); const fGroup = new THREE.Group(); fScene.add(fGroup);
 
             if (THREE.GLTFLoader) {
-              const loader = new THREE.GLTFLoader();
-              const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-
-              loader.load(darkModelUrl, (gltf) => {
-                window.appModels.footerDark = gltf.scene;
-                const box = new THREE.Box3().setFromObject(window.appModels.footerDark);
-                const size = box.getSize(new THREE.Vector3());
-                const center = box.getCenter(new THREE.Vector3());
-                const scale = 2.6 / Math.max(size.x, size.y, size.z);
-                window.appModels.footerDark.scale.setScalar(scale);
-                window.appModels.footerDark.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale);
-                fGroup.add(window.appModels.footerDark);
-                window.updateModelsVisibility(document.documentElement.getAttribute('data-theme') || 'dark');
-              }, undefined, (err) => console.error("Footer Dark Model Load Error:", err));
-
-              loader.load(lightModelUrl, (gltf) => {
-                window.appModels.footerLight = gltf.scene;
-                const box = new THREE.Box3().setFromObject(window.appModels.footerLight);
-                const size = box.getSize(new THREE.Vector3());
-                const center = box.getCenter(new THREE.Vector3());
-                const scale = 2.6 / Math.max(size.x, size.y, size.z);
-                window.appModels.footerLight.scale.setScalar(scale);
-                window.appModels.footerLight.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale);
-                fGroup.add(window.appModels.footerLight);
-                window.updateModelsVisibility(document.documentElement.getAttribute('data-theme') || 'dark');
-              }, undefined, (err) => console.error("Footer Light Model Load Error:", err));
+              new THREE.GLTFLoader().load(darkModelUrl, (gltf) => { window.appModels.footerDark = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.footerDark); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 2.6 / Math.max(size.x, size.y, size.z); window.appModels.footerDark.scale.setScalar(scale); window.appModels.footerDark.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale); window.appModels.footerDark.visible = document.documentElement.getAttribute('data-theme') !== 'light'; fGroup.add(window.appModels.footerDark); });
+              new THREE.GLTFLoader().load(lightModelUrl, (gltf) => { window.appModels.footerLight = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.footerLight); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 2.6 / Math.max(size.x, size.y, size.z); window.appModels.footerLight.scale.setScalar(scale); window.appModels.footerLight.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale); window.appModels.footerLight.visible = document.documentElement.getAttribute('data-theme') === 'light'; fGroup.add(window.appModels.footerLight); });
             }
 
             function resizeFooter() { fRenderer.setSize(container.clientWidth, container.clientHeight); fCamera.aspect = container.clientWidth / container.clientHeight; fCamera.updateProjectionMatrix(); } resizeFooter(); window.addEventListener('resize', resizeFooter);
@@ -3694,40 +3559,28 @@
 
       // SCROLL LOCK INTRO
       (function () {
-        const intro = document.getElementById('intro');
-        const counter = document.getElementById('intro-counter');
+        const intro = document.getElementById('intro'); const counter = document.getElementById('intro-counter');
         if (!intro) { initScrollEffects(); return; }
-
+        
         const forceHide = () => {
           intro.classList.add('hide');
           sessionStorage.setItem('introSeen', '1');
           setTimeout(() => {
-            document.body.classList.remove('intro-active'); // Mở khóa cuộn
+            document.body.classList.remove('intro-active');
             intro.style.display = 'none';
             initScrollEffects();
           }, 950);
         };
 
-        // CHECK SKIP INTRO
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || sessionStorage.getItem('introSeen')) {
           intro.style.display = 'none';
-
-          // FIX BUG 3: Đảm bảo xóa class khóa cuộn ngay lập tức
-          document.body.classList.remove('intro-active');
-
-          // FIX BUG 3: Đợi browser render xong frame hiện tại rồi mới init Lenis/GSAP
-          requestAnimationFrame(() => {
-            initScrollEffects();
-          });
+          initScrollEffects();
           return;
         }
 
         document.body.classList.add('intro-active');
         let count = 0; const duration = 2400, startTime = performance.now();
-
-        // Thêm 1 dòng nhỏ để set state ban đầu an toàn
-        if (counter) counter.textContent = "000";
-
+        
         function updateCounter(now) {
           count = Math.min(100, Math.round(((now - startTime) / duration) * 100));
           if (counter) counter.textContent = String(count).padStart(3, '0');
@@ -3745,12 +3598,7 @@
         const darkVideoSrc = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8'; const lightVideoSrc = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_074327_a4d6275d-82d9-4c83-bfbe-f1fb2213c17c.mp4'; let hlsInstance = null;
 
         function loadVideoForTheme(theme) {
-          if (!video) return; 
-          const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; 
-          if (prefersReduced || (navigator.connection && navigator.connection.saveData)) { 
-            video.parentElement.style.display = 'none'; 
-            return; 
-          }
+          if (!video) return; const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (prefersReduced || (navigator.connection && navigator.connection.saveData)) { video.parentElement.style.display = 'none'; return; }
           video.style.opacity = '0'; setTimeout(() => {
             if (theme === 'light') { if (hlsInstance) { hlsInstance.destroy(); hlsInstance = null; } video.src = lightVideoSrc; if (metaThemeColor) metaThemeColor.setAttribute('content', '#f8fafc'); }
             else { 
@@ -3767,17 +3615,15 @@
           }, 300);
         }
 
-        function updateModelsVisibility(theme) {
-          if (window.updateModelsVisibility) window.updateModelsVisibility(theme);
-        }
+        function updateModelsVisibility(theme) { const isLight = theme === 'light'; if (window.appModels.heroDark) window.appModels.heroDark.visible = !isLight; if (window.appModels.heroLight) window.appModels.heroLight.visible = isLight; if (window.appModels.footerDark) window.appModels.footerDark.visible = !isLight; if (window.appModels.footerLight) window.appModels.footerLight.visible = isLight; }
 
-        let currentTheme = localStorage.getItem('theme') || 'dark';
+        let currentTheme = localStorage.getItem('theme');
+        if (!currentTheme) {
+          currentTheme = 'dark';
+        }
         document.documentElement.setAttribute('data-theme', currentTheme);
         themeIcon.textContent = currentTheme === 'dark' ? '☼' : '☾';
         loadVideoForTheme(currentTheme);
-
-        // Đảm bảo sync visibility ngay khi theme manager init
-        updateModelsVisibility(currentTheme);
 
         if (themeToggle) {
           themeToggle.addEventListener('click', () => {
@@ -3802,13 +3648,9 @@
 
         const progressBar = document.getElementById('scroll-progress'); if (progressBar) gsap.to(progressBar, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 } });
 
-        function splitTextIntoChars(el) { 
-          if (isMobile) return []; 
-          const text = el.textContent; el.innerHTML = ''; el.classList.add('split-text'); const words = text.split(/\s+/); words.forEach((word, wi) => { const wordSpan = document.createElement('span'); wordSpan.classList.add('word'); word.split('').forEach((char, ci) => { const charSpan = document.createElement('span'); charSpan.classList.add('char'); charSpan.textContent = char; charSpan.style.transitionDelay = `${(wi * 4 + ci) * 0.03}s`; wordSpan.appendChild(charSpan); }); el.appendChild(wordSpan); }); return el.querySelectorAll('.char'); }
+        function splitTextIntoChars(el) { const text = el.textContent; el.innerHTML = ''; el.classList.add('split-text'); const words = text.split(/\s+/); words.forEach((word, wi) => { const wordSpan = document.createElement('span'); wordSpan.classList.add('word'); word.split('').forEach((char, ci) => { const charSpan = document.createElement('span'); charSpan.classList.add('char'); charSpan.textContent = char; charSpan.style.transitionDelay = `${(wi * 4 + ci) * 0.03}s`; wordSpan.appendChild(charSpan); }); el.appendChild(wordSpan); }); return el.querySelectorAll('.char'); }
 
-        document.querySelectorAll('.section-title').forEach(title => { 
-          if (isMobile) return; 
-          const html = title.innerHTML; const parts = html.split(/<br\s*\/?>/i); title.innerHTML = ''; title.classList.add('split-text'); title.style.opacity = '1'; title.style.transform = 'none'; parts.forEach((part, pi) => { const tempDiv = document.createElement('div'); tempDiv.innerHTML = part.trim(); const text = tempDiv.textContent; const words = text.split(/\s+/); words.forEach((word) => { const wordSpan = document.createElement('span'); wordSpan.classList.add('word'); word.split('').forEach((char) => { const charSpan = document.createElement('span'); charSpan.classList.add('char'); charSpan.textContent = char; wordSpan.appendChild(charSpan); }); title.appendChild(wordSpan); }); if (pi < parts.length - 1) title.appendChild(document.createElement('br')); }); const chars = title.querySelectorAll('.char'); gsap.fromTo(chars, { opacity: 0, y: '100%', rotateX: -80 }, { opacity: 1, y: '0%', rotateX: 0, duration: 0.8, ease: 'power3.out', stagger: 0.03, scrollTrigger: { trigger: title, start: 'top 85%', end: 'top 40%', toggleActions: 'play none none none' } }); });
+        document.querySelectorAll('.section-title').forEach(title => { const html = title.innerHTML; const parts = html.split(/<br\s*\/?>/i); title.innerHTML = ''; title.classList.add('split-text'); title.style.opacity = '1'; title.style.transform = 'none'; parts.forEach((part, pi) => { const tempDiv = document.createElement('div'); tempDiv.innerHTML = part.trim(); const text = tempDiv.textContent; const words = text.split(/\s+/); words.forEach((word) => { const wordSpan = document.createElement('span'); wordSpan.classList.add('word'); word.split('').forEach((char) => { const charSpan = document.createElement('span'); charSpan.classList.add('char'); charSpan.textContent = char; wordSpan.appendChild(charSpan); }); title.appendChild(wordSpan); }); if (pi < parts.length - 1) title.appendChild(document.createElement('br')); }); const chars = title.querySelectorAll('.char'); gsap.fromTo(chars, { opacity: 0, y: '100%', rotateX: -80 }, { opacity: 1, y: '0%', rotateX: 0, duration: 0.8, ease: 'power3.out', stagger: 0.03, scrollTrigger: { trigger: title, start: 'top 85%', end: 'top 40%', toggleActions: 'play none none none' } }); });
 
         const heroName = document.querySelector('.hero-name'); if (heroName) gsap.fromTo(heroName, { opacity: 0, y: 60, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power3.out', delay: 0.3 });
         const footerHeadline = document.querySelector('.footer-headline h2'); if (footerHeadline) { const fChars = splitTextIntoChars(footerHeadline); gsap.fromTo(fChars, { opacity: 0, y: '100%', rotateX: -90 }, { opacity: 1, y: '0%', rotateX: 0, duration: 0.9, ease: 'power3.out', stagger: 0.025, scrollTrigger: { trigger: footerHeadline, start: 'top 85%', toggleActions: 'play none none none' } }); }
@@ -3872,26 +3714,9 @@
         if (worksPinWrap && worksTrack) { 
           let mm = gsap.matchMedia(); 
           mm.add("(min-width: 769px)", () => { 
-            // Setup animation cho Desktop
             function getScrollAmount() { return -(worksTrack.scrollWidth - window.innerWidth); } 
             const tween = gsap.to(worksTrack, { x: () => getScrollAmount(), ease: "none" }); 
-            
-            window.worksST = ScrollTrigger.create({ 
-              trigger: worksPinWrap, 
-              start: "top top", 
-              end: () => `+=${getScrollAmount() * -1}`, 
-              pin: true, 
-              animation: tween, 
-              scrub: 1, 
-              invalidateOnRefresh: true 
-            }); 
-
-            // Cleanup function: Tự động chạy khi màn hình nhỏ hơn 769px
-            return () => {
-              window.worksST = null;
-              // Trả lại trạng thái sạch sẽ cho mobile
-              gsap.set(worksTrack, { clearProps: "all" });
-            };
+            window.worksST = ScrollTrigger.create({ trigger: worksPinWrap, start: "top top", end: () => `+=${getScrollAmount() * -1}`, pin: true, animation: tween, scrub: 1, invalidateOnRefresh: true }); 
           }); 
         }
 
@@ -3913,32 +3738,6 @@
         }
 
         document.querySelectorAll('.stat-num').forEach(stat => { const text = stat.textContent; const num = parseInt(text); if (isNaN(num)) return; const suffix = text.replace(String(num), ''); gsap.fromTo(stat, { innerText: 0 }, { innerText: num, duration: 2, ease: 'power2.out', snap: { innerText: 1 }, scrollTrigger: { trigger: stat, start: 'top 85%', toggleActions: 'play none none none' }, onUpdate: function () { stat.textContent = Math.round(gsap.getProperty(stat, 'innerText')) + suffix; } }); });
-
-        // SCROLL SPY CHO NAV LINKS
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-links a.nav-close-trigger');
-
-        const spyOptions = {
-          root: null,
-          rootMargin: '-20% 0px -70% 0px', // Trigger khi section chiếm phần lớn màn hình
-          threshold: 0
-        };
-
-        const scrollSpyObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const currentId = entry.target.getAttribute('id');
-              navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentId}`) {
-                  link.classList.add('active');
-                }
-              });
-            }
-          });
-        }, spyOptions);
-
-        sections.forEach(section => scrollSpyObserver.observe(section));
       }
 
       // MAGNETIC BUTTONS
