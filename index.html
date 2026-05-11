@@ -1556,7 +1556,6 @@
     }
 
     .marquee-section.reverse {
-      background: rgba(255, 255, 255, 0.015);
       margin-top: 2rem;
       border-top: none;
     }
@@ -2424,6 +2423,10 @@
     }
 
     /* ── VIEW TRANSITIONS ── */
+    @view-transition {
+      navigation: auto;
+    }
+
     ::view-transition-old(root),
     ::view-transition-new(root) {
       animation: none;
@@ -2432,8 +2435,8 @@
 
     ::view-transition-old(project-thumb),
     ::view-transition-new(project-thumb) {
-      animation-duration: 0.5s;
-      animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      animation-duration: 0.8s;
+      animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* ════ LIGHT MODE OVERRIDES ════ */
@@ -2563,8 +2566,9 @@
     [data-theme='light'] .btn-primary,
     [data-theme='light'] .nav-cta,
     [data-theme='light'] .footer-cta-btn {
-      background: #060b14 !important;
-      color: #f8fafc !important;
+      background: #f8fafc !important;
+      color: #060b14 !important;
+      border: 1px solid rgba(6, 11, 20, 0.15) !important;
     }
 
     [data-theme='light'] .glass,
@@ -2604,6 +2608,11 @@
     [data-theme='light'] .hero-tag .dot,
     [data-theme='light'] .marquee-dot {
       background: rgba(6, 11, 20, 0.5) !important;
+    }
+
+    [data-theme='light'] .marquee-section,
+    [data-theme='light'] .marquee-section.reverse {
+      background: transparent !important;
     }
 
     /* Giao diện tương phản cho Intro Screen (DatTran lúc mới vào web) khi ở Light Mode */
@@ -2797,9 +2806,6 @@
       <div class="nav-inner">
         <a href="#" class="nav-logo">DatTran<span data-i18n="nav_role">Graphic Designer</span></a>
         <div class="nav-links">
-          <a href="#about" class="nav-close-trigger" data-i18n="nav_about">About</a>
-          <a href="#career" class="nav-close-trigger" data-i18n="nav_career">Career</a>
-          <a href="#skills" class="nav-close-trigger" data-i18n="nav_skills">Skills</a>
           <a href="#works" class="nav-close-trigger" data-i18n="nav_works">Works</a>
           <a href="#contact" class="nav-close-trigger" data-i18n="nav_contact">Contact</a>
         </div>
@@ -2835,9 +2841,6 @@
     <div class="mobile-menu" id="mobile-menu">
       <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">✕</button>
       <nav class="mobile-menu-links">
-        <a href="#about" id="mm-about" data-i18n="nav_about">About</a>
-        <a href="#career" id="mm-career" data-i18n="nav_career">Career</a>
-        <a href="#skills" id="mm-skills" data-i18n="nav_skills">Skills</a>
         <a href="#works" id="mm-works" data-i18n="nav_works">Works</a>
         <a href="#contact" id="mm-contact" data-i18n="nav_contact">Contact</a>
       </nav>
@@ -2846,8 +2849,7 @@
 
     <section id="main-content" class="hero" style="position:relative;">
       <div class="hero-left">
-        <div class="glass hero-tag reveal"><span class="dot"></span><span data-i18n="hero_status">Available for
-            freelance work</span></div>
+
         <h1 class="hero-name reveal reveal-delay-1">Dat<span class="dim">Tran</span></h1>
         <p class="hero-sub reveal reveal-delay-2" data-i18n="hero_sub">
           Graphic Designer & Digital Image Artist crafting visual stories through bold concepts, cinematic aesthetics,
@@ -2863,29 +2865,6 @@
                 <path d="M7 7h10v10" />
               </svg>
             </button>
-          </div>
-          <div class="mag-btn">
-            <button class="btn-outline mag-inner"
-              onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"
-              data-i18n="btn_get_touch">Get in Touch</button>
-          </div>
-        </div>
-        <div class="hero-stats reveal reveal-delay-4">
-          <div class="stat-item">
-            <div class="stat-num">5+</div>
-            <div class="stat-label" data-i18n="stat_exp">Years Experience</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">80+</div>
-            <div class="stat-label" data-i18n="stat_proj">Projects Done</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">40+</div>
-            <div class="stat-label" data-i18n="stat_client">Happy Clients</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">8</div>
-            <div class="stat-label" data-i18n="stat_tool">Design Tools</div>
           </div>
         </div>
       </div>
@@ -2904,332 +2883,9 @@
       </div>
     </section>
 
-    <div class="marquee-section">
-      <div class="marquee-track">
-        <div class="marquee-item"><strong>DatTran</strong><span class="marquee-dot"></span></div>
-        <div class="marquee-item">Graphic Designer<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Digital Image Artist<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Ho Chi Minh City<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Brand Identity<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Photo Retouching<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Motion Graphics<span class="marquee-dot"></span></div>
-        <div class="marquee-item">UI / UX Design<span class="marquee-dot"></span></div>
-        <div class="marquee-item">5+ Years<span class="marquee-dot"></span></div>
-        <div class="marquee-item">80+ Projects<span class="marquee-dot"></span></div>
-        <div class="marquee-item"><strong>DatTran</strong><span class="marquee-dot"></span></div>
-        <div class="marquee-item">Graphic Designer<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Digital Image Artist<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Ho Chi Minh City<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Brand Identity<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Photo Retouching<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Motion Graphics<span class="marquee-dot"></span></div>
-        <div class="marquee-item">UI / UX Design<span class="marquee-dot"></span></div>
-        <div class="marquee-item">5+ Years<span class="marquee-dot"></span></div>
-        <div class="marquee-item">80+ Projects<span class="marquee-dot"></span></div>
-      </div>
-    </div>
 
-    <section id="about">
-      <div class="about-grid">
-        <div>
-          <p class="section-label reveal" data-i18n="lbl_about">— About me</p>
-          <h2 class="section-title reveal reveal-delay-1" data-i18n="title_about">Design that<br />speaks louder</h2>
-          <p class="about-text reveal reveal-delay-2" data-i18n="desc_about">
-            I'm <strong>Dat Tran</strong>, a graphic designer and digital image artist based in Vietnam. I specialize in
-            creating <strong>visual identities, cinematic composites,</strong> and <strong>immersive digital
-              experiences</strong> that go beyond the surface.<br /><br />
-            My approach blends strategic thinking with artistic intuition — every pixel has a purpose, every composition
-            tells a story. From brand campaigns to motion graphics, I bridge the gap between concept and execution.
-          </p>
-          <div class="about-tags reveal reveal-delay-3">
-            <span class="tag glass">Brand Identity</span>
-            <span class="tag glass">Photo Retouching</span>
-          </div>
-        </div>
-        <div>
-          <div class="about-card glass reveal reveal-delay-1">
-            <div class="about-card-label" data-i18n="lbl_status">Current Status</div>
-            <div class="about-card-val" data-i18n="val_status">Open to Projects</div>
-          </div>
-          <div class="about-card glass reveal reveal-delay-2">
-            <div class="about-card-label" data-i18n="lbl_based">Based in</div>
-            <div class="about-card-val" data-i18n="val_based">Ho Chi Minh City, Vietnam</div>
-          </div>
-          <div class="about-card glass reveal reveal-delay-3">
-            <div class="about-card-label" data-i18n="lbl_spec">Specialization</div>
-            <div class="about-card-val">Graphic & Digital Image</div>
-          </div>
-          <div class="about-card glass reveal reveal-delay-4">
-            <div class="about-card-label" data-i18n="lbl_lang">Languages</div>
-            <div class="about-card-val"><span data-i18n="val_lang">Vietnamese</span> <span
-                style="margin: 0 0.5rem; opacity: 0.5;">·</span> English</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="career-section" id="career">
-      <div class="career-inner">
-        <div class="career-header reveal">
-          <h2 class="career-title" data-i18n="title_career">My career &amp;<br><em>experience</em></h2>
-        </div>
-        <div class="career-timeline" id="career-timeline">
-          <div class="career-timeline-track"></div>
-          <div class="career-timeline-glow" id="career-glow"></div>
-          <div class="career-timeline-beam" id="career-beam"></div>
 
-          <div class="career-row reveal">
-            <div class="career-left">
-              <div class="career-job-title" data-i18n="job1_title">Freelance<br>Graphic Designer</div>
-              <div class="career-company" data-i18n="job1_comp">Self-employed</div>
-            </div>
-            <div class="career-year"><span>2019</span>
-              <div class="career-dot"></div>
-            </div>
-            <div class="career-right">
-              <p class="career-desc" data-i18n="job1_desc">Started my freelance journey creating brand identities, logo
-                systems, and visual assets for local businesses and startups across Vietnam.</p>
-            </div>
-          </div>
-
-          <div class="career-row reveal reveal-delay-1">
-            <div class="career-left">
-              <div class="career-job-title" data-i18n="job2_title">Brand &amp; Visual<br>Designer</div>
-              <div class="career-company" data-i18n="job2_comp">Studio Collaboration</div>
-            </div>
-            <div class="career-year"><span>2021</span>
-              <div class="career-dot"></div>
-            </div>
-            <div class="career-right">
-              <p class="career-desc" data-i18n="job2_desc">Collaborated with creative studios on campaign visuals, print
-                collateral, social media kits, and photo retouching for premium clients.</p>
-            </div>
-          </div>
-
-          <div class="career-row reveal reveal-delay-2">
-            <div class="career-left">
-              <div class="career-job-title" data-i18n="job3_title">Digital Image<br>Artist</div>
-              <div class="career-company" data-i18n="job3_comp">Freelance &amp; Agency Work</div>
-            </div>
-            <div class="career-year"><span>2023</span>
-              <div class="career-dot"></div>
-            </div>
-            <div class="career-right">
-              <p class="career-desc" data-i18n="job3_desc">Expanded into high-end photo compositing, cinematic
-                retouching, and 3D-assisted visuals — building a multi-disciplinary digital art practice.</p>
-            </div>
-          </div>
-
-          <div class="career-row reveal reveal-delay-3">
-            <div class="career-left">
-              <div class="career-job-title" data-i18n="job4_title">Creative Director<br>&amp; Designer</div>
-              <div class="career-company" data-i18n="job4_comp">Independent Studio</div>
-            </div>
-            <div class="career-year" style="color:#ff4444;"><span data-i18n="job4_year">NOW</span>
-              <div class="career-dot"></div>
-            </div>
-            <div class="career-right">
-              <p class="career-desc" data-i18n="job4_desc">Running an independent creative studio focused on brand
-                identity, digital art, and immersive visual storytelling — open for select projects worldwide.</p>
-            </div>
-          </div>
-          <div class="career-end-orb" id="career-end-orb"></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="marquee-section reverse">
-      <div class="marquee-track">
-        <div class="marquee-item">Photoshop<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Illustrator<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Premiere Pro<span class="marquee-dot"></span></div>
-        <div class="marquee-item">After Effects<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Figma<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Blender<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Capture One<span class="marquee-dot"></span></div>
-        <div class="marquee-item"><strong data-i18n="mq_available">Available Now</strong><span
-            class="marquee-dot"></span></div>
-        <div class="marquee-item" data-i18n="mq_open">Open to Projects<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Vietnam<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Photoshop<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Illustrator<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Premiere Pro<span class="marquee-dot"></span></div>
-        <div class="marquee-item">After Effects<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Figma<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Blender<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Capture One<span class="marquee-dot"></span></div>
-        <div class="marquee-item"><strong data-i18n="mq_available">Available Now</strong><span
-            class="marquee-dot"></span></div>
-        <div class="marquee-item" data-i18n="mq_open">Open to Projects<span class="marquee-dot"></span></div>
-        <div class="marquee-item">Vietnam<span class="marquee-dot"></span></div>
-      </div>
-    </div>
-
-    <section id="skills">
-      <div style="max-width:1400px; margin:0 auto;">
-        <p class="section-label reveal" data-i18n="lbl_skills">— Software Skills</p>
-        <h2 class="section-title reveal reveal-delay-1" data-i18n="title_skills">Tools I<br />master daily</h2>
-        <div class="skills-grid" id="skills-grid">
-          <div class="skill-card glass" data-level="85">
-            <div class="skill-icon-wrap glass"><img
-                src="https://cdn.jsdelivr.net/npm/simple-icons@11.0.0/icons/adobephotoshop.svg"
-                style="width: 28px; height: 28px; filter: invert(1);" alt="Photoshop" /></div>
-            <div>
-              <div class="skill-name">Adobe Photoshop</div>
-              <div class="skill-desc" data-i18n="sk1_desc">Photo manipulation, digital painting, compositing & advanced
-                retouching.</div>
-            </div>
-            <div>
-              <div class="skill-bar-wrap">
-                <div class="skill-bar" data-width="80"></div>
-              </div>
-              <div class="skill-level" data-i18n="lvl_adv">Advanced · 80%</div>
-            </div>
-          </div>
-          <div class="skill-card glass" data-level="80">
-            <div class="skill-icon-wrap glass"><img
-                src="https://cdn.jsdelivr.net/npm/simple-icons@11.0.0/icons/adobeillustrator.svg"
-                style="width: 28px; height: 28px; filter: invert(1);" alt="Illustrator" /></div>
-            <div>
-              <div class="skill-name">Adobe Illustrator</div>
-              <div class="skill-desc" data-i18n="sk2_desc">Vector illustration, logo design, brand identity & typography
-                systems.</div>
-            </div>
-            <div>
-              <div class="skill-bar-wrap">
-                <div class="skill-bar" data-width="60"></div>
-              </div>
-              <div class="skill-level" data-i18n="lvl_int">Intermediate · 60%</div>
-            </div>
-          </div>
-          <div class="skill-card glass" data-level="60">
-            <div class="skill-icon-wrap glass"><img
-                src="https://cdn.jsdelivr.net/npm/simple-icons@11.0.0/icons/adobepremierepro.svg"
-                style="width: 28px; height: 28px; filter: invert(1);" alt="Premiere Pro" /></div>
-            <div>
-              <div class="skill-name">Adobe Premiere Pro</div>
-              <div class="skill-desc" data-i18n="sk3_desc">Video editing, color grading, storytelling & cinematic
-                post-production.</div>
-            </div>
-            <div>
-              <div class="skill-bar-wrap">
-                <div class="skill-bar" data-width="60"></div>
-              </div>
-              <div class="skill-level" data-i18n="lvl_int">Intermediate · 60%</div>
-            </div>
-          </div>
-          <div class="skill-card glass" data-level="60">
-            <div class="skill-icon-wrap glass"><img
-                src="https://cdn.jsdelivr.net/npm/simple-icons@11.0.0/icons/adobeaftereffects.svg"
-                style="width: 28px; height: 28px; filter: invert(1);" alt="After Effects" /></div>
-            <div>
-              <div class="skill-name">After Effects</div>
-              <div class="skill-desc" data-i18n="sk4_desc">Motion graphics, visual effects, animation & interactive
-                title sequences.</div>
-            </div>
-            <div>
-              <div class="skill-bar-wrap">
-                <div class="skill-bar" data-width="60"></div>
-              </div>
-              <div class="skill-level" data-i18n="lvl_int">Intermediate · 60%</div>
-            </div>
-          </div>
-          <div class="skill-card glass" data-level="60">
-            <div class="skill-icon-wrap glass"><img
-                src="https://cdn.jsdelivr.net/npm/simple-icons@11.0.0/icons/figma.svg"
-                style="width: 28px; height: 28px; filter: invert(1);" alt="Figma" /></div>
-            <div>
-              <div class="skill-name">Figma</div>
-              <div class="skill-desc" data-i18n="sk5_desc">UI/UX design, prototyping, design systems & collaborative
-                workflows.</div>
-            </div>
-            <div>
-              <div class="skill-bar-wrap">
-                <div class="skill-bar" data-width="60"></div>
-              </div>
-              <div class="skill-level" data-i18n="lvl_int">Intermediate · 60%</div>
-            </div>
-          </div>
-          <div class="skill-card glass" data-level="55">
-            <div class="skill-icon-wrap glass"><img
-                src="https://cdn.jsdelivr.net/npm/simple-icons@11.0.0/icons/blender.svg"
-                style="width: 28px; height: 28px; filter: invert(1);" alt="Blender" /></div>
-            <div>
-              <div class="skill-name">Blender / 3D</div>
-              <div class="skill-desc" data-i18n="sk6_desc">3D modeling, rendering, product visualization & environment
-                design.</div>
-            </div>
-            <div>
-              <div class="skill-bar-wrap">
-                <div class="skill-bar" data-width="55"></div>
-              </div>
-              <div class="skill-level" data-i18n="lvl_int55">Intermediate · 55%</div>
-            </div>
-          </div>
-          <div class="skill-card glass" data-level="65">
-            <div class="skill-icon-wrap glass"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="m14.31 8 5.74 9.94"></path>
-                <path d="M9.69 8h11.48"></path>
-                <path d="m7.38 12 5.74-9.94"></path>
-                <path d="M9.69 16 3.95 6.06"></path>
-                <path d="M14.31 16H2.83"></path>
-                <path d="m16.62 12-5.74 9.94"></path>
-              </svg></div>
-            <div>
-              <div class="skill-name">Capture One</div>
-              <div class="skill-desc" data-i18n="sk7_desc">Professional photo editing, tethered shooting, color grading
-                & RAW processing.</div>
-            </div>
-            <div>
-              <div class="skill-bar-wrap">
-                <div class="skill-bar" data-width="65"></div>
-              </div>
-              <div class="skill-level" data-i18n="lvl_int65">Intermediate · 65%</div>
-            </div>
-          </div>
-          <div class="skill-card glass" data-level="60">
-            <div class="skill-icon-wrap glass"><img
-                src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/claude.svg"
-                style="width: 28px; height: 28px; filter: invert(1);" alt="AI Tools" /></div>
-            <div>
-              <div class="skill-name">AI Tools</div>
-              <div class="skill-desc" data-i18n="sk8_desc">Generative AI, prompt engineering, concept generation &
-                AI-assisted workflows.</div>
-            </div>
-            <div>
-              <div class="skill-bar-wrap">
-                <div class="skill-bar" data-width="60"></div>
-              </div>
-              <div class="skill-level" data-i18n="lvl_int">Intermediate · 60%</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="services">
-      <div style="max-width:1100px; margin:0 auto;">
-        <p class="section-label reveal" data-i18n="lbl_what">— What I do</p>
-        <h2 class="section-title reveal reveal-delay-1" data-i18n="title_services">Services<br />offered</h2>
-        <div class="services-grid reveal reveal-delay-2">
-          <div class="service-item">
-            <div class="service-num">01</div>
-            <div class="service-title">Brand Identity</div>
-            <div class="service-desc" data-i18n="sv1_desc">Logo, visual system, brand guidelines & full identity
-              packages built to last.</div>
-          </div>
-          <div class="service-item">
-            <div class="service-num">02</div>
-            <div class="service-title">Photo Retouching</div>
-            <div class="service-desc" data-i18n="sv2_desc">High-end compositing, skin retouching, product photography &
-              digital manipulation.</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section id="works" style="padding: 0;">
       <div class="works-pin-wrap" id="works-pin-wrap">
@@ -3239,6 +2895,15 @@
             <p class="section-label" style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.4);" data-i18n="lbl_port">
               — Portfolio</p>
             <h2 class="section-title" style="margin-bottom: 0;" data-i18n="title_work">My<br />works</h2>
+          </div>
+          <div class="work-slide" data-project-id="john-wick-cosplay">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'john-wick-cosplay')"
+              data-label="View →">
+              <div class="lando-img-wrap">
+                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/5b7e96192887941.673ec491cda1b.jpg"
+                  class="work-img" alt="John Wick Cosplay" crossorigin="anonymous" />
+              </div>
+            </div>
           </div>
 
           <div class="work-slide" data-project-id="brand-identity">
@@ -3285,10 +2950,6 @@
             </div>
           </div>
 
-          <div class="work-slide end-slide">
-            <a href="project.html" class="btn-outline" style="text-decoration: none;" data-i18n="btn_view_all">View all
-              projects →</a>
-          </div>
 
         </div>
       </div>
@@ -3301,10 +2962,7 @@
           <div class="footer-col-label" data-i18n="ftr_pages">Pages</div>
           <ul class="footer-col-links">
             <li><a href="#" data-i18n="ftr_home">Home</a></li>
-            <li><a href="#about" data-i18n="ftr_about">About</a></li>
-            <li><a href="#skills" data-i18n="ftr_skills">Skills</a></li>
             <li><a href="#works" data-i18n="ftr_works">Works</a></li>
-            <li><a href="#services" data-i18n="ftr_services">Services</a></li>
             <li><a href="mailto:minhdat0801@gmail.com" class="highlight" data-i18n="ftr_hire">Hire me</a></li>
           </ul>
         </div>
@@ -3357,34 +3015,6 @@
 
   <canvas id="webgl-works"></canvas>
 
-  <div id="detail-view">
-    <nav
-      style="position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3rem; display: flex; justify-content: space-between;">
-      <a href="#" class="back-btn" onclick="navigateBack(event)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        Back
-      </a>
-      <a href="#" class="nav-logo" onclick="navigateBack(event)">DatTran</a>
-    </nav>
-
-    <div class="project-hero" id="project-hero">
-      <div class="project-info">
-        <h1 class="project-title" id="p-title">Project Title</h1>
-        <div class="project-meta" id="p-meta">Category, 2024</div>
-      </div>
-    </div>
-
-    <div class="content-section">
-      <p>This is a detailed view of the project. The transition seamlessly morphs the thumbnail from the archive grid
-        into this immersive full-screen hero section.</p>
-      <p>Using the View Transitions API in a native SPA setup, navigating back feels natural and maintains the entire
-        context without reloading the page.</p>
-    </div>
-  </div>
 
   <div class="scroll-progress" id="scroll-progress"></div>
 
@@ -3515,7 +3145,7 @@
           }).catch(() => {
             // Không tự động phát nhạc khi người dùng tương tác chung (như đổi theme)
             // Nhạc sẽ chỉ phát khi người dùng nhấn nút Audio Toggle
-            updateIcon(); 
+            updateIcon();
           });
         } else {
           updateIcon();
@@ -3609,8 +3239,8 @@
       // THREE.JS
       // THREE.JS
       (function () {
-        const darkModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/public/12/do.glb';
-        const lightModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/public/11/xanh.glb';
+        const darkModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/sign/12/do.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85MTlkZjA2Yy00NTNkLTQzNTctOGFiMS0wMjA0NzVmMWY1YjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMi9kby5nbGIiLCJpYXQiOjE3Nzg0OTI2NzAsImV4cCI6MTgxMDAyODY3MH0.wIKEPi-K3DTcIH9dQ4d_Xaf74ulGFDRbtKi9dkbLPVU';
+        const lightModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/sign/11/xanh.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85MTlkZjA2Yy00NTNkLTQzNTctOGFiMS0wMjA0NzVmMWY1YjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMS94YW5oLmdsYiIsImlhdCI6MTc3ODQ5MjcxOCwiZXhwIjoxODEwMDI4NzE4fQ.UvtUKr4XivCM4IWPREOTlcCn9YA1VAlEgZ-eICCqkgU';
 
         const canvas = document.getElementById('three-canvas');
         if (canvas && typeof THREE !== 'undefined') {
@@ -3716,7 +3346,7 @@
 
         let currentTheme = localStorage.getItem('theme');
         if (!currentTheme) {
-          currentTheme = 'dark';
+          currentTheme = 'light';
         }
         document.documentElement.setAttribute('data-theme', currentTheme);
         themeIcon.textContent = currentTheme === 'dark' ? '☼' : '☾';
@@ -3766,8 +3396,8 @@
         document.querySelectorAll('.skill-bar').forEach(bar => { gsap.to(bar, { width: bar.getAttribute('data-width') + '%', duration: 1.4, ease: 'power3.out', scrollTrigger: { trigger: bar, start: 'top 90%', toggleActions: 'play none none none' } }); });
 
         document.addEventListener('mousemove', (e) => { const x = (e.clientX / window.innerWidth - 0.5) * 40; const y = (e.clientY / window.innerHeight - 0.5) * 40; gsap.to('.orb-1', { x: x * 0.3, y: y * 0.3, duration: 0.8, ease: 'power2.out' }); gsap.to('.orb-2', { x: -x * 0.2, y: -y * 0.2, duration: 0.8, ease: 'power2.out' }); gsap.to('.orb-3', { x: x * 0.15, y: y * 0.15, duration: 0.8, ease: 'power2.out' }); });
-        document.querySelectorAll('.about-card').forEach((card, i) => { gsap.fromTo(card, { y: 50 + i * 20 }, { y: -20, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1.5 } }); });
-        const skillCards = document.querySelectorAll('.skill-card'); gsap.set(skillCards, { opacity: 0, x: -30 }); gsap.to(skillCards, { x: 0, opacity: 1, duration: 1.8, ease: 'power2.out', stagger: 0.2, force3D: true, scrollTrigger: { trigger: '#skills-grid', start: 'top 90%', toggleActions: 'play none none none' } });
+        // document.querySelectorAll('.about-card').forEach((card, i) => { gsap.fromTo(card, { y: 50 + i * 20 }, { y: -20, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1.5 } }); });
+        // const skillCards = document.querySelectorAll('.skill-card'); gsap.set(skillCards, { opacity: 0, x: -30 }); gsap.to(skillCards, { x: 0, opacity: 1, duration: 1.8, ease: 'power2.out', stagger: 0.2, force3D: true, scrollTrigger: { trigger: '#skills-grid', start: 'top 90%', toggleActions: 'play none none none' } });
 
         let currentScrollVelocity = 0, marqueeSkew = 0;
         let heroSkew = 0, heroScale = 1, heroSpacing = 0;
@@ -3777,6 +3407,7 @@
         const marqueeSections = document.querySelectorAll('.marquee-section');
         const marqueeAnimations = Array.from(marqueeSections).map(s => s.querySelector('.marquee-track').getAnimations()[0]).filter(Boolean);
 
+        /*
         function updateMarqueeVelocity() {
           const targetSkew = Math.min(Math.max(currentScrollVelocity * 0.3, -4), 4);
           marqueeSkew += (targetSkew - marqueeSkew) * 0.1;
@@ -3804,6 +3435,23 @@
           }
         }
         gsap.ticker.add(updateMarqueeVelocity);
+        */
+        function updateHeroKinetic() {
+          if (heroName) {
+            const v = Math.abs(currentScrollVelocity);
+            heroSkew += (currentScrollVelocity * 0.5 - heroSkew) * 0.1;
+            heroScale += (1 + v * 0.002 - heroScale) * 0.1;
+            heroSpacing += (v * 0.05 - heroSpacing) * 0.1;
+
+            gsap.set(heroName, {
+              skewX: Math.min(Math.max(heroSkew, -12), 12),
+              scaleX: Math.min(heroScale, 1.15),
+              letterSpacing: `${Math.min(heroSpacing, 8)}px`,
+              force3D: true
+            });
+          }
+        }
+        gsap.ticker.add(updateHeroKinetic);
 
         document.querySelectorAll('section').forEach(section => { if (section.id === 'works') return; gsap.fromTo(section, { scale: 0.97, opacity: 0.8 }, { scale: 1, opacity: 1, ease: 'power2.out', scrollTrigger: { trigger: section, start: 'top 95%', end: 'top 60%', scrub: 1 } }); });
 
@@ -3834,7 +3482,7 @@
           else window.addEventListener('load', performScroll);
         }
 
-        document.querySelectorAll('.stat-num').forEach(stat => { const text = stat.textContent; const num = parseInt(text); if (isNaN(num)) return; const suffix = text.replace(String(num), ''); gsap.fromTo(stat, { innerText: 0 }, { innerText: num, duration: 2, ease: 'power2.out', snap: { innerText: 1 }, scrollTrigger: { trigger: stat, start: 'top 85%', toggleActions: 'play none none none' }, onUpdate: function () { stat.textContent = Math.round(gsap.getProperty(stat, 'innerText')) + suffix; } }); });
+        // document.querySelectorAll('.stat-num').forEach(stat => { const text = stat.textContent; const num = parseInt(text); if (isNaN(num)) return; const suffix = text.replace(String(num), ''); gsap.fromTo(stat, { innerText: 0 }, { innerText: num, duration: 2, ease: 'power2.out', snap: { innerText: 1 }, scrollTrigger: { trigger: stat, start: 'top 85%', toggleActions: 'play none none none' }, onUpdate: function () { stat.textContent = Math.round(gsap.getProperty(stat, 'innerText')) + suffix; } }); });
       }
 
       // MAGNETIC BUTTONS
@@ -3851,13 +3499,14 @@
         document.addEventListener('mouseleave', () => { buttons.forEach(btn => { btn.targetX = 0; btn.targetY = 0; }); });
       })();
 
-      // CAREER TIMELINE GLOW
-      (function () {
-        const timeline = document.getElementById('career-timeline'), glowLine = document.getElementById('career-glow'), beam = document.getElementById('career-beam');
-        if (!timeline || !glowLine || !beam) return;
-        function updateCareerGlow() { const rect = timeline.getBoundingClientRect(), total = rect.height, viewMid = window.innerHeight / 2, scrolled = viewMid - rect.top, progress = Math.min(Math.max(scrolled / total, 0), 1); glowLine.style.height = (progress * 100) + '%'; beam.style.top = (progress * total) + 'px'; beam.style.opacity = (progress > 0.01 && progress < 0.99) ? '1' : '0'; }
-        let isVisible = false; new IntersectionObserver(entries => { isVisible = entries[0].isIntersecting; if (isVisible) updateCareerGlow(); }, { threshold: 0, rootMargin: '0px 0px -5% 0px' }).observe(timeline); window.addEventListener('scroll', () => { if (isVisible) updateCareerGlow(); }, { passive: true }); updateCareerGlow();
-      })();
+        /*
+        (function () {
+          const timeline = document.getElementById('career-timeline'), glowLine = document.getElementById('career-glow'), beam = document.getElementById('career-beam');
+          if (!timeline || !glowLine || !beam) return;
+          function updateCareerGlow() { const rect = timeline.getBoundingClientRect(), total = rect.height, viewMid = window.innerHeight / 2, scrolled = viewMid - rect.top, progress = Math.min(Math.max(scrolled / total, 0), 1); glowLine.style.height = (progress * 100) + '%'; beam.style.top = (progress * total) + 'px'; beam.style.opacity = (progress > 0.01 && progress < 0.99) ? '1' : '0'; }
+          let isVisible = false; new IntersectionObserver(entries => { isVisible = entries[0].isIntersecting; if (isVisible) updateCareerGlow(); }, { threshold: 0, rootMargin: '0px 0px -5% 0px' }).observe(timeline); window.addEventListener('scroll', () => { if (isVisible) updateCareerGlow(); }, { passive: true }); updateCareerGlow();
+        })();
+        */
 
       // MOBILE HAMBURGER
       (function () {
@@ -3870,110 +3519,51 @@
         menu.addEventListener('click', function (e) { if (e.target === menu) closeMenu(); });
       })();
 
-      const PROJECTS = {
-        'brand-identity': { title: 'Brand Identity', meta: 'Branding, 2024', img: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1000&auto=format&fit=crop' },
-        'photo-composite': { title: 'Photo Composite', meta: 'Photography, 2024', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop' },
-        'noir-cosmetics': { title: 'Noir Cosmetics', meta: 'Retouch, 2024', img: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop' },
-        'motion-graphics': { title: 'Motion Graphics', meta: 'Motion, 2023', img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop' }
-      };
-
-      window._activeProjectId = null;
-      window._savedScrollPos = 0;
-
+      // Unified Navigation & Scroll Restoration
       window.navigateWithTransition = function (card, projectId) {
         if (card && card.preventDefault) card.preventDefault();
 
         const thumb = card.querySelector('.lando-img-wrap') || card;
-        window._activeProjectId = projectId;
-        window._savedScrollPos = window.scrollY || document.documentElement.scrollTop;
-
-        const project = PROJECTS[projectId];
-        if (project) {
-          document.getElementById('p-title').textContent = project.title;
-          document.getElementById('p-meta').textContent = project.meta;
-          const hero = document.getElementById('project-hero');
-          hero.style.backgroundImage = `url(${project.img})`;
-          hero.style.backgroundSize = 'cover';
-          hero.style.backgroundPosition = 'center';
-        }
-
-        history.pushState({ view: 'detail', id: projectId }, '', `?project=${projectId}`);
+        
+        // Save current scroll position for restoration
+        const currentPos = window.scrollY || document.documentElement.scrollTop;
+        sessionStorage.setItem('_savedScrollPos', currentPos);
+        sessionStorage.setItem('_vtProjectId', projectId);
 
         if (document.startViewTransition) {
-          // Native View Transitions API
           document.querySelectorAll('.lando-img-wrap').forEach(el => el.style.viewTransitionName = '');
           thumb.style.viewTransitionName = 'project-thumb';
-          document.getElementById('project-hero').style.viewTransitionName = 'project-thumb';
-
-          if (window._lenis) window._lenis.stop();
-
-          document.startViewTransition(() => {
-            document.querySelector('.page-wrap').style.display = 'none';
-            document.getElementById('detail-view').style.display = 'block';
-            window.scrollTo(0, 0);
-          }).finished.finally(() => {
-            thumb.style.viewTransitionName = '';
-            if (window._lenis) window._lenis.start();
-          });
+          
+          // Small delay to ensure viewTransitionName is applied
+          setTimeout(() => {
+            window.location.href = `project-detail.html?id=${projectId}`;
+          }, 50);
         } else {
-          // Fallback
-          document.querySelector('.page-wrap').style.display = 'none';
-          document.getElementById('detail-view').style.display = 'block';
-          window.scrollTo(0, 0);
-          if (window._lenis) window._lenis.start();
+          window.location.href = `project-detail.html?id=${projectId}`;
         }
       }
 
-      window.navigateBack = function (e) {
-        if (e) e.preventDefault();
-        history.back(); // Triggers popstate
-      }
-
-      window.addEventListener('popstate', (e) => {
-        const state = e.state;
-
-        if (!state || state.view !== 'detail') {
-          // Navigating back to main view
-          if (document.startViewTransition) {
-            if (window._activeProjectId) {
-              document.querySelectorAll('.lando-img-wrap').forEach(el => el.style.viewTransitionName = '');
-              const card = document.querySelector(`.work-slide[data-project-id="${window._activeProjectId}"] .lando-img-wrap`);
-              if (card) card.style.viewTransitionName = 'project-thumb';
-            }
-            document.getElementById('project-hero').style.viewTransitionName = 'project-thumb';
-
-            if (window._lenis) window._lenis.stop();
-
-            document.startViewTransition(() => {
-              document.getElementById('detail-view').style.display = 'none';
-              document.querySelector('.page-wrap').style.display = 'block';
-              window.scrollTo(0, window._savedScrollPos);
-              if (window.ScrollTrigger) {
-                ScrollTrigger.refresh();
-                ScrollTrigger.update();
-              }
-            }).finished.finally(() => {
-              if (window._lenis) {
-                window._lenis.scrollTo(window._savedScrollPos, { immediate: true });
-                window._lenis.start();
-              }
-            });
-          } else {
-            document.getElementById('detail-view').style.display = 'none';
-            document.querySelector('.page-wrap').style.display = 'block';
-            window.scrollTo(0, window._savedScrollPos);
-            if (window.ScrollTrigger) ScrollTrigger.refresh();
+      // Restore scroll position on load
+      const savedPos = sessionStorage.getItem('_savedScrollPos');
+      if (savedPos !== null) {
+        const performRestoration = () => {
+          const pos = parseFloat(savedPos);
+          // Wait for Lenis and ScrollTrigger to be ready
+          setTimeout(() => {
             if (window._lenis) {
-              window._lenis.scrollTo(window._savedScrollPos, { immediate: true });
-              window._lenis.start();
+              window._lenis.scrollTo(pos, { immediate: true });
+            } else {
+              window.scrollTo(0, pos);
             }
-          }
-          window._activeProjectId = null;
-        } else {
-          // Forward navigation within app
-          navigateWithTransition(document.querySelector(`.work-slide[data-project-id="${state.id}"]`), state.id);
-        }
-      });
+            // We keep it in session until another navigation or explicit clear
+            // but for one-time restoration, we can clear it.
+            sessionStorage.removeItem('_savedScrollPos');
+          }, 350); 
+        };
+
+        if (document.readyState === 'complete') performRestoration();
+        else window.addEventListener('load', performRestoration);
+      }
 
     });
 
