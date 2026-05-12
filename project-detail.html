@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="view-transition" content="same-origin" />
+  <title>DatTran — Project Detail</title>
+  
+  <meta name="theme-color" content="#080808" id="meta-theme-color" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #080808; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; cursor: none; transition: background-color 0.5s ease, color 0.5s ease; }
+    
+    a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 2px; }
+
+    /* ── CURSOR ── */
+    #cursor-dot { position: fixed; pointer-events: none; z-index: 10002; width: 8px; height: 8px; border-radius: 50%; background: #fff; transform: translate(-50%, -50%); transition: opacity 0.3s, transform 0.2s, width 0.2s, height 0.2s, background-color 0.5s; mix-blend-mode: difference; }
+    #cursor-ring { position: fixed; pointer-events: none; z-index: 10001; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.35); transform: translate(-50%, -50%); transition: opacity 0.3s, width 0.2s, height 0.2s, border-color 0.5s; mix-blend-mode: difference; }
+    #cursor-dot.hover { transform: translate(-50%, -50%) scale(1.8); }
+    #cursor-ring.hover { width: 56px; height: 56px; }
+
+    /* ── VIEW TRANSITIONS ── */
+    @view-transition {
+      navigation: auto;
+    }
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+      mix-blend-mode: normal;
+    }
+    ::view-transition-old(project-thumb),
+    ::view-transition-new(project-thumb) {
+      animation-duration: 0.8s;
+      animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.1rem; color: #fff; letter-spacing: -0.03em; text-decoration: none; cursor: none; }
+    
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+      padding: 0.75rem 1.5rem; border-radius: 9999px;
+      color: #fff; text-decoration: none; font-size: 0.85rem;
+      font-weight: 500; cursor: none; border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+    .back-btn:hover { background: #fff; color: #000; }
+
+    /* ── HERO ── */
+    .project-hero {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      /* view-transition-name: project-thumb; */ /* Set dynamically via JS */
+      background: #111; /* fallback */
+    }
+
+    .project-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 6rem 3rem 4rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      z-index: 10;
+    }
+
+    .project-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.5rem;
+    }
+    .project-meta {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .content-section {
+      padding: 6rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.7);
+    }
+    .content-section p { margin-bottom: 2rem; }
+
+    /* ════ LIGHT MODE OVERRIDES ════ */
+    [data-theme='light'] body { background-color: #f8fafc !important; color: #060b14 !important; }
+    [data-theme='light'] .project-title, [data-theme='light'] .nav-logo { color: #060b14 !important; }
+    [data-theme='light'] #cursor-dot { background: #060b14 !important; width: 5px; height: 5px; mix-blend-mode: normal !important; }
+    [data-theme='light'] #cursor-ring { border-color: #060b14 !important; width: 24px; height: 24px; mix-blend-mode: normal !important; }
+    [data-theme='light'] .project-info { background: linear-gradient(to top, rgba(248, 250, 252, 0.95), transparent) !important; }
+    [data-theme='light'] .content-section { color: rgba(6,11,20,0.8); }
+    [data-theme='light'] .back-btn { background: rgba(255,255,255,0.8); color: #000; border-color: rgba(0,0,0,0.1); }
+    [data-theme='light'] .back-btn:hover { background: #000; color: #fff; }
+
+    /* ── NEXT PROJECT SECTION ── */
+    .next-project-container {
+      text-align: right;
+      padding: 4rem 3rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    [data-theme='light'] .next-project-container {
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .next-project-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: #000;
+      padding: 1rem 2.5rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: none;
+      transition: all 0.3s;
+    }
+    .next-project-btn svg {
+      transition: transform 0.3s ease;
+    }
+    .next-project-btn:hover {
+      background: #ddd;
+      transform: translateY(-2px);
+    }
+    .next-project-btn:hover svg {
+      transform: translateX(6px);
+    }
+    [data-theme='light'] .next-project-btn {
+      background: #000;
+      color: #fff;
+    }
+    [data-theme='light'] .next-project-btn:hover {
+      background: #333;
+    }
+
+    .next-btn-nav {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #fff; color: #000;
+      padding: 0.7rem 1.2rem; border-radius: 9999px;
+      text-decoration: none; font-size: 0.8rem;
+      font-weight: 600; cursor: none;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .next-btn-nav:hover { background: #ddd; transform: translateY(-1px); }
+    .next-btn-nav svg { transition: transform 0.3s ease; }
+    .next-btn-nav:hover svg { transform: translateX(3px); }
+    
+    [data-theme='light'] .next-btn-nav { background: #000; color: #fff; }
+    [data-theme='light'] .next-btn-nav:hover { background: #333; }
+
+    .project-page-section {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    [data-theme='light'] .project-page-section {
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* ── BEHANCE STYLE LAYOUT ── */
+    .case-study-intro {
+      text-align: center;
+      margin: 4rem 0;
+    }
+    .case-meta {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      opacity: 0.5;
+      margin-bottom: 1rem;
+    }
+    .case-desc {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    [data-theme='light'] .case-desc { color: rgba(0,0,0,0.6); }
+
+    .case-study-roll {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      max-width: 1100px;
+      margin: 4rem auto;
+    }
+    .case-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      /* transition for smooth loading */
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .case-img.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .behance-embed-container {
+      width: 100%;
+      margin-top: 3rem;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #0f0f0f;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .behance-embed-container iframe {
+      width: 100%;
+      height: 600px; /* Standard height for Behance embeds */
+      border: none;
+      display: block;
+    }
+    [data-theme='light'] .behance-embed-container {
+      background: #fff;
+      border-color: rgba(0,0,0,0.1);
+    }
+
+  </style>
+</head>
+<body>
+  <div id="cursor-ring"></div><div id="cursor-dot"></div>
+
+  <nav>
+    <a href="#" class="back-btn" onclick="handleBackNavigation(event)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Back
+    </a>
+
+    <div style="display: flex; align-items: center; gap: 1.5rem;">
+      <div id="nav-next-container"></div>
+      <button id="theme-toggle" style="background: transparent; border: none; color: inherit; cursor: none; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;" aria-label="Toggle Theme">
+        <span id="theme-icon">☼</span>
+      </button>
+      <a href="index.html" class="nav-logo" onclick="handleBackNavigation(event)">DatTran</a>
+    </div>
+  </nav>
+
+  <div id="all-projects-container">
+    <!-- Projects will be rendered here via JS -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script>
+    function handleBackNavigation(e) {
+      e.preventDefault();
+      if (document.referrer && document.referrer.includes(window.location.host)) {
+        window.history.back();
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    const PROJECTS = {
+      'project-1': { 
+        title: 'Frequency Separation', 
+        meta: 'RETOUCH, 2024', 
+        img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/14%20colour%20copy.jpg',
+        content: `
+          <div style="width: 100vw; margin-left: calc(50% - 50vw); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative;">
+            <img src="https://github.com/minhdat0801/porfolio/blob/main/2222.gif?raw=true" class="case-img" style="width: 100%; height: 100%; object-fit: contain;" />
+            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
+              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Frequency Separation</h1>
+            </div>
+          </div>
+        `
+      },
+      'project-2': { 
+        title: 'Contouring', 
+        meta: 'RETOUCH, 2024', 
+        img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/9%20contouring%20copy.jpg',
+        content: `
+          <div style="width: 100vw; margin-left: calc(50% - 50vw); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative;">
+            <img src="https://github.com/minhdat0801/porfolio/blob/main/11111.gif?raw=true" class="case-img" style="width: 100%; height: 100%; object-fit: contain;" />
+            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
+              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Contouring</h1>
+            </div>
+          </div>
+        `
+      },
+      'project-3': { 
+        title: 'Photo Composite', 
+        meta: 'ADVERTISING, 2024', 
+        img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/29.png',
+        content: `
+          <div style="width: 100vw; margin-left: calc(50% - 50vw); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative;">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/202e9d212689829.673ef636bc64e.gif" class="case-img" style="width: 100%; height: 100%; object-fit: contain;" />
+            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
+              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Photo Composite</h1>
+            </div>
+          </div>
+        `
+      },
+      'project-4': { 
+        title: 'Advertising Artwork', 
+        meta: 'ADVERTISING, 2024', 
+        img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/Tr%E1%BA%A7n%20Minh%20%C4%90%E1%BA%A1t%20SE182104.png',
+        content: `
+          <div style="width: 100vw; margin-left: calc(50% - 50vw); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative;">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/35b970212689829.673ef636bbf87.gif" class="case-img" style="width: 100%; height: 100%; object-fit: contain;" />
+            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
+              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Advertising Artwork</h1>
+            </div>
+          </div>
+        `
+      },
+      'john-wick-cosplay': { 
+        title: 'JOHN WICK COSPLAY', 
+        meta: 'PHOTOGRAPHY, STUDIO, 2024', 
+        img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/5b7e96192887941.673ec491cda1b.jpg',
+        content: `
+          <div class="case-study-roll">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/5b7e96192887941.673ec491cda1b.jpg" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/bd6849192887941.673e34acc06d5.jpg" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/67353d192887941.673e34acc18b2.jpg" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/fd50ec192887941.673e34acc209a.jpg" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/aaca01192887941.673e34acc28fa.jpg" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/7fbf00192887941.673e34acc0e3b.jpg" class="case-img" />
+          </div>
+        `
+      },
+      'project-6': { 
+        title: '2024 INFOGRAPHIC DESIGN', 
+        meta: 'INFOGRAPHIC, DATA VISUALIZATION, 2024', 
+        img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/9a2337203584565.6752726375504.png',
+        content: `
+          <div class="case-study-roll">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/9a2337203584565.6752726375504.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/db1863203584565.6752726376430.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/ef1243203584565.675275ba245b4.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/ccd8cc203584565.675275ba24ff7.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/9d470c203584565.669971db3a6d2.jpg" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/5ec682203584565.675275bb3accd.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/873eeb203584565.6752726375f48.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/8cb905203584565.6752726375a57.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/a019dc203584565.675275bb3b9be.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/45e61d203584565.675275bb3b45e.png" class="case-img" />
+          </div>
+        `
+      },
+      'project-7': { 
+        title: 'APPASTA BRAND IDENTITY', 
+        meta: 'BRANDING, 2024', 
+        img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/d9d4ba203180295.66999a92c7b7e.png',
+        content: `
+          <div class="case-study-roll">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/d9d091203180295.6695b7602f46e.gif" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/d9d4ba203180295.66999a92c7b7e.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/6dbbe6203180295.669997564a4a4.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/68478e203180295.669611cdaa6cf.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/e7d041203180295.6699533fa0123.jpg" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/bccf49203180295.6699379631939.png" class="case-img" />
+          </div>
+        `
+      },
+      'project-8': { 
+        title: 'Die With A Smile (Lyrics Video)', 
+        meta: 'MOTION GRAPHICS, LYRIC VIDEO, 2024', 
+        img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/29626c211853067.672af12e553b1.png',
+        content: `
+          <div class="case-study-roll">
+            <div class="video-container" style="width: 100%; max-width: 1400px; aspect-ratio: 16/9; margin: 0 auto 2rem; background: #000; border-radius: 8px; overflow: hidden;">
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/GHyeCRcLLj0?si=wYpZZwQvZywWFY0a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div style="text-align: center; margin-bottom: 3rem; margin-top: -1rem;">
+              <a href="https://www.youtube.com/watch?v=GHyeCRcLLj0" target="_blank" style="color: rgba(255,255,255,0.4); font-size: 0.8rem; text-decoration: underline;">Video not playing? Watch on YouTube ↗</a>
+            </div>
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/29626c211853067.672af12e553b1.png" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/fb867d211853067.6741fe68de35f.gif" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/26fe5b211853067.6741fe68dec5a.gif" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/f0b2d8211853067.6741fe68df15c.gif" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/d92d1c211853067.6741fe6a900ad.gif" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/a09b52211853067.6741fe6a90541.gif" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/e7c8a4211853067.6741fe6a909e6.gif" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/5be1f8211853067.6741fe6b63a98.gif" class="case-img" />
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/f8febb211853067.6741fe6b63f08.gif" class="case-img" />
+          </div>
+        `
+      }
+    };
+
+    const PROJECT_ORDER = [
+      'project-1', 'project-2', 'project-3', 'project-4', 
+      'john-wick-cosplay', 'project-6', 'project-7', 'project-8'
+    ];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let targetId = urlParams.get('id') || sessionStorage.getItem('_vtProjectId') || PROJECT_ORDER[0];
+
+    // Ensure the ID exists, fallback to first project
+    if (!PROJECTS[targetId]) {
+      targetId = PROJECT_ORDER[0];
+    }
+
+    const p = PROJECTS[targetId];
+    const container = document.getElementById('all-projects-container');
+
+    // Find the next project for the "Next Project" section
+    const currentIndex = PROJECT_ORDER.indexOf(targetId);
+    const nextIndex = (currentIndex + 1) % PROJECT_ORDER.length;
+    const nextProjectId = PROJECT_ORDER[nextIndex];
+    const nextProject = PROJECTS[nextProjectId];
+
+    // Render only the specific project
+    const section = document.createElement('div');
+    section.className = 'project-page-section';
+    section.id = `project-${targetId}`;
+    section.innerHTML = `
+      <div class="content-section" style="padding-top: 0; padding-bottom: 0;">
+        ${p.content ? p.content : `
+          <div style="width: 100vw; margin-left: calc(50% - 50vw); min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #080808; position: relative;">
+            <img src="${p.img}" class="case-img" style="width: 100%; height: auto; max-height: 100vh; object-fit: contain;" />
+            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
+              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">${p.title}</h1>
+            </div>
+          </div>
+        `}
+        ${p.behanceUrl ? `
+          <div class="behance-embed-container">
+            <iframe src="${p.behanceUrl}" allowfullscreen lazyload title="${p.title} on Behance"></iframe>
+          </div>
+        ` : ''}
+      </div>
+    `;
+    container.appendChild(section);
+
+    // Render Next Project Button in Nav
+    const navNextContainer = document.getElementById('nav-next-container');
+    if (navNextContainer) {
+      navNextContainer.innerHTML = `
+        <a href="project-detail.html?id=${nextProjectId}" class="next-btn-nav" onclick="navigateToNext(event, '${nextProjectId}')">
+          Next Project
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      `;
+    }
+
+    function navigateToNext(e, id) {
+      e.preventDefault();
+      sessionStorage.setItem('_vtProjectId', id);
+      window.location.href = `project-detail.html?id=${id}`;
+    }
+
+    const heroElement = section.querySelector('.project-hero') || section.querySelector('.case-img');
+    if (heroElement) {
+      if (document.startViewTransition) {
+        heroElement.style.viewTransitionName = 'project-thumb';
+      } else {
+        gsap.fromTo(heroElement, { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'power3.out' });
+      }
+    }
+
+    window.scrollTo(0, 0);
+
+    // THEME SYNC & TOGGLE
+    let currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    if (themeIcon) themeIcon.textContent = currentTheme === 'dark' ? '☼' : '☾';
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        localStorage.setItem('theme', currentTheme);
+        themeIcon.textContent = currentTheme === 'dark' ? '☼' : '☾';
+      });
+    }
+
+    // CURSOR
+    const dot = document.getElementById('cursor-dot'); const ring = document.getElementById('cursor-ring');
+    let mx = -300, my = -300, rx = -300, ry = -300; let rafId = null;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top  = my + 'px'; if (!rafId) rafId = requestAnimationFrame(tick); });
+    document.querySelectorAll('a, button').forEach(el => { el.addEventListener('mouseenter', () => { ring.classList.add('hover'); dot.classList.add('hover'); }); el.addEventListener('mouseleave', () => { ring.classList.remove('hover'); dot.classList.remove('hover'); }); });
+    function tick() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; rafId = (Math.abs(mx - rx) < 0.5 && Math.abs(my - ry) < 0.5) ? null : requestAnimationFrame(tick); }
+
+    // Intersection Observer for case study images
+    const caseImgObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.case-img').forEach(img => caseImgObserver.observe(img));
+  </script>
+</body>
+</html>
