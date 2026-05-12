@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="view-transition" content="same-origin" />
 
   <title>DatTran — Graphic Designer</title>
   <meta name="description" content="DatTran - Graphic Designer & Digital Image Artist based in Vietnam." />
@@ -288,10 +289,10 @@
     }
 
     .work-img {
-      width: 100%;
       height: 100%;
-      object-fit: cover;
+      width: auto;
       display: block;
+      object-fit: contain;
     }
 
     /* ── DETAIL VIEW OVERLAY ── */
@@ -1012,80 +1013,112 @@
     }
 
     /* WORKS (HORIZONTAL) */
+    .works-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    
+    .filter-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.6);
+      border-radius: 9999px;
+      padding: 0.5rem 1.25rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: none;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #fff;
+    }
+
+    .filter-btn.active {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
     .works-pin-wrap {
-      height: 100vh;
+      height: auto;
       display: flex;
       align-items: center;
-      overflow: hidden;
+      overflow-x: auto;
       width: 100%;
+      cursor: grab;
+      user-select: none;
+      scrollbar-width: none; /* Hide scrollbar Firefox */
+      -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+    }
+    .works-pin-wrap::-webkit-scrollbar {
+      display: none; /* Hide scrollbar Chrome/Safari */
+    }
+    .works-pin-wrap.active {
+      cursor: grabbing;
     }
 
     .works-track {
       display: flex;
-      gap: 5vw;
-      padding: 0 30vw 0 10vw;
-      height: 65vh;
+      gap: 2rem;
+      padding: 6rem 15vw 6rem 6vw;
+      height: 90vh;
       will-change: transform;
       align-items: center;
     }
 
     .work-slide {
-      flex-shrink: 0;
+      flex: 0 0 auto;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      width: auto;
     }
 
     .headline-slide {
-      width: 35vw;
+      width: 30vw;
       justify-content: center;
       align-items: flex-start;
-      padding-right: 4rem;
+      padding-right: 3rem;
     }
 
     .work-card-horizontal {
       height: 100%;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 0;
       position: relative;
       cursor: none;
+      width: auto;
     }
 
-    .work-slide:nth-child(odd) .work-card-horizontal {
-      width: 35vw;
+    .work-slide:nth-child(n+2) .work-card-horizontal {
+      width: auto;
     }
 
-    .work-slide:nth-child(even) .work-card-horizontal {
-      width: 45vw;
-    }
 
-    .work-slide:nth-child(4) .work-card-horizontal {
-      width: 55vw;
-    }
-
-    .work-card-horizontal .lando-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.5);
-      font-weight: 600;
-      z-index: 2;
-    }
 
     .work-card-horizontal .lando-img-wrap {
-      flex: 1;
+      height: 100%;
+      width: auto;
       position: relative;
       overflow: hidden;
       border-radius: 8px;
-      background: #111;
+      background: transparent;
+      display: block;
     }
 
     .work-card-horizontal .work-bg {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       position: absolute;
       inset: 0;
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;
@@ -1107,8 +1140,8 @@
     @media (max-width: 900px) {
       .works-track {
         height: 55vh;
-        gap: 2rem;
-        padding: 0 30vw 0 5vw;
+        gap: 1.5rem;
+        padding: 0 20vw 0 5vw;
       }
 
       .headline-slide {
@@ -1116,8 +1149,8 @@
         padding-right: 1rem;
       }
 
-      .work-slide:nth-child(n) .work-card-horizontal {
-        width: 75vw;
+      .work-slide:nth-child(n+2) .work-card-horizontal {
+        width: 80vw;
       }
 
       .end-slide {
@@ -2731,6 +2764,20 @@
       display: none !important;
     }
 
+    [data-theme='light'] .filter-btn {
+      border-color: rgba(6, 11, 20, 0.15) !important;
+      color: rgba(6, 11, 20, 0.6) !important;
+    }
+    [data-theme='light'] .filter-btn:hover {
+      border-color: rgba(6, 11, 20, 0.4) !important;
+      color: #060b14 !important;
+    }
+    [data-theme='light'] .filter-btn.active {
+      background: #060b14 !important;
+      color: #fff !important;
+      border-color: #060b14 !important;
+    }
+
     [data-i18n] {
       transition: opacity 0.3s ease;
     }
@@ -2895,62 +2942,92 @@
             <p class="section-label" style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.4);" data-i18n="lbl_port">
               — Portfolio</p>
             <h2 class="section-title" style="margin-bottom: 0;" data-i18n="title_work">My<br />works</h2>
+            <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); font-style: italic; margin-top: 1rem; margin-bottom: 1.5rem;" data-i18n="lbl_click_project">* Click on each project to view details</p>
+            <div class="works-filters">
+              <button class="filter-btn active">ALL</button>
+              <button class="filter-btn">BRANDING</button>
+              <button class="filter-btn">PHOTOGRAPHY</button>
+              <button class="filter-btn">TYPOGRAPHY</button>
+              <button class="filter-btn">RETOUCH</button>
+              <button class="filter-btn">UX/UI</button>
+              <button class="filter-btn">ILLUSTRATION</button>
+              <button class="filter-btn">ANIMATION</button>
+              <button class="filter-btn">ADVERTISING</button>
+            </div>
           </div>
-          <div class="work-slide" data-project-id="john-wick-cosplay">
+          <div class="work-slide" data-project-id="project-1" data-category="RETOUCH">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-1')" data-label="View →">
+              <div class="lando-img-wrap">
+                <img src="https://raw.githubusercontent.com/minhdat0801/porfolio/main/14%20colour%20copy.jpg"
+                  class="work-img" alt="Colour Grading" />
+              </div>
+            </div>
+          </div>
+
+          <div class="work-slide" data-project-id="project-2" data-category="RETOUCH">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-2')" data-label="View →">
+              <div class="lando-img-wrap">
+                <img src="https://raw.githubusercontent.com/minhdat0801/porfolio/main/9%20contouring%20copy.jpg"
+                  class="work-img" alt="Contouring" />
+              </div>
+            </div>
+          </div>
+
+          <div class="work-slide" data-project-id="project-3" data-category="ADVERTISING">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-3')" data-label="View →">
+              <div class="lando-img-wrap">
+                <img src="https://raw.githubusercontent.com/minhdat0801/porfolio/main/29.png" class="work-img"
+                  alt="Photo Composite" />
+              </div>
+            </div>
+          </div>
+
+          <div class="work-slide" data-project-id="project-4" data-category="ADVERTISING">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-4')" data-label="View →">
+              <div class="lando-img-wrap">
+                <img
+                  src="https://raw.githubusercontent.com/minhdat0801/porfolio/main/Tr%E1%BA%A7n%20Minh%20%C4%90%E1%BA%A1t%20SE182104.png"
+                  class="work-img" alt="Trần Minh Đạt SE182104" />
+              </div>
+            </div>
+          </div>
+
+          <div class="work-slide" data-project-id="john-wick-cosplay" data-category="PHOTOGRAPHY">
             <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'john-wick-cosplay')"
               data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/5b7e96192887941.673ec491cda1b.jpg"
-                  class="work-img" alt="John Wick Cosplay" crossorigin="anonymous" />
+                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/5b7e96192887941.673ec491cda1b.jpg"
+                  class="work-img" alt="John Wick Cosplay" />
               </div>
             </div>
           </div>
 
-          <div class="work-slide" data-project-id="brand-identity">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'brand-identity')"
-              data-label="View →">
-              <div class="lando-label">Brand Identity, 2024</div>
+          <div class="work-slide" data-project-id="project-6" data-category="ADVERTISING">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-6')" data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1000&auto=format&fit=crop"
-                  class="work-img" alt="Brand Identity" crossorigin="anonymous" />
+                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/9a2337203584565.6752726375504.png"
+                  class="work-img" alt="2024 INFOGRAPHIC DESIGN" />
               </div>
             </div>
           </div>
 
-          <div class="work-slide" data-project-id="photo-composite">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'photo-composite')"
-              data-label="View →">
-              <div class="lando-label">Photo Composite, 2024</div>
+          <div class="work-slide" data-project-id="project-7" data-category="BRANDING">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-7')" data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop"
-                  class="work-img" alt="Photo Composite" crossorigin="anonymous" />
+                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/e7d041203180295.6699533fa0123.jpg"
+                  class="work-img" alt="APPASTA BRAND IDENTITY" />
               </div>
             </div>
           </div>
 
-          <div class="work-slide" data-project-id="noir-cosmetics">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'noir-cosmetics')"
-              data-label="View →">
-              <div class="lando-label">Noir Cosmetics, 2024</div>
+          <div class="work-slide" data-project-id="project-8" data-category="ANIMATION">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-8')" data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop"
-                  class="work-img" alt="Noir Cosmetics" crossorigin="anonymous" />
+                <img src="https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true"
+                  class="work-img" alt="Die With A Smile (Lyrics Video)" />
               </div>
             </div>
           </div>
-
-          <div class="work-slide" data-project-id="motion-graphics">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'motion-graphics')"
-              data-label="View →">
-              <div class="lando-label">Motion Graphics, 2023</div>
-              <div class="lando-img-wrap">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop"
-                  class="work-img" alt="Motion Graphics" crossorigin="anonymous" />
-              </div>
-            </div>
-          </div>
-
-
         </div>
       </div>
     </section>
@@ -3020,6 +3097,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
@@ -3027,6 +3105,30 @@
 
   <script>
     // Gói tất cả script của bạn vào DOMContentLoaded để nó đợi các thư viện bên trên load xong mới chạy
+    // Unified Navigation - Global early definition
+    window.navigateWithTransition = function (card, projectId) {
+      console.log("Navigating to:", projectId);
+      
+      // Save position for return
+      const currentPos = window.scrollY || document.documentElement.scrollTop;
+      sessionStorage.setItem('_savedScrollPos', currentPos);
+      sessionStorage.setItem('_vtProjectId', projectId);
+
+      const thumb = (card && card.querySelector) ? (card.querySelector('.lando-img-wrap') || card) : card;
+
+      if (document.startViewTransition && thumb && thumb.style) {
+        // Clear others
+        document.querySelectorAll('.lando-img-wrap').forEach(el => el.style.viewTransitionName = '');
+        thumb.style.viewTransitionName = 'project-thumb';
+        
+        setTimeout(() => {
+          window.location.href = `project-detail.html?id=${projectId}`;
+        }, 50);
+      } else {
+        window.location.href = `project-detail.html?id=${projectId}`;
+      }
+    };
+
     window.addEventListener('DOMContentLoaded', () => {
       // ════════════════════════════════════════
       // TRANSLATIONS (CHỈ DỊCH DESCRIPTION)
@@ -3239,8 +3341,38 @@
       // THREE.JS
       // THREE.JS
       (function () {
-        const darkModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/sign/12/do.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85MTlkZjA2Yy00NTNkLTQzNTctOGFiMS0wMjA0NzVmMWY1YjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMi9kby5nbGIiLCJpYXQiOjE3Nzg0OTI2NzAsImV4cCI6MTgxMDAyODY3MH0.wIKEPi-K3DTcIH9dQ4d_Xaf74ulGFDRbtKi9dkbLPVU';
-        const lightModelUrl = 'https://dkomivcblwpbbomtihtr.supabase.co/storage/v1/object/sign/11/xanh.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV85MTlkZjA2Yy00NTNkLTQzNTctOGFiMS0wMjA0NzVmMWY1YjEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiIxMS94YW5oLmdsYiIsImlhdCI6MTc3ODQ5MjcxOCwiZXhwIjoxODEwMDI4NzE4fQ.UvtUKr4XivCM4IWPREOTlcCn9YA1VAlEgZ-eICCqkgU';
+        const darkModelUrl = '';
+        const lightModelUrl = '';
+
+        const modelCache = {};
+        const modelCallbacks = {};
+
+        function loadSharedModel(url, callback) {
+          if (modelCache[url]) {
+            callback(modelCache[url].clone());
+            return;
+          }
+          if (modelCallbacks[url]) {
+            modelCallbacks[url].push(callback);
+            return;
+          }
+
+          modelCallbacks[url] = [callback];
+          const loader = new THREE.GLTFLoader();
+          if (THREE.DRACOLoader) {
+            const draco = new THREE.DRACOLoader();
+            draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');
+            loader.setDRACOLoader(draco);
+          }
+
+          loader.load(url, (gltf) => {
+            modelCache[url] = gltf.scene;
+            modelCallbacks[url].forEach(cb => cb(gltf.scene.clone()));
+            delete modelCallbacks[url];
+          }, undefined, (err) => {
+            console.error("Failed to load model:", url, err);
+          });
+        }
 
         const canvas = document.getElementById('three-canvas');
         if (canvas && typeof THREE !== 'undefined') {
@@ -3252,12 +3384,23 @@
             scene.add(new THREE.AmbientLight(0xffffff, 0.6)); const keyLight = new THREE.DirectionalLight(0xffffff, 1.5); keyLight.position.set(3, 5, 4); scene.add(keyLight); const fillLight = new THREE.DirectionalLight(0xff6060, 0.6); fillLight.position.set(-4, 2, -2); scene.add(fillLight); const rimLight = new THREE.DirectionalLight(0xffffff, 0.8); rimLight.position.set(0, -3, -4); scene.add(rimLight); const mouseLight = new THREE.PointLight(0xff4444, 0.5, 15); mouseLight.position.set(0, 1, 4); scene.add(mouseLight);
             const group = new THREE.Group(); scene.add(group);
 
-            if (THREE.GLTFLoader) {
-              new THREE.GLTFLoader().load(darkModelUrl, (gltf) => { if (hint) hint.style.opacity = '1'; window.appModels.heroDark = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.heroDark); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 3.0 / Math.max(size.x, size.y, size.z); window.appModels.heroDark.scale.setScalar(scale); window.appModels.heroDark.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale); window.appModels.heroDark.visible = document.documentElement.getAttribute('data-theme') !== 'light'; group.add(window.appModels.heroDark); });
-              new THREE.GLTFLoader().load(lightModelUrl, (gltf) => { window.appModels.heroLight = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.heroLight); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 3.0 / Math.max(size.x, size.y, size.z); window.appModels.heroLight.scale.setScalar(scale); window.appModels.heroLight.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale); window.appModels.heroLight.visible = document.documentElement.getAttribute('data-theme') === 'light'; group.add(window.appModels.heroLight); });
+            function setupModel(model, isDark) {
+              const box = new THREE.Box3().setFromObject(model);
+              const size = box.getSize(new THREE.Vector3());
+              const center = box.getCenter(new THREE.Vector3());
+              const scale = 3.0 / Math.max(size.x, size.y, size.z);
+              model.scale.setScalar(scale);
+              model.position.set(-center.x * scale, -center.y * scale + 0.5, -center.z * scale);
+              const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+              model.visible = isDark ? (currentTheme !== 'light') : (currentTheme === 'light');
+              group.add(model);
+              if (isDark && hint) hint.style.opacity = '1';
             }
 
-            const geo = new THREE.BufferGeometry(); const n = 150, pos = new Float32Array(n * 3); for (let i = 0; i < n; i++) { const r = 2.2 + Math.random() * 1.5, t = Math.random() * Math.PI * 2, p = Math.acos(2 * Math.random() - 1); pos[i * 3] = r * Math.sin(p) * Math.cos(t); pos[i * 3 + 1] = r * Math.sin(p) * Math.sin(t); pos[i * 3 + 2] = r * Math.cos(p); } geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); const particles = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xff3333, size: 0.03, transparent: true, opacity: 0.6, sizeAttenuation: true })); scene.add(particles);
+            loadSharedModel(darkModelUrl, (m) => { window.appModels.heroDark = m; setupModel(m, true); });
+            loadSharedModel(lightModelUrl, (m) => { window.appModels.heroLight = m; setupModel(m, false); });
+
+            const geo = new THREE.BufferGeometry(); const n = 150, pos = new Float32Array(n * 3); for (let i = 0; i < n; i++) { const r = 2.2 + Math.random() * 1.5, t = Math.random() * Math.PI * 2, p = Math.acos(2 * Math.random() - 1); pos[i * 3] = r * Math.sin(p) * Math.cos(t); pos[i * 3 + 1] = r * Math.sin(p) * Math.sin(t); pos[i * 3 + 2] = r * Math.cos(p); } geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); const particles = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xff3333, size: 0.03, transparent: true, opacity: 0.6, sizeAttenuation: true })); group.add(particles);
             let tRX = 0.1, tRY = 0, cRX = 0.1, cRY = 0; document.addEventListener('mousemove', (e) => { const nx = (e.clientX / window.innerWidth - 0.5) * 2, ny = (e.clientY / window.innerHeight - 0.5) * 2; tRY = nx * 0.8; tRX = 0.1 + ny * 0.3; mouseLight.position.set(nx * 5, 1 - ny * 3, 4); });
             function resize() { const w = container.clientWidth, h = container.clientHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); } resize(); window.addEventListener('resize', resize);
             let heroRafId = null, heroVisible = true; function heroAnimate() { cRX += (tRX - cRX) * 0.05; cRY += (tRY - cRY) * 0.05; group.rotation.x = cRX; group.rotation.y = cRY; tRY += 0.002; particles.rotation.y += 0.0008; renderer.render(scene, camera); heroRafId = requestAnimationFrame(heroAnimate); }
@@ -3272,13 +3415,49 @@
             const fRenderer = new THREE.WebGLRenderer({ canvas: fCanvas, antialias: true, alpha: true }); fRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); fRenderer.outputEncoding = THREE.sRGBEncoding; fRenderer.toneMapping = THREE.ACESFilmicToneMapping;
             const fScene = new THREE.Scene(); const fCamera = new THREE.PerspectiveCamera(35, 1, 0.1, 100); fCamera.position.set(0, 1.0, 6); fScene.add(new THREE.AmbientLight(0xffffff, 0.5)); const key = new THREE.DirectionalLight(0xffffff, 1.2); key.position.set(2, 4, 3); fScene.add(key); const fGroup = new THREE.Group(); fScene.add(fGroup);
 
-            if (THREE.GLTFLoader) {
-              new THREE.GLTFLoader().load(darkModelUrl, (gltf) => { window.appModels.footerDark = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.footerDark); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 2.6 / Math.max(size.x, size.y, size.z); window.appModels.footerDark.scale.setScalar(scale); window.appModels.footerDark.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale); window.appModels.footerDark.visible = document.documentElement.getAttribute('data-theme') !== 'light'; fGroup.add(window.appModels.footerDark); });
-              new THREE.GLTFLoader().load(lightModelUrl, (gltf) => { window.appModels.footerLight = gltf.scene; const box = new THREE.Box3().setFromObject(window.appModels.footerLight); const size = box.getSize(new THREE.Vector3()); const center = box.getCenter(new THREE.Vector3()); const scale = 2.6 / Math.max(size.x, size.y, size.z); window.appModels.footerLight.scale.setScalar(scale); window.appModels.footerLight.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale); window.appModels.footerLight.visible = document.documentElement.getAttribute('data-theme') === 'light'; fGroup.add(window.appModels.footerLight); });
+            function initFooterModels() {
+              if (window.footerModelsInitialized) return;
+              window.footerModelsInitialized = true;
+
+              loadSharedModel(darkModelUrl, (m) => {
+                window.appModels.footerDark = m;
+                const box = new THREE.Box3().setFromObject(m);
+                const size = box.getSize(new THREE.Vector3());
+                const center = box.getCenter(new THREE.Vector3());
+                const scale = 2.6 / Math.max(size.x, size.y, size.z);
+                m.scale.setScalar(scale);
+                m.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale);
+                const theme = document.documentElement.getAttribute('data-theme');
+                m.visible = (theme !== 'light');
+                fGroup.add(m);
+              });
+
+              loadSharedModel(lightModelUrl, (m) => {
+                window.appModels.footerLight = m;
+                const box = new THREE.Box3().setFromObject(m);
+                const size = box.getSize(new THREE.Vector3());
+                const center = box.getCenter(new THREE.Vector3());
+                const scale = 2.6 / Math.max(size.x, size.y, size.z);
+                m.scale.setScalar(scale);
+                m.position.set(-center.x * scale, -center.y * scale + 0.6, -center.z * scale);
+                const theme = document.documentElement.getAttribute('data-theme');
+                m.visible = (theme === 'light');
+                fGroup.add(m);
+              });
             }
 
             function resizeFooter() { fRenderer.setSize(container.clientWidth, container.clientHeight); fCamera.aspect = container.clientWidth / container.clientHeight; fCamera.updateProjectionMatrix(); } resizeFooter(); window.addEventListener('resize', resizeFooter);
-            new IntersectionObserver(entries => { const isVisible = entries[0].isIntersecting; if (isVisible && !document.hidden && !footerRafId) { footerRafId = requestAnimationFrame(function loop() { fGroup.rotation.y += 0.003; fRenderer.render(fScene, fCamera); footerRafId = requestAnimationFrame(loop); }); } else if (!isVisible && footerRafId) { cancelAnimationFrame(footerRafId); footerRafId = null; } }, { threshold: 0.01 }).observe(container);
+            new IntersectionObserver(entries => {
+              const isVisible = entries[0].isIntersecting;
+              if (isVisible) {
+                initFooterModels(); // Lazy load when scrolled to footer
+                if (!document.hidden && !footerRafId) {
+                  footerRafId = requestAnimationFrame(function loop() { fGroup.rotation.y += 0.003; fRenderer.render(fScene, fCamera); footerRafId = requestAnimationFrame(loop); });
+                }
+              } else if (footerRafId) {
+                cancelAnimationFrame(footerRafId); footerRafId = null;
+              }
+            }, { threshold: 0.01 }).observe(container);
           } catch (e) { console.warn("Three.js Footer Canvas failed to initialize:", e); }
         }
       })();
@@ -3457,11 +3636,54 @@
 
         const worksPinWrap = document.getElementById('works-pin-wrap'); const worksTrack = document.getElementById('works-track');
         if (worksPinWrap && worksTrack) {
-          let mm = gsap.matchMedia();
-          mm.add("(min-width: 769px)", () => {
-            function getScrollAmount() { return -(worksTrack.scrollWidth - window.innerWidth); }
-            const tween = gsap.to(worksTrack, { x: () => getScrollAmount(), ease: "none" });
-            window.worksST = ScrollTrigger.create({ trigger: worksPinWrap, start: "top top", end: () => `+=${getScrollAmount() * -1}`, pin: true, animation: tween, scrub: 1, invalidateOnRefresh: true });
+          let isDown = false;
+          let startX;
+          let scrollLeft;
+          let velocity = 0;
+          let rafId = null;
+
+          const momentumScroll = () => {
+            if (!isDown && Math.abs(velocity) > 0.5) {
+              worksPinWrap.scrollLeft += velocity;
+              velocity *= 0.92; // stronger friction to prevent "too fast" feel
+              rafId = requestAnimationFrame(momentumScroll);
+            } else {
+              rafId = null;
+            }
+          };
+
+          worksPinWrap.addEventListener('mousedown', (e) => {
+            isDown = true;
+            worksPinWrap.classList.add('active');
+            startX = e.pageX - worksPinWrap.offsetLeft;
+            scrollLeft = worksPinWrap.scrollLeft;
+            velocity = 0;
+            if (rafId) cancelAnimationFrame(rafId);
+          });
+
+          worksPinWrap.addEventListener('mouseleave', () => {
+            if (!isDown) return;
+            isDown = false;
+            worksPinWrap.classList.remove('active');
+            momentumScroll();
+          });
+
+          worksPinWrap.addEventListener('mouseup', () => {
+            if (!isDown) return;
+            isDown = false;
+            worksPinWrap.classList.remove('active');
+            momentumScroll();
+          });
+
+          worksPinWrap.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - worksPinWrap.offsetLeft;
+            const walk = (x - startX) * 1.0; // multiplier reduced to 1.0
+            
+            const prevScrollLeft = worksPinWrap.scrollLeft;
+            worksPinWrap.scrollLeft = scrollLeft - walk;
+            velocity = worksPinWrap.scrollLeft - prevScrollLeft;
           });
         }
 
@@ -3499,14 +3721,14 @@
         document.addEventListener('mouseleave', () => { buttons.forEach(btn => { btn.targetX = 0; btn.targetY = 0; }); });
       })();
 
-        /*
-        (function () {
-          const timeline = document.getElementById('career-timeline'), glowLine = document.getElementById('career-glow'), beam = document.getElementById('career-beam');
-          if (!timeline || !glowLine || !beam) return;
-          function updateCareerGlow() { const rect = timeline.getBoundingClientRect(), total = rect.height, viewMid = window.innerHeight / 2, scrolled = viewMid - rect.top, progress = Math.min(Math.max(scrolled / total, 0), 1); glowLine.style.height = (progress * 100) + '%'; beam.style.top = (progress * total) + 'px'; beam.style.opacity = (progress > 0.01 && progress < 0.99) ? '1' : '0'; }
-          let isVisible = false; new IntersectionObserver(entries => { isVisible = entries[0].isIntersecting; if (isVisible) updateCareerGlow(); }, { threshold: 0, rootMargin: '0px 0px -5% 0px' }).observe(timeline); window.addEventListener('scroll', () => { if (isVisible) updateCareerGlow(); }, { passive: true }); updateCareerGlow();
-        })();
-        */
+      /*
+      (function () {
+        const timeline = document.getElementById('career-timeline'), glowLine = document.getElementById('career-glow'), beam = document.getElementById('career-beam');
+        if (!timeline || !glowLine || !beam) return;
+        function updateCareerGlow() { const rect = timeline.getBoundingClientRect(), total = rect.height, viewMid = window.innerHeight / 2, scrolled = viewMid - rect.top, progress = Math.min(Math.max(scrolled / total, 0), 1); glowLine.style.height = (progress * 100) + '%'; beam.style.top = (progress * total) + 'px'; beam.style.opacity = (progress > 0.01 && progress < 0.99) ? '1' : '0'; }
+        let isVisible = false; new IntersectionObserver(entries => { isVisible = entries[0].isIntersecting; if (isVisible) updateCareerGlow(); }, { threshold: 0, rootMargin: '0px 0px -5% 0px' }).observe(timeline); window.addEventListener('scroll', () => { if (isVisible) updateCareerGlow(); }, { passive: true }); updateCareerGlow();
+      })();
+      */
 
       // MOBILE HAMBURGER
       (function () {
@@ -3519,53 +3741,76 @@
         menu.addEventListener('click', function (e) { if (e.target === menu) closeMenu(); });
       })();
 
-      // Unified Navigation & Scroll Restoration
-      window.navigateWithTransition = function (card, projectId) {
-        if (card && card.preventDefault) card.preventDefault();
-
-        const thumb = card.querySelector('.lando-img-wrap') || card;
+      // FILTER LOGIC
+      (function() {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const workSlides = document.querySelectorAll('.work-slide:not(.headline-slide)');
         
-        // Save current scroll position for restoration
-        const currentPos = window.scrollY || document.documentElement.scrollTop;
-        sessionStorage.setItem('_savedScrollPos', currentPos);
-        sessionStorage.setItem('_vtProjectId', projectId);
+        filterBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.textContent.trim().toUpperCase();
+            
+            workSlides.forEach(slide => {
+              if (filter === 'ALL') {
+                slide.style.display = '';
+              } else {
+                const cat = slide.getAttribute('data-category');
+                if (cat && cat.toUpperCase() === filter) {
+                  slide.style.display = '';
+                } else {
+                  slide.style.display = 'none';
+                }
+              }
+            });
+            
+            setTimeout(() => {
+              window.dispatchEvent(new Event('resize'));
+            }, 50);
+          });
+        });
+      })();
 
-        if (document.startViewTransition) {
-          document.querySelectorAll('.lando-img-wrap').forEach(el => el.style.viewTransitionName = '');
-          thumb.style.viewTransitionName = 'project-thumb';
-          
-          // Small delay to ensure viewTransitionName is applied
-          setTimeout(() => {
-            window.location.href = `project-detail.html?id=${projectId}`;
-          }, 50);
-        } else {
-          window.location.href = `project-detail.html?id=${projectId}`;
-        }
-      }
+      // Unified Navigation & Scroll Restoration
+
 
       // Restore scroll position on load
       const savedPos = sessionStorage.getItem('_savedScrollPos');
       if (savedPos !== null) {
         const performRestoration = () => {
           const pos = parseFloat(savedPos);
-          // Wait for Lenis and ScrollTrigger to be ready
+          // Ensure ScrollTrigger has calculated everything
+          ScrollTrigger.refresh();
+          
+          // Wait slightly for GSAP and Lenis to sync
           setTimeout(() => {
             if (window._lenis) {
-              window._lenis.scrollTo(pos, { immediate: true });
+              window._lenis.scrollTo(pos, { 
+                immediate: true,
+                force: true 
+              });
             } else {
               window.scrollTo(0, pos);
             }
-            // We keep it in session until another navigation or explicit clear
-            // but for one-time restoration, we can clear it.
+            // Clear after use
             sessionStorage.removeItem('_savedScrollPos');
-          }, 350); 
+          }, 400); // Increased delay for stability
         };
 
         if (document.readyState === 'complete') performRestoration();
         else window.addEventListener('load', performRestoration);
+        
+        // Handle back-forward cache
+        window.addEventListener('pageshow', (event) => {
+          if (event.persisted) performRestoration();
+        });
       }
 
     });
+
+
 
     // --- WEBGL WORKS LIQUID EFFECT ---
     (function () {
