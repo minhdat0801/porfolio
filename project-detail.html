@@ -230,6 +230,41 @@
       border-color: rgba(0,0,0,0.1);
     }
 
+    /* ════ MOBILE RESPONSIVENESS ════ */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .project-info { padding: 4rem 1.5rem 2rem; }
+      .project-title { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+      .content-section { padding: 3rem 1.5rem; }
+      .next-project-container { padding: 2rem 1.5rem; text-align: center; }
+      
+      /* Hide custom cursor on mobile */
+      #cursor-dot, #cursor-ring { display: none !important; }
+      body, a, button, .back-btn, .next-btn-nav, .nav-logo { cursor: auto !important; }
+
+      .case-study-intro { margin: 2rem 1.5rem; }
+      .case-study-roll { gap: 1rem; margin: 2rem auto; }
+      
+      /* Make sure Behance embed fits */
+      .behance-embed-container iframe { height: 400px; }
+      
+      /* Adjust nav logo & controls for tight space */
+      .nav-logo { font-size: 1rem; }
+      .back-btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+      
+      /* Next project nav button text wrap/scale */
+      .next-btn-nav { padding: 0.5rem 1rem; font-size: 0.75rem; }
+      
+      /* Adjust inline font sizes for mobile if they were hardcoded */
+      div[style*="font-size: clamp"] h1 { font-size: clamp(1.8rem, 6vw, 2.5rem) !important; }
+    }
+    
+    @media (max-width: 480px) {
+      .project-title { font-size: clamp(1.8rem, 10vw, 2.5rem) !important; }
+      .content-section { font-size: 1rem; }
+      .behance-embed-container iframe { height: 300px; }
+    }
+
   </style>
 </head>
 <body>
@@ -274,9 +309,6 @@
         content: `
           <div style="width: 100vw; margin-left: calc(50% - 50vw); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative;">
             <img src="https://github.com/minhdat0801/porfolio/blob/main/2222.gif?raw=true" class="case-img" style="width: 100%; height: 100%; object-fit: contain;" />
-            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
-              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Frequency Separation</h1>
-            </div>
           </div>
         `
       },
@@ -287,9 +319,6 @@
         content: `
           <div style="width: 100vw; margin-left: calc(50% - 50vw); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative;">
             <img src="https://github.com/minhdat0801/porfolio/blob/main/11111.gif?raw=true" class="case-img" style="width: 100%; height: 100%; object-fit: contain;" />
-            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
-              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Contouring</h1>
-            </div>
           </div>
         `
       },
@@ -300,9 +329,6 @@
         content: `
           <div style="width: 100vw; margin-left: calc(50% - 50vw); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative;">
             <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/202e9d212689829.673ef636bc64e.gif" class="case-img" style="width: 100%; height: 100%; object-fit: contain;" />
-            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
-              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Photo Composite</h1>
-            </div>
           </div>
         `
       },
@@ -313,9 +339,6 @@
         content: `
           <div style="width: 100vw; margin-left: calc(50% - 50vw); height: 100vh; display: flex; justify-content: center; align-items: center; position: relative;">
             <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/35b970212689829.673ef636bbf87.gif" class="case-img" style="width: 100%; height: 100%; object-fit: contain;" />
-            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
-              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Advertising Artwork</h1>
-            </div>
           </div>
         `
       },
@@ -335,60 +358,41 @@
         `
       },
       'project-6': { 
-        title: '2024 INFOGRAPHIC DESIGN', 
-        meta: 'INFOGRAPHIC, DATA VISUALIZATION, 2024', 
-        img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/9a2337203584565.6752726375504.png',
+        title: 'Die With A Smile (Lyrics Video)', 
+        meta: 'ANIMATION, 2024', 
+        img: 'https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true',
         content: `
-          <div class="case-study-roll">
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/9a2337203584565.6752726375504.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/db1863203584565.6752726376430.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/ef1243203584565.675275ba245b4.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/ccd8cc203584565.675275ba24ff7.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/9d470c203584565.669971db3a6d2.jpg" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/5ec682203584565.675275bb3accd.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/873eeb203584565.6752726375f48.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/8cb905203584565.6752726375a57.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/a019dc203584565.675275bb3b9be.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/45e61d203584565.675275bb3b45e.png" class="case-img" />
+          <div style="width: 100vw; margin-left: calc(50% - 50vw); min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #080808; position: relative;">
+            <img src="https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true" class="case-img" style="width: 100%; height: auto; max-height: 100vh; object-fit: contain;" />
+          </div>
+          <div class="behance-embed-container">
+            <iframe src="https://www.behance.net/embed/project/211853067?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
           </div>
         `
       },
       'project-7': { 
-        title: 'APPASTA BRAND IDENTITY', 
-        meta: 'BRANDING, 2024', 
-        img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/d9d4ba203180295.66999a92c7b7e.png',
+        title: '2024 INFOGRAPHIC DESIGN', 
+        meta: 'ADVERTISING, 2024', 
+        img: 'https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png',
         content: `
-          <div class="case-study-roll">
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/d9d091203180295.6695b7602f46e.gif" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/d9d4ba203180295.66999a92c7b7e.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/6dbbe6203180295.669997564a4a4.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/68478e203180295.669611cdaa6cf.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/e7d041203180295.6699533fa0123.jpg" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/bccf49203180295.6699379631939.png" class="case-img" />
+          <div style="width: 100vw; margin-left: calc(50% - 50vw); min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #080808; position: relative;">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png" class="case-img" style="width: 100%; height: auto; max-height: 100vh; object-fit: contain;" />
+          </div>
+          <div class="behance-embed-container">
+            <iframe src="https://www.behance.net/embed/project/203584565?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
           </div>
         `
       },
       'project-8': { 
-        title: 'Die With A Smile (Lyrics Video)', 
-        meta: 'MOTION GRAPHICS, LYRIC VIDEO, 2024', 
-        img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/29626c211853067.672af12e553b1.png',
+        title: 'APPASTA BRAND IDENTITY', 
+        meta: 'BRANDING, 2024', 
+        img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png',
         content: `
-          <div class="case-study-roll">
-            <div class="video-container" style="width: 100%; max-width: 1400px; aspect-ratio: 16/9; margin: 0 auto 2rem; background: #000; border-radius: 8px; overflow: hidden;">
-              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/GHyeCRcLLj0?si=wYpZZwQvZywWFY0a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <div style="text-align: center; margin-bottom: 3rem; margin-top: -1rem;">
-              <a href="https://www.youtube.com/watch?v=GHyeCRcLLj0" target="_blank" style="color: rgba(255,255,255,0.4); font-size: 0.8rem; text-decoration: underline;">Video not playing? Watch on YouTube ↗</a>
-            </div>
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/29626c211853067.672af12e553b1.png" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/fb867d211853067.6741fe68de35f.gif" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/26fe5b211853067.6741fe68dec5a.gif" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/f0b2d8211853067.6741fe68df15c.gif" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/d92d1c211853067.6741fe6a900ad.gif" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/a09b52211853067.6741fe6a90541.gif" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/e7c8a4211853067.6741fe6a909e6.gif" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/5be1f8211853067.6741fe6b63a98.gif" class="case-img" />
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/f8febb211853067.6741fe6b63f08.gif" class="case-img" />
+          <div style="width: 100vw; margin-left: calc(50% - 50vw); min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #080808; position: relative;">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png" class="case-img" style="width: 100%; height: auto; max-height: 100vh; object-fit: contain;" />
+          </div>
+          <div class="behance-embed-container">
+            <iframe src="https://www.behance.net/embed/project/203180295?ilo0=1" height="316" width="404" allowfullscreen lazyload frameborder="0" allow="clipboard-write" refererPolicy="strict-origin-when-cross-origin"></iframe>
           </div>
         `
       }
@@ -425,9 +429,6 @@
         ${p.content ? p.content : `
           <div style="width: 100vw; margin-left: calc(50% - 50vw); min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #080808; position: relative;">
             <img src="${p.img}" class="case-img" style="width: 100%; height: auto; max-height: 100vh; object-fit: contain;" />
-            <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10;">
-              <h1 class="project-title" style="margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">${p.title}</h1>
-            </div>
           </div>
         `}
         ${p.behanceUrl ? `
