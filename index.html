@@ -2996,35 +2996,36 @@
             <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'john-wick-cosplay')"
               data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/5b7e96192887941.673ec491cda1b.jpg"
+                <img src="https://images.weserv.nl/?url=https://mir-s3-cdn-cf.behance.net/project_modules/disp/5b7e96192887941.673ec491cda1b.jpg"
                   class="work-img" alt="John Wick Cosplay" />
               </div>
             </div>
           </div>
 
-          <div class="work-slide" data-project-id="project-6" data-category="ADVERTISING">
+
+          <div class="work-slide" data-project-id="project-6" data-category="ANIMATION">
             <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-6')" data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/9a2337203584565.6752726375504.png"
+                <img src="https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true"
+                  class="work-img" alt="Die With A Smile (Lyrics Video)" />
+              </div>
+            </div>
+          </div>
+
+          <div class="work-slide" data-project-id="project-7" data-category="ADVERTISING">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-7')" data-label="View →">
+              <div class="lando-img-wrap">
+                <img src="https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png"
                   class="work-img" alt="2024 INFOGRAPHIC DESIGN" />
               </div>
             </div>
           </div>
 
-          <div class="work-slide" data-project-id="project-7" data-category="BRANDING">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-7')" data-label="View →">
-              <div class="lando-img-wrap">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/e7d041203180295.6699533fa0123.jpg"
-                  class="work-img" alt="APPASTA BRAND IDENTITY" />
-              </div>
-            </div>
-          </div>
-
-          <div class="work-slide" data-project-id="project-8" data-category="ANIMATION">
+          <div class="work-slide" data-project-id="project-8" data-category="BRANDING">
             <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-8')" data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true"
-                  class="work-img" alt="Die With A Smile (Lyrics Video)" />
+                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png"
+                  class="work-img" alt="APPASTA BRAND IDENTITY" />
               </div>
             </div>
           </div>
@@ -3043,10 +3044,7 @@
             <li><a href="mailto:minhdat0801@gmail.com" class="highlight" data-i18n="ftr_hire">Hire me</a></li>
           </ul>
         </div>
-        <div class="footer-headline reveal reveal-delay-1">
-          <h2>ALWAYS<br /><span class="outline-text accent-text">CREATING</span><br />THE <span
-              class="accent-text">ART.</span></h2>
-        </div>
+
         <div class="footer-side-right reveal">
           <div class="footer-col-label" data-i18n="ftr_follow">Follow On</div>
           <ul class="footer-col-links">
@@ -3112,6 +3110,12 @@
       // Save position for return
       const currentPos = window.scrollY || document.documentElement.scrollTop;
       sessionStorage.setItem('_savedScrollPos', currentPos);
+      
+      const worksPinWrap = document.getElementById('works-pin-wrap');
+      if (worksPinWrap) {
+        sessionStorage.setItem('_savedWorksScrollPos', worksPinWrap.scrollLeft);
+      }
+      
       sessionStorage.setItem('_vtProjectId', projectId);
 
       const thumb = (card && card.querySelector) ? (card.querySelector('.lando-img-wrap') || card) : card;
@@ -3777,9 +3781,9 @@
 
 
       // Restore scroll position on load
-      const savedPos = sessionStorage.getItem('_savedScrollPos');
-      if (savedPos !== null) {
-        const performRestoration = () => {
+      const performRestoration = () => {
+        const savedPos = sessionStorage.getItem('_savedScrollPos');
+        if (savedPos !== null) {
           const pos = parseFloat(savedPos);
           // Ensure ScrollTrigger has calculated everything
           ScrollTrigger.refresh();
@@ -3794,19 +3798,28 @@
             } else {
               window.scrollTo(0, pos);
             }
+            
+            // Restore horizontal works scroll
+            const worksPinWrap = document.getElementById('works-pin-wrap');
+            const savedWorksPos = sessionStorage.getItem('_savedWorksScrollPos');
+            if (worksPinWrap && savedWorksPos !== null) {
+              worksPinWrap.scrollLeft = parseFloat(savedWorksPos);
+              sessionStorage.removeItem('_savedWorksScrollPos');
+            }
+
             // Clear after use
             sessionStorage.removeItem('_savedScrollPos');
           }, 400); // Increased delay for stability
-        };
+        }
+      };
 
-        if (document.readyState === 'complete') performRestoration();
-        else window.addEventListener('load', performRestoration);
-        
-        // Handle back-forward cache
-        window.addEventListener('pageshow', (event) => {
-          if (event.persisted) performRestoration();
-        });
-      }
+      if (document.readyState === 'complete') performRestoration();
+      else window.addEventListener('load', performRestoration);
+      
+      // Handle back-forward cache
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted) performRestoration();
+      });
 
     });
 
