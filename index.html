@@ -1019,7 +1019,7 @@
       gap: 0.5rem;
       margin-top: 2rem;
     }
-    
+
     .filter-btn {
       background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1054,12 +1054,17 @@
       width: 100%;
       cursor: grab;
       user-select: none;
-      scrollbar-width: none; /* Hide scrollbar Firefox */
-      -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+      scrollbar-width: none;
+      /* Hide scrollbar Firefox */
+      -ms-overflow-style: none;
+      /* Hide scrollbar IE/Edge */
     }
+
     .works-pin-wrap::-webkit-scrollbar {
-      display: none; /* Hide scrollbar Chrome/Safari */
+      display: none;
+      /* Hide scrollbar Chrome/Safari */
     }
+
     .works-pin-wrap.active {
       cursor: grabbing;
     }
@@ -2768,10 +2773,12 @@
       border-color: rgba(6, 11, 20, 0.15) !important;
       color: rgba(6, 11, 20, 0.6) !important;
     }
+
     [data-theme='light'] .filter-btn:hover {
       border-color: rgba(6, 11, 20, 0.4) !important;
       color: #060b14 !important;
     }
+
     [data-theme='light'] .filter-btn.active {
       background: #060b14 !important;
       color: #fff !important;
@@ -2942,7 +2949,8 @@
             <p class="section-label" style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.4);" data-i18n="lbl_port">
               — Portfolio</p>
             <h2 class="section-title" style="margin-bottom: 0;" data-i18n="title_work">My<br />works</h2>
-            <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); font-style: italic; margin-top: 1rem; margin-bottom: 1.5rem;" data-i18n="lbl_click_project">* Click on each project to view details</p>
+            <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); font-style: italic; margin-top: 1rem; margin-bottom: 1.5rem;"
+              data-i18n="lbl_click_project">* Click on each project to view details</p>
             <div class="works-filters">
               <button class="filter-btn active">ALL</button>
               <button class="filter-btn">BRANDING</button>
@@ -2996,7 +3004,8 @@
             <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'john-wick-cosplay')"
               data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://images.weserv.nl/?url=https://mir-s3-cdn-cf.behance.net/project_modules/disp/5b7e96192887941.673ec491cda1b.jpg"
+                <img
+                  src="https://images.weserv.nl/?url=https://mir-s3-cdn-cf.behance.net/project_modules/disp/5b7e96192887941.673ec491cda1b.jpg"
                   class="work-img" alt="John Wick Cosplay" />
               </div>
             </div>
@@ -3006,8 +3015,8 @@
           <div class="work-slide" data-project-id="project-6" data-category="ANIMATION">
             <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-6')" data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true"
-                  class="work-img" alt="Die With A Smile (Lyrics Video)" />
+                <img src="https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true" class="work-img"
+                  alt="Die With A Smile (Lyrics Video)" />
               </div>
             </div>
           </div>
@@ -3015,7 +3024,8 @@
           <div class="work-slide" data-project-id="project-7" data-category="ADVERTISING">
             <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-7')" data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png"
+                <img
+                  src="https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png"
                   class="work-img" alt="2024 INFOGRAPHIC DESIGN" />
               </div>
             </div>
@@ -3024,7 +3034,8 @@
           <div class="work-slide" data-project-id="project-8" data-category="BRANDING">
             <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-8')" data-label="View →">
               <div class="lando-img-wrap">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png"
+                <img
+                  src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png"
                   class="work-img" alt="APPASTA BRAND IDENTITY" />
               </div>
             </div>
@@ -3106,16 +3117,16 @@
     // Unified Navigation - Global early definition
     window.navigateWithTransition = function (card, projectId) {
       console.log("Navigating to:", projectId);
-      
+
       // Save position for return
       const currentPos = window.scrollY || document.documentElement.scrollTop;
       sessionStorage.setItem('_savedScrollPos', currentPos);
-      
+
       const worksPinWrap = document.getElementById('works-pin-wrap');
       if (worksPinWrap) {
         sessionStorage.setItem('_savedWorksScrollPos', worksPinWrap.scrollLeft);
       }
-      
+
       sessionStorage.setItem('_vtProjectId', projectId);
 
       const thumb = (card && card.querySelector) ? (card.querySelector('.lando-img-wrap') || card) : card;
@@ -3124,7 +3135,7 @@
         // Clear others
         document.querySelectorAll('.lando-img-wrap').forEach(el => el.style.viewTransitionName = '');
         thumb.style.viewTransitionName = 'project-thumb';
-        
+
         setTimeout(() => {
           window.location.href = `project-detail.html?id=${projectId}`;
         }, 50);
@@ -3345,8 +3356,8 @@
       // THREE.JS
       // THREE.JS
       (function () {
-        const darkModelUrl = '';
-        const lightModelUrl = '';
+        const darkModelUrl = 'https://nohgzuiwuvfhbzhjxiki.supabase.co/storage/v1/object/public/model%203d/do-v3.glb';
+        const lightModelUrl = 'https://nohgzuiwuvfhbzhjxiki.supabase.co/storage/v1/object/public/model%203d/xanh-v1.glb';
 
         const modelCache = {};
         const modelCallbacks = {};
@@ -3680,11 +3691,11 @@
           });
 
           worksPinWrap.addEventListener('mousemove', (e) => {
-            if(!isDown) return;
+            if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - worksPinWrap.offsetLeft;
             const walk = (x - startX) * 1.0; // multiplier reduced to 1.0
-            
+
             const prevScrollLeft = worksPinWrap.scrollLeft;
             worksPinWrap.scrollLeft = scrollLeft - walk;
             velocity = worksPinWrap.scrollLeft - prevScrollLeft;
@@ -3746,17 +3757,17 @@
       })();
 
       // FILTER LOGIC
-      (function() {
+      (function () {
         const filterBtns = document.querySelectorAll('.filter-btn');
         const workSlides = document.querySelectorAll('.work-slide:not(.headline-slide)');
-        
+
         filterBtns.forEach(btn => {
           btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
+
             const filter = btn.textContent.trim().toUpperCase();
-            
+
             workSlides.forEach(slide => {
               if (filter === 'ALL') {
                 slide.style.display = '';
@@ -3769,7 +3780,7 @@
                 }
               }
             });
-            
+
             setTimeout(() => {
               window.dispatchEvent(new Event('resize'));
             }, 50);
@@ -3787,18 +3798,18 @@
           const pos = parseFloat(savedPos);
           // Ensure ScrollTrigger has calculated everything
           ScrollTrigger.refresh();
-          
+
           // Wait slightly for GSAP and Lenis to sync
           setTimeout(() => {
             if (window._lenis) {
-              window._lenis.scrollTo(pos, { 
+              window._lenis.scrollTo(pos, {
                 immediate: true,
-                force: true 
+                force: true
               });
             } else {
               window.scrollTo(0, pos);
             }
-            
+
             // Restore horizontal works scroll
             const worksPinWrap = document.getElementById('works-pin-wrap');
             const savedWorksPos = sessionStorage.getItem('_savedWorksScrollPos');
@@ -3815,7 +3826,7 @@
 
       if (document.readyState === 'complete') performRestoration();
       else window.addEventListener('load', performRestoration);
-      
+
       // Handle back-forward cache
       window.addEventListener('pageshow', (event) => {
         if (event.persisted) performRestoration();
