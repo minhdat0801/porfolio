@@ -301,7 +301,7 @@
       }
     }
 
-    const PROJECTS = {
+    const DEFAULT_PROJECTS = {
       'project-1': { 
         title: 'Frequency Separation', 
         meta: 'RETOUCH, 2024', 
@@ -398,7 +398,39 @@
       }
     };
 
-    const PROJECT_ORDER = [
+    // ── LOAD FROM ADMIN PANEL (localStorage) ──
+    function buildProjectsFromStorage() {
+      try {
+        const stored = JSON.parse(localStorage.getItem('portfolio_projects'));
+        const order = JSON.parse(localStorage.getItem('portfolio_order'));
+        if (!stored || !order) return null;
+        const result = {};
+        order.forEach(id => {
+          const p = stored[id];
+          if (!p) return;
+          let content = '';
+          if (p.contentType === 'html' && p.html) {
+            content = p.html;
+          } else {
+            const imgs = (p.images || []).filter(Boolean);
+            if (imgs.length === 0) {
+              content = `<div style="width:100vw;margin-left:calc(50% - 50vw);min-height:100vh;display:flex;justify-content:center;align-items:center;background:#080808;"><img src="${p.img}" class="case-img" style="width:100%;height:auto;max-height:100vh;object-fit:contain;" /></div>`;
+            } else if (imgs.length === 1) {
+              const isgif = imgs[0].toLowerCase().includes('.gif');
+              content = `<div style="width:100vw;margin-left:calc(50% - 50vw);${isgif ? 'height:100vh' : 'min-height:100vh'};display:flex;justify-content:center;align-items:center;background:#080808;position:relative;"><img src="${imgs[0]}" class="case-img" style="width:100%;${isgif ? 'height:100%;object-fit:contain' : 'height:auto;max-height:100vh;object-fit:contain'};" /></div>`;
+            } else {
+              content = `<div class="case-study-roll">${imgs.map(u => `<img src="${u}" class="case-img" />`).join('')}</div>`;
+            }
+          }
+          result[id] = { title: p.title, meta: p.meta || '', img: p.img, content, behanceUrl: p.behance || '' };
+        });
+        return { projects: result, order };
+      } catch { return null; }
+    }
+
+    const storageData = buildProjectsFromStorage();
+    const PROJECTS = storageData ? { ...DEFAULT_PROJECTS, ...storageData.projects } : DEFAULT_PROJECTS;
+    const PROJECT_ORDER = storageData ? storageData.order : [
       'project-1', 'project-2', 'project-3', 'project-4', 
       'john-wick-cosplay', 'project-6', 'project-7', 'project-8'
     ];
@@ -419,6 +451,9 @@
     const nextIndex = (currentIndex + 1) % PROJECT_ORDER.length;
     const nextProjectId = PROJECT_ORDER[nextIndex];
     const nextProject = PROJECTS[nextProjectId];
+
+    // Set page title dynamically
+    document.title = `DatTran — ${p.title}`;
 
     // Render only the specific project
     const section = document.createElement('div');
