@@ -2884,6 +2884,11 @@
             </div>
           </div>
           <div style="width:1px; height:16px; background:rgba(255,255,255,0.15);"></div>
+          <a href="admin.html" class="dock-btn" title="Admin Panel" style="font-size:0.75rem; opacity:0.45; letter-spacing:0.05em; text-decoration:none; display:flex; align-items:center; gap:0.35rem;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.45'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            Admin
+          </a>
+          <div style="width:1px; height:16px; background:rgba(255,255,255,0.15);"></div>
           <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"
             data-i18n="btn_hire_me">Hire Me ↗</button>
           <button class="nav-hamburger" id="nav-hamburger"
@@ -2963,83 +2968,7 @@
               <button class="filter-btn">ADVERTISING</button>
             </div>
           </div>
-          <div class="work-slide" data-project-id="project-1" data-category="RETOUCH">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-1')" data-label="View →">
-              <div class="lando-img-wrap">
-                <img src="https://raw.githubusercontent.com/minhdat0801/porfolio/main/14%20colour%20copy.jpg"
-                  class="work-img" alt="Colour Grading" />
-              </div>
-            </div>
-          </div>
-
-          <div class="work-slide" data-project-id="project-2" data-category="RETOUCH">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-2')" data-label="View →">
-              <div class="lando-img-wrap">
-                <img src="https://raw.githubusercontent.com/minhdat0801/porfolio/main/9%20contouring%20copy.jpg"
-                  class="work-img" alt="Contouring" />
-              </div>
-            </div>
-          </div>
-
-          <div class="work-slide" data-project-id="project-3" data-category="ADVERTISING">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-3')" data-label="View →">
-              <div class="lando-img-wrap">
-                <img src="https://raw.githubusercontent.com/minhdat0801/porfolio/main/29.png" class="work-img"
-                  alt="Photo Composite" />
-              </div>
-            </div>
-          </div>
-
-          <div class="work-slide" data-project-id="project-4" data-category="ADVERTISING">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-4')" data-label="View →">
-              <div class="lando-img-wrap">
-                <img
-                  src="https://raw.githubusercontent.com/minhdat0801/porfolio/main/Tr%E1%BA%A7n%20Minh%20%C4%90%E1%BA%A1t%20SE182104.png"
-                  class="work-img" alt="Trần Minh Đạt SE182104" />
-              </div>
-            </div>
-          </div>
-
-          <div class="work-slide" data-project-id="john-wick-cosplay" data-category="PHOTOGRAPHY">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'john-wick-cosplay')"
-              data-label="View →">
-              <div class="lando-img-wrap">
-                <img
-                  src="https://images.weserv.nl/?url=https://mir-s3-cdn-cf.behance.net/project_modules/disp/5b7e96192887941.673ec491cda1b.jpg"
-                  class="work-img" alt="John Wick Cosplay" />
-              </div>
-            </div>
-          </div>
-
-
-          <div class="work-slide" data-project-id="project-6" data-category="ANIMATION">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-6')" data-label="View →">
-              <div class="lando-img-wrap">
-                <img src="https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true" class="work-img"
-                  alt="Die With A Smile (Lyrics Video)" />
-              </div>
-            </div>
-          </div>
-
-          <div class="work-slide" data-project-id="project-7" data-category="ADVERTISING">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-7')" data-label="View →">
-              <div class="lando-img-wrap">
-                <img
-                  src="https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png"
-                  class="work-img" alt="2024 INFOGRAPHIC DESIGN" />
-              </div>
-            </div>
-          </div>
-
-          <div class="work-slide" data-project-id="project-8" data-category="BRANDING">
-            <div class="work-card-horizontal" onclick="navigateWithTransition(this, 'project-8')" data-label="View →">
-              <div class="lando-img-wrap">
-                <img
-                  src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png"
-                  class="work-img" alt="APPASTA BRAND IDENTITY" />
-              </div>
-            </div>
-          </div>
+          <!-- Projects are rendered dynamically by JS from admin panel data -->
         </div>
       </div>
     </section>
@@ -3103,6 +3032,53 @@
 
 
   <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ── DYNAMIC PROJECTS FROM ADMIN PANEL ── -->
+  <script>
+    (function() {
+      const DEFAULT_PROJECTS = {
+        'project-1': { title: 'Frequency Separation', category: 'RETOUCH', img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/14%20colour%20copy.jpg' },
+        'project-2': { title: 'Contouring', category: 'RETOUCH', img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/9%20contouring%20copy.jpg' },
+        'project-3': { title: 'Photo Composite', category: 'ADVERTISING', img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/29.png' },
+        'project-4': { title: 'Advertising Artwork', category: 'ADVERTISING', img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/Tr%E1%BA%A7n%20Minh%20%C4%90%E1%BA%A1t%20SE182104.png' },
+        'john-wick-cosplay': { title: 'JOHN WICK COSPLAY', category: 'PHOTOGRAPHY', img: 'https://images.weserv.nl/?url=https://mir-s3-cdn-cf.behance.net/project_modules/disp/5b7e96192887941.673ec491cda1b.jpg' },
+        'project-6': { title: 'Die With A Smile (Lyrics Video)', category: 'ANIMATION', img: 'https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true' },
+        'project-7': { title: '2024 INFOGRAPHIC DESIGN', category: 'ADVERTISING', img: 'https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png' },
+        'project-8': { title: 'APPASTA BRAND IDENTITY', category: 'BRANDING', img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png' }
+      };
+      const DEFAULT_ORDER = ['project-1','project-2','project-3','project-4','john-wick-cosplay','project-6','project-7','project-8'];
+
+      function getPortfolioData() {
+        try {
+          const projects = JSON.parse(localStorage.getItem('portfolio_projects')) || DEFAULT_PROJECTS;
+          const order = JSON.parse(localStorage.getItem('portfolio_order')) || DEFAULT_ORDER;
+          return { projects, order };
+        } catch { return { projects: DEFAULT_PROJECTS, order: DEFAULT_ORDER }; }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const track = document.getElementById('works-track');
+        if (!track) return;
+        // Remove placeholder comment
+        track.querySelectorAll('*:not(.headline-slide):not(.headline-slide *)').forEach(el => {
+          if (!el.closest('.headline-slide')) el.remove();
+        });
+
+        const { projects, order } = getPortfolioData();
+
+        order.forEach(id => {
+          const p = projects[id];
+          if (!p) return;
+          const slide = document.createElement('div');
+          slide.className = 'work-slide';
+          slide.dataset.projectId = id;
+          slide.dataset.category = p.category || 'BRANDING';
+          slide.innerHTML = `<div class="work-card-horizontal" onclick="navigateWithTransition(this, '${id}')" data-label="View →"><div class="lando-img-wrap"><img src="${p.img}" class="work-img" alt="${p.title}" /></div></div>`;
+          track.appendChild(slide);
+        });
+      });
+    })();
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js" defer></script>
@@ -3356,8 +3332,8 @@
       // THREE.JS
       // THREE.JS
       (function () {
-        const darkModelUrl = 'https://nohgzuiwuvfhbzhjxiki.supabase.co/storage/v1/object/sign/model%203d/do-v3.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82YzgyYTA2MS0xYjM1LTQxOTAtYjdlZS02ZGI4OTQxYjJiYWYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtb2RlbCAzZC9kby12My5nbGIiLCJpYXQiOjE3Nzg5MTU1MzksImV4cCI6MTgxMDQ1MTUzOX0.b5_iqFsYPeOtzM6_9D9jumSYclrKK6F1Exzs5rmVS5k';
-        const lightModelUrl = 'https://nohgzuiwuvfhbzhjxiki.supabase.co/storage/v1/object/sign/model%203d/xanh-v1.glb?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82YzgyYTA2MS0xYjM1LTQxOTAtYjdlZS02ZGI4OTQxYjJiYWYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtb2RlbCAzZC94YW5oLXYxLmdsYiIsImlhdCI6MTc3ODkxNTU2MywiZXhwIjoxODEwNDUxNTYzfQ.NoinZ-qAk1PfgUKyZgLRTb8C7jayXzZncz3nw3Equ3g';
+        const darkModelUrl = 'https://nohgzuiwuvfhbzhjxiki.supabase.co/storage/v1/object/public/model%203d/do-v3.glb';
+        const lightModelUrl = 'https://nohgzuiwuvfhbzhjxiki.supabase.co/storage/v1/object/public/model%203d/xanh-v1.glb';
 
         const modelCache = {};
         const modelCallbacks = {};
