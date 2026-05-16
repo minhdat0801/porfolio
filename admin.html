@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DatTran — Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.15);
+      --text: #ffffff;
+      --text-dim: rgba(255,255,255,0.5);
+      --text-dimmer: rgba(255,255,255,0.3);
+      --accent: #ffffff;
+      --accent-bg: rgba(255,255,255,0.06);
+      --danger: #ff4444;
+      --danger-bg: rgba(255,68,68,0.08);
+      --success: #44ff88;
+      --success-bg: rgba(68,255,136,0.08);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── LOGIN SCREEN ── */
+    #login-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.4s, transform 0.4s;
+    }
+
+    #login-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-20px);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .login-brand {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.25rem;
+    }
+
+    .login-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: rgba(255,255,255,0.35);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
+    }
+
+    .form-input::placeholder { color: var(--text-dimmer); }
+
+    .login-error {
+      font-size: 0.8rem;
+      color: var(--danger);
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* ── ADMIN PANEL ── */
+    #admin-panel {
+      display: none;
+      min-height: 100vh;
+    }
+
+    #admin-panel.visible { display: flex; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.75rem 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .sidebar-role {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 0.25rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0.75rem;
+      flex: 1;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .sidebar-item:hover { background: var(--accent-bg); color: var(--text); }
+    .sidebar-item.active { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    .sidebar-item svg { opacity: 0.7; flex-shrink: 0; }
+
+    .sidebar-footer {
+      padding: 1rem 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--danger);
+      cursor: pointer;
+      transition: background 0.2s;
+      border: none;
+      background: transparent;
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-logout:hover { background: var(--danger-bg); }
+
+    /* MAIN CONTENT */
+    .main-content {
+      margin-left: 240px;
+      flex: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-sm.white { background: #fff; color: #000; }
+    .btn-sm.white:hover { opacity: 0.88; }
+    .btn-sm.ghost { background: var(--accent-bg); color: var(--text); border: 1px solid var(--border2); }
+    .btn-sm.ghost:hover { background: rgba(255,255,255,0.1); }
+    .btn-sm.danger { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(255,68,68,0.2); }
+    .btn-sm.danger:hover { background: rgba(255,68,68,0.15); }
+    .btn-sm.success { background: var(--success-bg); color: var(--success); border: 1px solid rgba(68,255,136,0.2); }
+
+    .content-area {
+      padding: 2rem;
+      flex: 1;
+    }
+
+    /* PROJECT LIST */
+    .projects-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .project-card:hover {
+      border-color: var(--border2);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    .drag-handle {
+      color: var(--text-dimmer);
+      cursor: grab;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .drag-handle:active { cursor: grabbing; }
+
+    .project-thumb {
+      width: 72px;
+      height: 54px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: var(--surface2);
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .project-thumb-placeholder {
+      width: 72px;
+      height: 54px;
+      border-radius: var(--radius-sm);
+      background: var(--surface2);
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dimmer);
+      font-size: 1.4rem;
+    }
+
+    .project-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .project-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .project-card-meta {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 0.2rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 99px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--accent-bg);
+      border: 1px solid var(--border2);
+      color: var(--text-dim);
+    }
+
+    .project-id-badge {
+      font-size: 0.68rem;
+      color: var(--text-dimmer);
+      font-family: monospace;
+    }
+
+    .project-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .icon-btn:hover { background: var(--accent-bg); color: var(--text); }
+    .icon-btn.del:hover { background: var(--danger-bg); color: var(--danger); border-color: rgba(255,68,68,0.3); }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 640px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(20px) scale(0.98);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+    .modal-header {
+      padding: 1.5rem 2rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 10;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .modal-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover { background: var(--accent-bg); color: var(--text); }
+
+    .modal-body { padding: 1.5rem 2rem; }
+
+    .modal-footer {
+      padding: 1.25rem 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-input-lg {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input-lg:focus { border-color: rgba(255,255,255,0.35); }
+    .form-input-lg::placeholder { color: var(--text-dimmer); }
+
+    textarea.form-input-lg {
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.5;
+    }
+
+    select.form-input-lg {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    select.form-input-lg option { background: #1a1a1a; color: #fff; }
+
+    .hint {
+      font-size: 0.72rem;
+      color: var(--text-dimmer);
+      margin-top: 0.4rem;
+      line-height: 1.4;
+    }
+
+    /* CONTENT TYPE PICKER */
+    .content-type-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.3rem;
+    }
+
+    .content-tab {
+      flex: 1;
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .content-tab.active { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    /* IMAGES LIST */
+    .images-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .img-row {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .img-row .form-input-lg { flex: 1; }
+
+    .img-preview {
+      width: 46px;
+      height: 34px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      display: none;
+    }
+
+    .btn-add-img {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border2);
+      background: transparent;
+      color: var(--text-dim);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-add-img:hover { background: var(--accent-bg); color: var(--text); border-style: solid; }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(1rem);
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 9999px;
+      padding: 0.65rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      z-index: 99999;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.success-toast { border-color: rgba(68,255,136,0.3); color: var(--success); }
+    .toast.error-toast { border-color: rgba(255,68,68,0.3); color: var(--danger); }
+
+    /* STATS */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-dim);
+    }
+
+    .empty-state-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+    .empty-state-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+    .empty-state-desc { font-size: 0.85rem; line-height: 1.6; }
+
+    /* DRAG & DROP */
+    .project-card.dragging {
+      opacity: 0.4;
+      border-style: dashed;
+    }
+
+    .project-card.drag-over {
+      border-color: rgba(255,255,255,0.4);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
+    }
+
+    /* SETTINGS TAB */
+    .settings-section { max-width: 560px; }
+    .settings-title { font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 1.25rem; margin-top: 1.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); letter-spacing: -0.01em; }
+    .settings-title:first-child { margin-top: 0; }
+
+    .password-info {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .code-block {
+      background: #0d0d0d;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: #aaa;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 0.75rem;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    @media (max-width: 768px) {
+      .sidebar { width: 100%; min-height: auto; position: static; flex-direction: row; flex-wrap: wrap; height: auto; }
+      .sidebar-nav { display: flex; flex-direction: row; padding: 0.5rem; width: 100%; }
+      .sidebar-footer { display: none; }
+      .main-content { margin-left: 0; }
+      .form-row { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-brand">DatTran ✦</div>
+    <div class="login-subtitle">Admin Panel</div>
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input type="text" id="login-user" class="form-input" placeholder="admin" autocomplete="username" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" id="login-pass" class="form-input" placeholder="••••••••" autocomplete="current-password" />
+      <div class="login-error" id="login-error">Sai tên đăng nhập hoặc mật khẩu</div>
+    </div>
+    <button class="btn-primary" onclick="handleLogin()">Đăng nhập</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">DatTran ✦</div>
+      <div class="sidebar-role">Admin Panel</div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="sidebar-item active" onclick="switchTab('projects', this)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Danh sách Projects
+      </button>
+      <button class="sidebar-item" onclick="switchTab('export', this)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export Code
+      </button>
+      <button class="sidebar-item" onclick="switchTab('settings', this)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Cài đặt
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="index.html" class="btn-logout" style="color: rgba(255,255,255,0.5); text-decoration: none;">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Về trang chủ
+      </a>
+      <button class="btn-logout" onclick="handleLogout()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Đăng xuất
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-content">
+    <!-- PROJECTS TAB -->
+    <div id="tab-projects">
+      <div class="topbar">
+        <div class="topbar-title">Quản lý Projects</div>
+        <div class="topbar-actions">
+          <button class="btn-sm ghost" onclick="switchTab('export', document.querySelector(\'.sidebar-item:nth-child(2)\'))">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+          <button class="btn-sm white" onclick="openModal()">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Thêm Project
+          </button>
+        </div>
+      </div>
+      <div class="content-area">
+        <div class="stats-bar">
+          <div class="stat-card">
+            <div class="stat-label">Tổng projects</div>
+            <div class="stat-value" id="stat-total">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Categories</div>
+            <div class="stat-value" id="stat-cats">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Có Behance link</div>
+            <div class="stat-value" id="stat-behance">0</div>
+          </div>
+        </div>
+        <div class="projects-grid" id="projects-list"></div>
+      </div>
+    </div>
+
+    <!-- EXPORT TAB -->
+    <div id="tab-export" style="display:none;">
+      <div class="topbar">
+        <div class="topbar-title">Export Code</div>
+        <div class="topbar-actions">
+          <button class="btn-sm white" onclick="copyExport('index')">Copy index.html patch</button>
+        </div>
+      </div>
+      <div class="content-area">
+        <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:1.5rem; line-height:1.6;">
+          Sau khi chỉnh sửa xong, copy đoạn code bên dưới và thay thế vào file <code style="background:var(--surface2); padding:0.1rem 0.4rem; border-radius:4px; font-size:0.8rem;">index.html</code> và <code style="background:var(--surface2); padding:0.1rem 0.4rem; border-radius:4px; font-size:0.8rem;">project-detail.html</code> của bạn. Hoặc dùng chế độ Auto-inject nếu cả hai file cùng thư mục.
+        </p>
+
+        <div class="settings-title">Patch cho index.html — Thay phần #works section</div>
+        <div class="code-block" id="export-index-code">Đang tạo...</div>
+        <div style="display:flex; gap:0.75rem; margin-top:0.75rem;">
+          <button class="btn-sm ghost" onclick="copyCode('export-index-code')">📋 Copy</button>
+        </div>
+
+        <div class="settings-title" style="margin-top:2rem;">Patch cho project-detail.html — Thay PROJECTS object</div>
+        <div class="code-block" id="export-detail-code">Đang tạo...</div>
+        <div style="display:flex; gap:0.75rem; margin-top:0.75rem;">
+          <button class="btn-sm ghost" onclick="copyCode('export-detail-code')">📋 Copy</button>
+        </div>
+
+        <div class="settings-title" style="margin-top:2rem;">JSON Data (backup)</div>
+        <div class="code-block" id="export-json-code">Đang tạo...</div>
+        <div style="display:flex; gap:0.75rem; margin-top:0.75rem;">
+          <button class="btn-sm ghost" onclick="copyCode('export-json-code')">📋 Copy JSON</button>
+          <button class="btn-sm ghost" onclick="downloadJson()">⬇ Download JSON</button>
+          <button class="btn-sm ghost" onclick="document.getElementById('import-json').click()">⬆ Import JSON</button>
+          <input type="file" id="import-json" accept=".json" style="display:none" onchange="importJson(this)" />
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="tab-settings" style="display:none;">
+      <div class="topbar">
+        <div class="topbar-title">Cài đặt</div>
+      </div>
+      <div class="content-area">
+        <div class="settings-section">
+          <div class="settings-title">Đổi mật khẩu Admin</div>
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="new-user" class="form-input-lg" placeholder="admin" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mật khẩu mới</label>
+            <input type="password" id="new-pass" class="form-input-lg" placeholder="••••••••" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Xác nhận mật khẩu</label>
+            <input type="password" id="new-pass2" class="form-input-lg" placeholder="••••••••" />
+          </div>
+          <button class="btn-sm white" onclick="changePassword()" style="margin-top:0.5rem;">Lưu mật khẩu</button>
+
+          <div class="settings-title">Thông tin</div>
+          <div class="password-info">
+            Dữ liệu projects được lưu trong <strong>localStorage</strong> của trình duyệt này. Để đồng bộ sang máy khác, dùng chức năng <strong>Export JSON</strong> rồi <strong>Import JSON</strong> trên máy mới.
+          </div>
+
+          <div class="settings-title">Xóa toàn bộ dữ liệu</div>
+          <button class="btn-sm danger" onclick="clearAllData()">⚠ Reset toàn bộ dữ liệu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT/ADD MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Thêm Project mới</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="field-id-original" />
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Project ID *</label>
+          <input type="text" id="field-id" class="form-input-lg" placeholder="my-project" />
+          <div class="hint">Chữ thường, dùng dấu - thay khoảng trắng. VD: john-wick-cosplay</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category *</label>
+          <select id="field-category" class="form-input-lg">
+            <option value="BRANDING">BRANDING</option>
+            <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+            <option value="TYPOGRAPHY">TYPOGRAPHY</option>
+            <option value="RETOUCH">RETOUCH</option>
+            <option value="UX/UI">UX/UI</option>
+            <option value="ILLUSTRATION">ILLUSTRATION</option>
+            <option value="ANIMATION">ANIMATION</option>
+            <option value="ADVERTISING">ADVERTISING</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Tên Project *</label>
+        <input type="text" id="field-title" class="form-input-lg" placeholder="Tên project hiển thị" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Meta (Category + Năm)</label>
+        <input type="text" id="field-meta" class="form-input-lg" placeholder="VD: RETOUCH, 2024" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Thumbnail URL *</label>
+        <input type="text" id="field-img" class="form-input-lg" placeholder="https://..." oninput="previewThumb(this.value)" />
+        <div class="hint">URL ảnh hiển thị trên trang chủ (card thumbnail)</div>
+        <img id="thumb-preview" class="img-preview" style="margin-top:0.5rem; width:120px; height:80px;" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Behance Embed URL (không bắt buộc)</label>
+        <input type="text" id="field-behance" class="form-input-lg" placeholder="https://www.behance.net/embed/project/..." />
+        <div class="hint">Dạng: https://www.behance.net/embed/project/XXXXXXX?ilo0=1</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" style="margin-bottom:0.75rem;">Ảnh nội dung project</label>
+        <div class="content-type-tabs">
+          <button class="content-tab active" onclick="setContentType('images', this)">🖼 Danh sách ảnh</button>
+          <button class="content-tab" onclick="setContentType('html', this)">💻 Custom HTML</button>
+        </div>
+
+        <div id="content-images-section">
+          <div class="images-list" id="images-list"></div>
+          <button class="btn-add-img" onclick="addImageRow()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Thêm ảnh
+          </button>
+          <div class="hint" style="margin-top:0.5rem;">Mỗi URL một ảnh — ảnh sẽ xếp dọc như Behance</div>
+        </div>
+
+        <div id="content-html-section" style="display:none;">
+          <textarea id="field-html" class="form-input-lg" placeholder="<div>Custom HTML content...</div>" rows="6"></textarea>
+          <div class="hint">Dán HTML tùy chỉnh — dùng cho GIF, video embed, layout đặc biệt</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm ghost" onclick="closeModal()">Hủy</button>
+      <button class="btn-sm white" onclick="saveProject()">Lưu Project</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── AUTH ──
+  const DEFAULT_CREDS = { user: 'admin', pass: 'dattran2024' };
+  
+  function getCreds() {
+    try {
+      return JSON.parse(localStorage.getItem('admin_creds')) || DEFAULT_CREDS;
+    } catch { return DEFAULT_CREDS; }
+  }
+
+  function isLoggedIn() {
+    return sessionStorage.getItem('admin_logged_in') === 'true';
+  }
+
+  function handleLogin() {
+    const user = document.getElementById('login-user').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    const creds = getCreds();
+
+    if (user === creds.user && pass === creds.pass) {
+      sessionStorage.setItem('admin_logged_in', 'true');
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('admin-panel').classList.add('visible');
+      renderProjects();
+      generateExports();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+      document.getElementById('login-pass').value = '';
+    }
+  }
+
+  document.getElementById('login-pass').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+
+  document.getElementById('login-user').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('login-pass').focus();
+  });
+
+  function handleLogout() {
+    sessionStorage.removeItem('admin_logged_in');
+    location.reload();
+  }
+
+  function changePassword() {
+    const user = document.getElementById('new-user').value.trim();
+    const pass = document.getElementById('new-pass').value;
+    const pass2 = document.getElementById('new-pass2').value;
+    if (!user) return showToast('Nhập username', 'error');
+    if (pass.length < 6) return showToast('Mật khẩu tối thiểu 6 ký tự', 'error');
+    if (pass !== pass2) return showToast('Mật khẩu không khớp', 'error');
+    localStorage.setItem('admin_creds', JSON.stringify({ user, pass }));
+    showToast('Đã lưu mật khẩu mới!', 'success');
+  }
+
+  function clearAllData() {
+    if (!confirm('Xóa toàn bộ dữ liệu projects? Không thể hoàn tác!')) return;
+    localStorage.removeItem('portfolio_projects');
+    localStorage.removeItem('portfolio_order');
+    loadDefaultProjects();
+    renderProjects();
+    showToast('Đã reset dữ liệu!', 'success');
+  }
+
+  // ── DATA ──
+  const DEFAULT_PROJECTS = {
+    'project-1': { title: 'Frequency Separation', meta: 'RETOUCH, 2024', category: 'RETOUCH', img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/14%20colour%20copy.jpg', images: ['https://github.com/minhdat0801/porfolio/blob/main/2222.gif?raw=true'], contentType: 'images', behance: '' },
+    'project-2': { title: 'Contouring', meta: 'RETOUCH, 2024', category: 'RETOUCH', img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/9%20contouring%20copy.jpg', images: ['https://github.com/minhdat0801/porfolio/blob/main/11111.gif?raw=true'], contentType: 'images', behance: '' },
+    'project-3': { title: 'Photo Composite', meta: 'ADVERTISING, 2024', category: 'ADVERTISING', img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/29.png', images: ['https://mir-s3-cdn-cf.behance.net/project_modules/disp/202e9d212689829.673ef636bc64e.gif'], contentType: 'images', behance: '' },
+    'project-4': { title: 'Advertising Artwork', meta: 'ADVERTISING, 2024', category: 'ADVERTISING', img: 'https://raw.githubusercontent.com/minhdat0801/porfolio/main/Tr%E1%BA%A7n%20Minh%20%C4%90%E1%BA%A1t%20SE182104.png', images: ['https://mir-s3-cdn-cf.behance.net/project_modules/disp/35b970212689829.673ef636bbf87.gif'], contentType: 'images', behance: '' },
+    'john-wick-cosplay': { title: 'JOHN WICK COSPLAY', meta: 'PHOTOGRAPHY, STUDIO, 2024', category: 'PHOTOGRAPHY', img: 'https://images.weserv.nl/?url=https://mir-s3-cdn-cf.behance.net/project_modules/disp/5b7e96192887941.673ec491cda1b.jpg', images: ['https://mir-s3-cdn-cf.behance.net/project_modules/1400/5b7e96192887941.673ec491cda1b.jpg','https://mir-s3-cdn-cf.behance.net/project_modules/1400/bd6849192887941.673e34acc06d5.jpg','https://mir-s3-cdn-cf.behance.net/project_modules/1400/67353d192887941.673e34acc18b2.jpg','https://mir-s3-cdn-cf.behance.net/project_modules/1400/fd50ec192887941.673e34acc209a.jpg','https://mir-s3-cdn-cf.behance.net/project_modules/1400/aaca01192887941.673e34acc28fa.jpg','https://mir-s3-cdn-cf.behance.net/project_modules/1400/7fbf00192887941.673e34acc0e3b.jpg'], contentType: 'images', behance: '' },
+    'project-6': { title: 'Die With A Smile (Lyrics Video)', meta: 'ANIMATION, 2024', category: 'ANIMATION', img: 'https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true', images: ['https://github.com/minhdat0801/porfolio/blob/main/Asset%209.png?raw=true'], contentType: 'images', behance: 'https://www.behance.net/embed/project/211853067?ilo0=1' },
+    'project-7': { title: '2024 INFOGRAPHIC DESIGN', meta: 'ADVERTISING, 2024', category: 'ADVERTISING', img: 'https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png', images: ['https://mir-s3-cdn-cf.behance.net/projects/original_webp/07f751203584565.Y3JvcCwzMDAwLDIzNDYsMCw2Njg.png'], contentType: 'images', behance: 'https://www.behance.net/embed/project/203584565?ilo0=1' },
+    'project-8': { title: 'APPASTA BRAND IDENTITY', meta: 'BRANDING, 2024', category: 'BRANDING', img: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png', images: ['https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/d30506203180295.669804e1211d3.png'], contentType: 'images', behance: 'https://www.behance.net/embed/project/203180295?ilo0=1' }
+  };
+
+  const DEFAULT_ORDER = ['project-1','project-2','project-3','project-4','john-wick-cosplay','project-6','project-7','project-8'];
+
+  function loadDefaultProjects() {
+    localStorage.setItem('portfolio_projects', JSON.stringify(DEFAULT_PROJECTS));
+    localStorage.setItem('portfolio_order', JSON.stringify(DEFAULT_ORDER));
+  }
+
+  function getProjects() {
+    try {
+      const raw = localStorage.getItem('portfolio_projects');
+      if (!raw) { loadDefaultProjects(); return JSON.parse(JSON.stringify(DEFAULT_PROJECTS)); }
+      return JSON.parse(raw);
+    } catch { return JSON.parse(JSON.stringify(DEFAULT_PROJECTS)); }
+  }
+
+  function getOrder() {
+    try {
+      const raw = localStorage.getItem('portfolio_order');
+      if (!raw) { loadDefaultProjects(); return [...DEFAULT_ORDER]; }
+      return JSON.parse(raw);
+    } catch { return [...DEFAULT_ORDER]; }
+  }
+
+  function saveProjects(projects, order) {
+    localStorage.setItem('portfolio_projects', JSON.stringify(projects));
+    localStorage.setItem('portfolio_order', JSON.stringify(order));
+  }
+
+  // ── RENDER ──
+  function renderProjects() {
+    const projects = getProjects();
+    const order = getOrder();
+    const list = document.getElementById('projects-list');
+    list.innerHTML = '';
+
+    if (order.length === 0) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-title">Chưa có project nào</div><div class="empty-state-desc">Nhấn "Thêm Project" để bắt đầu.</div></div>`;
+    }
+
+    order.forEach((id, idx) => {
+      const p = projects[id];
+      if (!p) return;
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.draggable = true;
+      card.dataset.id = id;
+      card.dataset.idx = idx;
+
+      const thumbHtml = p.img
+        ? `<img class="project-thumb" src="${p.img}" alt="${p.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="project-thumb-placeholder" style="display:none">🖼</div>`
+        : `<div class="project-thumb-placeholder">🖼</div>`;
+
+      card.innerHTML = `
+        <span class="drag-handle" title="Kéo để sắp xếp">⣿</span>
+        ${thumbHtml}
+        <div class="project-info">
+          <div class="project-card-title">${p.title}</div>
+          <div class="project-card-meta">
+            <span class="tag">${p.category || 'UNCATEGORIZED'}</span>
+            <span class="project-id-badge">#${id}</span>
+            ${p.behance ? '<span style="color:rgba(68,255,136,0.7); font-size:0.7rem;">✓ Behance</span>' : ''}
+          </div>
+        </div>
+        <div class="project-card-actions">
+          <button class="icon-btn" onclick="editProject('${id}')" title="Sửa">✏️</button>
+          <button class="icon-btn del" onclick="deleteProject('${id}')" title="Xóa">🗑</button>
+        </div>
+      `;
+
+      // Drag & drop
+      card.addEventListener('dragstart', onDragStart);
+      card.addEventListener('dragover', onDragOver);
+      card.addEventListener('drop', onDrop);
+      card.addEventListener('dragend', onDragEnd);
+      card.addEventListener('dragleave', e => card.classList.remove('drag-over'));
+
+      list.appendChild(card);
+    });
+
+    updateStats(projects, order);
+    generateExports();
+  }
+
+  function updateStats(projects, order) {
+    const cats = new Set(order.map(id => projects[id]?.category).filter(Boolean));
+    const behanceCount = order.filter(id => projects[id]?.behance).length;
+    document.getElementById('stat-total').textContent = order.length;
+    document.getElementById('stat-cats').textContent = cats.size;
+    document.getElementById('stat-behance').textContent = behanceCount;
+  }
+
+  // ── DRAG & DROP ──
+  let dragSrcId = null;
+
+  function onDragStart(e) {
+    dragSrcId = e.currentTarget.dataset.id;
+    e.currentTarget.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  function onDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    document.querySelectorAll('.project-card').forEach(c => c.classList.remove('drag-over'));
+    e.currentTarget.classList.add('drag-over');
+  }
+
+  function onDrop(e) {
+    e.preventDefault();
+    const targetId = e.currentTarget.dataset.id;
+    if (dragSrcId === targetId) return;
+    const projects = getProjects();
+    const order = getOrder();
+    const fromIdx = order.indexOf(dragSrcId);
+    const toIdx = order.indexOf(targetId);
+    order.splice(fromIdx, 1);
+    order.splice(toIdx, 0, dragSrcId);
+    saveProjects(projects, order);
+    renderProjects();
+    showToast('Đã sắp xếp lại!', 'success');
+  }
+
+  function onDragEnd(e) {
+    document.querySelectorAll('.project-card').forEach(c => { c.classList.remove('dragging'); c.classList.remove('drag-over'); });
+  }
+
+  // ── MODAL ──
+  let editingId = null;
+  let contentType = 'images';
+
+  function openModal(id = null) {
+    editingId = id;
+    contentType = 'images';
+    document.getElementById('modal-title').textContent = id ? 'Sửa Project' : 'Thêm Project mới';
+    document.getElementById('field-id-original').value = id || '';
+    document.getElementById('images-list').innerHTML = '';
+    document.getElementById('field-html').value = '';
+    document.getElementById('thumb-preview').style.display = 'none';
+
+    // Reset content type tabs
+    document.querySelectorAll('.content-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+    document.getElementById('content-images-section').style.display = '';
+    document.getElementById('content-html-section').style.display = 'none';
+
+    if (id) {
+      const projects = getProjects();
+      const p = projects[id];
+      document.getElementById('field-id').value = id;
+      document.getElementById('field-id').disabled = true;
+      document.getElementById('field-title').value = p.title || '';
+      document.getElementById('field-meta').value = p.meta || '';
+      document.getElementById('field-img').value = p.img || '';
+      document.getElementById('field-category').value = p.category || 'BRANDING';
+      document.getElementById('field-behance').value = p.behance || '';
+
+      if (p.img) previewThumb(p.img);
+
+      contentType = p.contentType || 'images';
+      if (contentType === 'html') {
+        setContentType('html', document.querySelectorAll('.content-tab')[1]);
+        document.getElementById('field-html').value = p.html || '';
+      } else {
+        (p.images || []).forEach(url => addImageRow(url));
+        if (!p.images || p.images.length === 0) addImageRow();
+      }
+    } else {
+      document.getElementById('field-id').disabled = false;
+      document.getElementById('field-id').value = '';
+      document.getElementById('field-title').value = '';
+      document.getElementById('field-meta').value = '';
+      document.getElementById('field-img').value = '';
+      document.getElementById('field-category').value = 'BRANDING';
+      document.getElementById('field-behance').value = '';
+      addImageRow();
+    }
+
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+
+  function closeModalOnOverlay(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  function editProject(id) { openModal(id); }
+
+  function deleteProject(id) {
+    if (!confirm(`Xóa project "${id}"?`)) return;
+    const projects = getProjects();
+    const order = getOrder();
+    delete projects[id];
+    const idx = order.indexOf(id);
+    if (idx > -1) order.splice(idx, 1);
+    saveProjects(projects, order);
+    renderProjects();
+    showToast('Đã xóa project!', 'success');
+  }
+
+  function setContentType(type, btn) {
+    contentType = type;
+    document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('content-images-section').style.display = type === 'images' ? '' : 'none';
+    document.getElementById('content-html-section').style.display = type === 'html' ? '' : 'none';
+  }
+
+  function addImageRow(url = '') {
+    const list = document.getElementById('images-list');
+    const row = document.createElement('div');
+    row.className = 'img-row';
+    row.innerHTML = `
+      <input type="text" class="form-input-lg img-url-field" placeholder="https://..." value="${url}" oninput="updateImgPreview(this)" />
+      <img class="img-preview" src="${url}" style="${url ? 'display:block' : 'display:none'}" />
+      <button class="icon-btn del" onclick="this.parentElement.remove()" title="Xóa ảnh">✕</button>
+    `;
+    list.appendChild(row);
+  }
+
+  function updateImgPreview(input) {
+    const img = input.nextElementSibling;
+    if (input.value) { img.src = input.value; img.style.display = 'block'; }
+    else img.style.display = 'none';
+  }
+
+  function previewThumb(url) {
+    const img = document.getElementById('thumb-preview');
+    if (url) { img.src = url; img.style.display = 'block'; }
+    else img.style.display = 'none';
+  }
+
+  function saveProject() {
+    const idOriginal = document.getElementById('field-id-original').value;
+    const id = document.getElementById('field-id').value.trim().toLowerCase().replace(/\s+/g, '-');
+    const title = document.getElementById('field-title').value.trim();
+    const meta = document.getElementById('field-meta').value.trim();
+    const img = document.getElementById('field-img').value.trim();
+    const category = document.getElementById('field-category').value;
+    const behance = document.getElementById('field-behance').value.trim();
+
+    if (!id) return showToast('Nhập Project ID!', 'error');
+    if (!title) return showToast('Nhập tên project!', 'error');
+    if (!img) return showToast('Nhập URL thumbnail!', 'error');
+
+    const projects = getProjects();
+    const order = getOrder();
+
+    let images = [];
+    let html = '';
+
+    if (contentType === 'images') {
+      images = Array.from(document.querySelectorAll('.img-url-field')).map(i => i.value.trim()).filter(Boolean);
+    } else {
+      html = document.getElementById('field-html').value;
+    }
+
+    const projectData = { title, meta, category, img, images, html, contentType, behance };
+
+    if (idOriginal && idOriginal !== id) {
+      // ID changed
+      delete projects[idOriginal];
+      const oldIdx = order.indexOf(idOriginal);
+      if (oldIdx > -1) order[oldIdx] = id;
+    }
+
+    if (!idOriginal) {
+      // New project
+      order.push(id);
+    }
+
+    projects[id] = projectData;
+    saveProjects(projects, order);
+    closeModal();
+    renderProjects();
+    showToast(idOriginal ? 'Đã lưu thay đổi!' : 'Đã thêm project mới!', 'success');
+  }
+
+  // ── EXPORT ──
+  function generateExports() {
+    const projects = getProjects();
+    const order = getOrder();
+
+    // INDEX.HTML patch — works section
+    let indexSlides = order.map(id => {
+      const p = projects[id];
+      if (!p) return '';
+      return `          <div class="work-slide" data-project-id="${id}" data-category="${p.category || 'BRANDING'}">
+            <div class="work-card-horizontal" onclick="navigateWithTransition(this, '${id}')" data-label="View →">
+              <div class="lando-img-wrap">
+                <img src="${p.img}" class="work-img" alt="${p.title}" />
+              </div>
+            </div>
+          </div>`;
+    }).join('\n');
+
+    const indexPatch = `<!-- CỤC NÀY DÁN VÀO #works section, thay thế toàn bộ work-slide (KHÔNG bao gồm headline-slide) -->
+${indexSlides}`;
+
+    document.getElementById('export-index-code').textContent = indexPatch;
+
+    // PROJECT-DETAIL.HTML patch — PROJECTS object
+    let projectsObj = 'const PROJECTS = {\n';
+    order.forEach(id => {
+      const p = projects[id];
+      if (!p) return;
+      let content = '';
+      if (p.contentType === 'html' && p.html) {
+        content = p.html;
+      } else {
+        const imgs = (p.images || []).filter(Boolean);
+        if (imgs.length === 1 && (imgs[0].endsWith('.gif') || imgs[0].includes('.gif'))) {
+          content = `<div style="width:100vw;margin-left:calc(50% - 50vw);height:100vh;display:flex;justify-content:center;align-items:center;position:relative;"><img src="${imgs[0]}" class="case-img" style="width:100%;height:100%;object-fit:contain;" /></div>`;
+        } else {
+          content = `<div class="case-study-roll">\n${imgs.map(u => `            <img src="${u}" class="case-img" />`).join('\n')}\n          </div>`;
+        }
+      }
+      projectsObj += `  '${id}': { title: ${JSON.stringify(p.title)}, meta: ${JSON.stringify(p.meta || '')}, img: ${JSON.stringify(p.img)}, content: \`\n          ${content}\n        \``;
+      if (p.behance) projectsObj += `, behanceUrl: ${JSON.stringify(p.behance)}`;
+      projectsObj += ` },\n`;
+    });
+    projectsObj += '};';
+
+    const orderLine = `\nconst PROJECT_ORDER = ${JSON.stringify(order)};`;
+    document.getElementById('export-detail-code').textContent = projectsObj + orderLine;
+
+    // JSON
+    document.getElementById('export-json-code').textContent = JSON.stringify({ projects, order }, null, 2);
+  }
+
+  function copyCode(elementId) {
+    const text = document.getElementById(elementId).textContent;
+    navigator.clipboard.writeText(text).then(() => showToast('Đã copy!', 'success')).catch(() => showToast('Copy thất bại', 'error'));
+  }
+
+  function downloadJson() {
+    const projects = getProjects();
+    const order = getOrder();
+    const data = JSON.stringify({ projects, order }, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'portfolio-projects.json';
+    a.click();
+  }
+
+  function importJson(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!data.projects || !data.order) throw new Error('Invalid format');
+        localStorage.setItem('portfolio_projects', JSON.stringify(data.projects));
+        localStorage.setItem('portfolio_order', JSON.stringify(data.order));
+        renderProjects();
+        showToast('Import thành công!', 'success');
+      } catch { showToast('File JSON không hợp lệ!', 'error'); }
+    };
+    reader.readAsText(file);
+    input.value = '';
+  }
+
+  // ── TABS ──
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-projects').style.display = tab === 'projects' ? '' : 'none';
+    document.getElementById('tab-export').style.display = tab === 'export' ? '' : 'none';
+    document.getElementById('tab-settings').style.display = tab === 'settings' ? '' : 'none';
+    if (tab === 'export') generateExports();
+  }
+
+  // ── TOAST ──
+  function showToast(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show' + (type === 'success' ? ' success-toast' : type === 'error' ? ' error-toast' : '');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.className = 'toast', 2800);
+  }
+
+  // ── INIT ──
+  if (isLoggedIn()) {
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('admin-panel').classList.add('visible');
+    renderProjects();
+    generateExports();
+  }
+</script>
+</body>
+</html>
